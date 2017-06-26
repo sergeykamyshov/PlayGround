@@ -19,4 +19,25 @@ public class MainActivity extends AppCompatActivity {
         CharSequence number = ((Button) view).getText();
         textViewResult.setText(textViewResult.getText() + number.toString());
     }
+
+    /**
+     * Clear the input result
+     * @param view  view that was clicked
+     */
+    public void clearResult(View view) {
+        TextView textViewResult = (TextView) findViewById(R.id.textViewResult);
+        textViewResult.setText("");
+    }
+
+    /**
+     * Clear last input number or symbol
+     * @param view  view that was clicked
+     */
+    public void clearLastInput(View view) {
+        TextView textViewResult = (TextView) findViewById(R.id.textViewResult);
+        String text = textViewResult.getText().toString();
+        if (!text.isEmpty()) {
+            textViewResult.setText(text.substring(0, text.length() - 1));
+        }
+    }
 }
