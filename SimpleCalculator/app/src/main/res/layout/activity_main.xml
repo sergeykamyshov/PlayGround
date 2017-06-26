@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:columnCount="4"
+    android:orientation="horizontal"
+    tools:context="com.example.kamyshovcorp.simplecalculator.MainActivity">
+
+    <TextView
+        android:id="@+id/textViewResult"
+        style="@android:style/TextAppearance.Large"
+        android:layout_column="0"
+        android:layout_columnSpan="4"
+        android:layout_gravity="fill"
+        android:gravity="right"/>
+
+    <Button android:text="C" />
+
+    <Button android:text="LC" />
+
+    <Button android:text="*" />
+
+    <Button android:text="/" />
+
+    <Button
+        android:onClick="concatNumber"
+        android:text="1" />
+
+    <Button
+        android:onClick="concatNumber"
+        android:text="2" />
+
+    <Button
+        android:onClick="concatNumber"
+        android:text="3" />
+
+    <Button android:text="+" />
+
+    <Button
+        android:onClick="concatNumber"
+        android:text="4" />
+
+    <Button
+        android:onClick="concatNumber"
+        android:text="5" />
+
+    <Button
+        android:onClick="concatNumber"
+        android:text="6" />
+
+    <Button android:text="-" />
+
+    <Button
+        android:onClick="concatNumber"
+        android:text="7" />
+
+    <Button
+        android:onClick="concatNumber"
+        android:text="8" />
+
+    <Button
+        android:onClick="concatNumber"
+        android:text="9" />
+
+    <Button
+        android:layout_gravity="fill"
+        android:layout_rowSpan="2"
+        android:text="=" />
+
+    <Button android:text="" />
+
+    <Button android:text="0" />
+
+    <Button android:text="." />
+</GridLayout>
