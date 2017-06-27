@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Clear the input result
-     * @param view  view that was clicked
+     *
+     * @param view view that was clicked
      */
     public void clearResult(View view) {
         TextView textViewResult = (TextView) findViewById(R.id.textViewResult);
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Clear last input number or symbol
-     * @param view  view that was clicked
+     *
+     * @param view view that was clicked
      */
     public void clearLastInput(View view) {
         TextView textViewResult = (TextView) findViewById(R.id.textViewResult);
@@ -46,25 +48,60 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void countResult(View view) {
+    /**
+     * Добавляет знак операции к введенному числу.
+     * Если это вторая операция, то происходит вычисление результата и только потом добавляется
+     * знак последней выбранной операции.
+     * @param view  кнопка операции, которая была нажата
+     */
+    public void addOperation(View view) {
         TextView textViewResult = (TextView) findViewById(R.id.textViewResult);
         String result = textViewResult.getText().toString();
 
-        // You can not start input with operation
+        // Нельзя вызывать операцию без введенных значений
         if (result.isEmpty()) {
             return;
         }
 
-        String lastSymbol = "";
-        if (!result.isEmpty()) {
-            lastSymbol = result.substring(result.length() - 1, result.length());
+        // Если была указана какая-то операция, то выполняем ее
+        for (String operation : basicOperations) {
+            if (result.contains(operation)) {
+                result = executeOperation(result, operation);
+                break;
+            }
         }
-        // If last symbol the operation then change the operation for new
-        if (basicOperations.contains(lastSymbol)) {
-            textViewResult.setText(result.substring(0, result.length() - 1));
-            textViewResult.setText(textViewResult.getText().toString() + ((Button) view).getText().toString());
-        } else {
-            textViewResult.setText(textViewResult.getText().toString() + ((Button) view).getText().toString());
+        // Добавляем указанную операцию к результату
+        result += ((Button) view).getText();
+        textViewResult.setText(result);
+    }
+
+    private String executeOperation(String result, String operation) {
+        String[] tokens = result.split(getOperationForSplit(operation));
+        Integer a = Integer.valueOf(tokens[0]);
+        Integer b = Integer.valueOf(tokens[1]);
+        int resultInt = 0;
+        if ("+".equals(operation)) {
+            resultInt = a + b;
+        } else if ("-".equals(operation)) {
+            resultInt = a - b;
+        } else if ("*".equals(operation)) {
+            resultInt = a * b;
+        } else if ("/".equals(operation)) {
+            resultInt = a / b;
         }
+        return String.valueOf(resultInt);
+    }
+
+    private String getOperationForSplit(String operation) {
+        if ("+".equals(operation)) {
+            return "\\+";
+        } else if ("-".equals(operation)) {
+            return "\\-";
+        } else if ("*".equals(operation)) {
+            return "\\*";
+        } else if ("/".equals(operation)) {
+            return "\\/";
+        }
+        return "";
     }
 }
