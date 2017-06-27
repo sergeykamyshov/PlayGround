@@ -21,11 +21,17 @@
         android:onClick="clearResult"
         android:text="C" />
 
-    <Button android:text="LC" android:onClick="clearLastInput" />
+    <Button
+        android:onClick="clearLastInput"
+        android:text="LC" />
 
-    <Button android:text="*" />
+    <Button
+        android:onClick="countResult"
+        android:text="*" />
 
-    <Button android:text="/" />
+    <Button
+        android:onClick="countResult"
+        android:text="/" />
 
     <Button
         android:onClick="concatNumber"
@@ -39,7 +45,9 @@
         android:onClick="concatNumber"
         android:text="3" />
 
-    <Button android:text="+" />
+    <Button
+        android:onClick="countResult"
+        android:text="+" />
 
     <Button
         android:onClick="concatNumber"
@@ -53,7 +61,9 @@
         android:onClick="concatNumber"
         android:text="6" />
 
-    <Button android:text="-" />
+    <Button
+        android:onClick="countResult"
+        android:text="-" />
 
     <Button
         android:onClick="concatNumber"
@@ -74,7 +84,9 @@
 
     <Button android:text="" />
 
-    <Button android:text="0" />
+    <Button
+        android:onClick="concatNumber"
+        android:text="0" />
 
     <Button android:text="." />
 </GridLayout>
