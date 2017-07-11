@@ -6,12 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
-    private List<String> basicOperations = Arrays.asList("+", "-", "*", "/");
+    private boolean operationWasInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +16,61 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void concatNumber(View view) {
-        TextView textViewResult = (TextView) findViewById(R.id.textViewResult);
-        CharSequence number = ((Button) view).getText();
-        textViewResult.setText(textViewResult.getText() + number.toString());
+    public void addNumber(View view) {
+        TextView resultTextView = (TextView) findViewById(R.id.resultTextView);
+        Button numberButton = (Button) view;
+        String number = numberButton.getText().toString();
+        if (operationWasInput) {
+            resultTextView.setText(number);
+        } else {
+            resultTextView.setText(resultTextView.getText() + number);
+        }
+    }
+
+    public void addOperation(View view) {
+        TextView textViewResult = (TextView) findViewById(R.id.resultTextView);
+        String inputNumber = textViewResult.getText().toString();
+        // Cann't call operation sign for empty input
+        if (inputNumber.isEmpty()) {
+            return;
+        }
+
+        Button operationButton = (Button) view;
+        String operationSign = operationButton.getText().toString();
+        // Move input number and sign to upper TextView
+        TextView operationTextView = (TextView) findViewById(R.id.operationTextView);
+        operationTextView.setText(inputNumber + " " + operationSign);
+
+        operationWasInput = true;
+    }
+
+    public void calculate(View view) {
+        // Parse upper TextView for number and operation sign
+        TextView operationTextView = (TextView) findViewById(R.id.operationTextView);
+        String[] split = operationTextView.getText().toString().split(" ");
+        int x = Integer.valueOf(split[0]);
+        String operationSign = split[1];
+
+        TextView resultTextView = (TextView) findViewById(R.id.resultTextView);
+        int y = Integer.valueOf(resultTextView.getText().toString());
+
+        operationTextView.setText("");
+        String result = executeOperation(x, y, operationSign);
+        resultTextView.setText(result);
+    }
+
+    private String executeOperation(int x, int y, String operation) {
+        int resultInt = 0;
+        if ("+".equals(operation)) {
+            resultInt = x + y;
+        } else if ("-".equals(operation)) {
+            resultInt = x - y;
+        } else if ("*".equals(operation)) {
+            resultInt = x * y;
+        } else if ("/".equals(operation)) {
+            resultInt = x / y;
+        }
+        return String.valueOf(resultInt);
     }
 
     /**
@@ -31,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
      * @param view view that was clicked
      */
     public void clearResult(View view) {
-        TextView textViewResult = (TextView) findViewById(R.id.textViewResult);
+        TextView textViewResult = (TextView) findViewById(R.id.resultTextView);
         textViewResult.setText("");
     }
 
@@ -41,67 +89,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view view that was clicked
      */
     public void clearLastInput(View view) {
-        TextView textViewResult = (TextView) findViewById(R.id.textViewResult);
+        TextView textViewResult = (TextView) findViewById(R.id.resultTextView);
         String result = textViewResult.getText().toString();
         if (!result.isEmpty()) {
             textViewResult.setText(result.substring(0, result.length() - 1));
         }
-    }
-
-    /**
-     * Добавляет знак операции к введенному числу.
-     * Если это вторая операция, то происходит вычисление результата и только потом добавляется
-     * знак последней выбранной операции.
-     * @param view  кнопка операции, которая была нажата
-     */
-    public void addOperation(View view) {
-        TextView textViewResult = (TextView) findViewById(R.id.textViewResult);
-        String result = textViewResult.getText().toString();
-
-        // Нельзя вызывать операцию без введенных значений
-        if (result.isEmpty()) {
-            return;
-        }
-
-        // Если была указана какая-то операция, то выполняем ее
-        for (String operation : basicOperations) {
-            if (result.contains(operation)) {
-                result = executeOperation(result, operation);
-                break;
-            }
-        }
-        // Добавляем указанную операцию к результату
-        result += ((Button) view).getText();
-        textViewResult.setText(result);
-    }
-
-    private String executeOperation(String result, String operation) {
-        String[] tokens = result.split(getOperationForSplit(operation));
-        Integer a = Integer.valueOf(tokens[0]);
-        Integer b = Integer.valueOf(tokens[1]);
-        int resultInt = 0;
-        if ("+".equals(operation)) {
-            resultInt = a + b;
-        } else if ("-".equals(operation)) {
-            resultInt = a - b;
-        } else if ("*".equals(operation)) {
-            resultInt = a * b;
-        } else if ("/".equals(operation)) {
-            resultInt = a / b;
-        }
-        return String.valueOf(resultInt);
-    }
-
-    private String getOperationForSplit(String operation) {
-        if ("+".equals(operation)) {
-            return "\\+";
-        } else if ("-".equals(operation)) {
-            return "\\-";
-        } else if ("*".equals(operation)) {
-            return "\\*";
-        } else if ("/".equals(operation)) {
-            return "\\/";
-        }
-        return "";
     }
 }

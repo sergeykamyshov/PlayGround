@@ -9,7 +9,15 @@
     tools:context="com.example.kamyshovcorp.simplecalculator.MainActivity">
 
     <TextView
-        android:id="@+id/textViewResult"
+        android:id="@+id/operationTextView"
+        style="@android:style/TextAppearance.Small"
+        android:layout_column="0"
+        android:layout_columnSpan="4"
+        android:layout_gravity="fill"
+        android:gravity="right" />
+
+    <TextView
+        android:id="@+id/resultTextView"
         style="@android:style/TextAppearance.Large"
         android:layout_column="0"
         android:layout_columnSpan="4"
@@ -34,15 +42,15 @@
         android:text="/" />
 
     <Button
-        android:onClick="concatNumber"
+        android:onClick="addNumber"
         android:text="1" />
 
     <Button
-        android:onClick="concatNumber"
+        android:onClick="addNumber"
         android:text="2" />
 
     <Button
-        android:onClick="concatNumber"
+        android:onClick="addNumber"
         android:text="3" />
 
     <Button
@@ -50,15 +58,15 @@
         android:text="+" />
 
     <Button
-        android:onClick="concatNumber"
+        android:onClick="addNumber"
         android:text="4" />
 
     <Button
-        android:onClick="concatNumber"
+        android:onClick="addNumber"
         android:text="5" />
 
     <Button
-        android:onClick="concatNumber"
+        android:onClick="addNumber"
         android:text="6" />
 
     <Button
@@ -66,18 +74,19 @@
         android:text="-" />
 
     <Button
-        android:onClick="concatNumber"
+        android:onClick="addNumber"
         android:text="7" />
 
     <Button
-        android:onClick="concatNumber"
+        android:onClick="addNumber"
         android:text="8" />
 
     <Button
-        android:onClick="concatNumber"
+        android:onClick="addNumber"
         android:text="9" />
 
     <Button
+        android:onClick="calculate"
         android:layout_gravity="fill"
         android:layout_rowSpan="2"
         android:text="=" />
@@ -85,7 +94,7 @@
     <Button android:text="" />
 
     <Button
-        android:onClick="concatNumber"
+        android:onClick="addNumber"
         android:text="0" />
 
     <Button android:text="." />
