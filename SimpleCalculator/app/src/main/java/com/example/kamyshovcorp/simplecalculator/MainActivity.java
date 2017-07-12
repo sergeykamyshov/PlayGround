@@ -8,28 +8,26 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean operationWasInput;
+    private TextView mResultTextView;
+    private TextView mOperationTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mResultTextView = (TextView) findViewById(R.id.resultTextView);
+        mOperationTextView = (TextView) findViewById(R.id.operationTextView);
     }
 
     public void addNumber(View view) {
-        TextView resultTextView = (TextView) findViewById(R.id.resultTextView);
         Button numberButton = (Button) view;
         String number = numberButton.getText().toString();
-        if (operationWasInput) {
-            resultTextView.setText(number);
-        } else {
-            resultTextView.setText(resultTextView.getText() + number);
-        }
+        mResultTextView.setText(mResultTextView.getText() + number);
     }
 
     public void addOperation(View view) {
-        TextView textViewResult = (TextView) findViewById(R.id.resultTextView);
-        String inputNumber = textViewResult.getText().toString();
+        String inputNumber = mResultTextView.getText().toString();
         // Cann't call operation sign for empty input
         if (inputNumber.isEmpty()) {
             return;
@@ -38,25 +36,22 @@ public class MainActivity extends AppCompatActivity {
         Button operationButton = (Button) view;
         String operationSign = operationButton.getText().toString();
         // Move input number and sign to upper TextView
-        TextView operationTextView = (TextView) findViewById(R.id.operationTextView);
-        operationTextView.setText(inputNumber + " " + operationSign);
+        mOperationTextView.setText(inputNumber + " " + operationSign);
 
-        operationWasInput = true;
+        mResultTextView.setText("");
     }
 
     public void calculate(View view) {
         // Parse upper TextView for number and operation sign
-        TextView operationTextView = (TextView) findViewById(R.id.operationTextView);
-        String[] split = operationTextView.getText().toString().split(" ");
+        String[] split = mOperationTextView.getText().toString().split(" ");
         int x = Integer.valueOf(split[0]);
         String operationSign = split[1];
 
-        TextView resultTextView = (TextView) findViewById(R.id.resultTextView);
-        int y = Integer.valueOf(resultTextView.getText().toString());
+        int y = Integer.valueOf(mResultTextView.getText().toString());
 
-        operationTextView.setText("");
+        mOperationTextView.setText("");
         String result = executeOperation(x, y, operationSign);
-        resultTextView.setText(result);
+        mResultTextView.setText(result);
     }
 
     private String executeOperation(int x, int y, String operation) {
@@ -73,26 +68,15 @@ public class MainActivity extends AppCompatActivity {
         return String.valueOf(resultInt);
     }
 
-    /**
-     * Clear the input result
-     *
-     * @param view view that was clicked
-     */
     public void clearResult(View view) {
-        TextView textViewResult = (TextView) findViewById(R.id.resultTextView);
-        textViewResult.setText("");
+        mResultTextView.setText("");
+        mOperationTextView.setText("");
     }
 
-    /**
-     * Clear last input number or symbol
-     *
-     * @param view view that was clicked
-     */
     public void clearLastInput(View view) {
-        TextView textViewResult = (TextView) findViewById(R.id.resultTextView);
-        String result = textViewResult.getText().toString();
+        String result = mResultTextView.getText().toString();
         if (!result.isEmpty()) {
-            textViewResult.setText(result.substring(0, result.length() - 1));
+            mResultTextView.setText(result.substring(0, result.length() - 1));
         }
     }
 }
