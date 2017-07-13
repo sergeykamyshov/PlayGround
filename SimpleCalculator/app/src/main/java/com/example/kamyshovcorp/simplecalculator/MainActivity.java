@@ -26,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
         mResultTextView.setText(mResultTextView.getText() + sign);
     }
 
+    public void addDot(View view) {
+        String text = mResultTextView.getText().toString();
+        if (!text.isEmpty() && !text.contains(".")) {
+            mResultTextView.setText(text + ".");
+        }
+    }
+
     public void addOperation(View view) {
         String inputNumber = mResultTextView.getText().toString();
         // Нельзя добавлять операцию пока ничего не ввели
@@ -35,13 +42,28 @@ public class MainActivity extends AppCompatActivity {
 
         Button operationButton = (Button) view;
         String operationSign = operationButton.getText().toString();
-        // Move input number and sign to upper TextView
         mOperationTextView.setText(inputNumber + " " + operationSign);
 
         mResultTextView.setText("");
     }
 
     public void calculate(View view) {
+        if (mResultTextView.getText().toString().isEmpty()) {
+            if (!mOperationTextView.getText().toString().isEmpty()) {
+                String[] split = mOperationTextView.getText().toString().split(" ");
+                Double x = Double.valueOf(split[0]);
+                // Если остаток по модулю 1 равен 0, то это целое число
+                Double module = x % 1;
+                if (Double.compare(0d, module) == 0) {
+                    mResultTextView.setText(String.valueOf(x.intValue()));
+                } else {
+                    mResultTextView.setText(String.valueOf(x));
+                }
+                mOperationTextView.setText("");
+            }
+            return;
+        }
+
         String[] split = mOperationTextView.getText().toString().split(" ");
         double x = Double.valueOf(split[0]);
         String operationSign = split[1];
@@ -69,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 result = x / y;
             }
         }
-        // Если остаток по модулю равен 0, то это целое число
+        // Если остаток по модулю 1 равен 0, то это целое число
         Double module = result % 1;
         if (Double.compare(0d, module) == 0) {
             return String.valueOf(result.intValue());
