@@ -21,14 +21,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addNumber(View view) {
-        Button numberButton = (Button) view;
-        String number = numberButton.getText().toString();
-        mResultTextView.setText(mResultTextView.getText() + number);
+        Button signButton = (Button) view;
+        String sign = signButton.getText().toString();
+        mResultTextView.setText(mResultTextView.getText() + sign);
     }
 
     public void addOperation(View view) {
         String inputNumber = mResultTextView.getText().toString();
-        // Cann't call operation sign for empty input
+        // Нельзя добавлять операцию пока ничего не ввели
         if (inputNumber.isEmpty()) {
             return;
         }
@@ -42,30 +42,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void calculate(View view) {
-        // Parse upper TextView for number and operation sign
         String[] split = mOperationTextView.getText().toString().split(" ");
-        int x = Integer.valueOf(split[0]);
+        double x = Double.valueOf(split[0]);
         String operationSign = split[1];
 
-        int y = Integer.valueOf(mResultTextView.getText().toString());
+        double y = Double.valueOf(mResultTextView.getText().toString());
 
         mOperationTextView.setText("");
         String result = executeOperation(x, y, operationSign);
         mResultTextView.setText(result);
     }
 
-    private String executeOperation(int x, int y, String operation) {
-        int resultInt = 0;
+    private String executeOperation(double x, double y, String operation) {
+        Double result = 0d;
         if ("+".equals(operation)) {
-            resultInt = x + y;
+            result = x + y;
         } else if ("-".equals(operation)) {
-            resultInt = x - y;
+            result = x - y;
         } else if ("*".equals(operation)) {
-            resultInt = x * y;
+            result = x * y;
         } else if ("/".equals(operation)) {
-            resultInt = x / y;
+            // На ноль делить нельзя
+            if (Double.compare(0d, y) == 0) {
+                result = 0d;
+            } else {
+                result = x / y;
+            }
         }
-        return String.valueOf(resultInt);
+        // Если остаток по модулю равен 0, то это целое число
+        Double module = result % 1;
+        if (Double.compare(0d, module) == 0) {
+            return String.valueOf(result.intValue());
+        }
+        return String.valueOf(result);
     }
 
     public void clearResult(View view) {

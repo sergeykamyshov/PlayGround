@@ -86,9 +86,9 @@
         android:text="9" />
 
     <Button
-        android:onClick="calculate"
         android:layout_gravity="fill"
         android:layout_rowSpan="2"
+        android:onClick="calculate"
         android:text="=" />
 
     <Button android:text="" />
@@ -97,5 +97,7 @@
         android:onClick="addNumber"
         android:text="0" />
 
-    <Button android:text="." />
+    <Button
+        android:onClick="addNumber"
+        android:text="." />
 </GridLayout>
