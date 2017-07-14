@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 mOperationTextView.setText("");
             }
             return;
+        } else if (mOperationTextView.getText().toString().isEmpty()) {
+            return;
         }
 
         String[] split = mOperationTextView.getText().toString().split(" ");
