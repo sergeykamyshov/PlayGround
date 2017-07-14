@@ -34,15 +34,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addOperation(View view) {
-        String inputNumber = mResultTextView.getText().toString();
         // Нельзя добавлять операцию пока ничего не ввели
-        if (inputNumber.isEmpty()) {
+        if (mResultTextView.getText().toString().isEmpty()) {
             return;
         }
 
+        if (mOperationTextView.getText().toString().isEmpty()) {
+            Button operationButton = (Button) view;
+            String operationSign = operationButton.getText().toString();
+            mOperationTextView.setText(mResultTextView.getText().toString() + " " + operationSign);
+            mResultTextView.setText("");
+            return;
+        }
+
+        // Выполняет операцию, чтобы лишний раз не нажимать кнопку равно
+        String[] split = mOperationTextView.getText().toString().split(" ");
+        double x = Double.valueOf(split[0]);
+        String operationSign = split[1];
+
+        double y = Double.valueOf(mResultTextView.getText().toString());
+
+        String result = executeOperation(x, y, operationSign);
         Button operationButton = (Button) view;
-        String operationSign = operationButton.getText().toString();
-        mOperationTextView.setText(inputNumber + " " + operationSign);
+        String pressButtonOperationSign = operationButton.getText().toString();
+        mOperationTextView.setText(result + " " + pressButtonOperationSign);
 
         mResultTextView.setText("");
     }
