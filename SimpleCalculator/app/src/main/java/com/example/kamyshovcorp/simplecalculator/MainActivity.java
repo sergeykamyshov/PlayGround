@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         double y = Double.valueOf(mResultTextView.getText().toString());
 
-        String result = executeOperation(x, y, operationSign);
+        String result = MathHelper.executeOperation(x, y, operationSign);
         Button operationButton = (Button) view;
         String pressButtonOperationSign = operationButton.getText().toString();
         mOperationTextView.setText(result + " " + pressButtonOperationSign);
@@ -67,16 +67,11 @@ public class MainActivity extends AppCompatActivity {
             if (!mOperationTextView.getText().toString().isEmpty()) {
                 String[] split = mOperationTextView.getText().toString().split(" ");
                 Double x = Double.valueOf(split[0]);
-                // Если остаток по модулю 1 равен 0, то это целое число
-                Double module = x % 1;
-                if (Double.compare(0d, module) == 0) {
-                    mResultTextView.setText(String.valueOf(x.intValue()));
-                } else {
-                    mResultTextView.setText(String.valueOf(x));
-                }
+                String result = MathHelper.isInteger(x) ? String.valueOf(x.intValue()) : String.valueOf(x);
+                mResultTextView.setText(result);
                 mOperationTextView.setText("");
+                return;
             }
-            return;
         } else if (mOperationTextView.getText().toString().isEmpty()) {
             return;
         }
@@ -88,33 +83,10 @@ public class MainActivity extends AppCompatActivity {
         double y = Double.valueOf(mResultTextView.getText().toString());
 
         mOperationTextView.setText("");
-        String result = executeOperation(x, y, operationSign);
+        String result = MathHelper.executeOperation(x, y, operationSign);
         mResultTextView.setText(result);
     }
 
-    private String executeOperation(double x, double y, String operation) {
-        Double result = 0d;
-        if ("+".equals(operation)) {
-            result = x + y;
-        } else if ("-".equals(operation)) {
-            result = x - y;
-        } else if ("*".equals(operation)) {
-            result = x * y;
-        } else if ("/".equals(operation)) {
-            // На ноль делить нельзя
-            if (Double.compare(0d, y) == 0) {
-                result = 0d;
-            } else {
-                result = x / y;
-            }
-        }
-        // Если остаток по модулю 1 равен 0, то это целое число
-        Double module = result % 1;
-        if (Double.compare(0d, module) == 0) {
-            return String.valueOf(result.intValue());
-        }
-        return String.valueOf(result);
-    }
 
     public void clearResult(View view) {
         mResultTextView.setText("");
