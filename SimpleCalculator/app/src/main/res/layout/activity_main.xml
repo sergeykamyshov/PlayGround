@@ -1,103 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:columnCount="4"
-    android:orientation="horizontal"
+    android:layout_centerHorizontal="true"
+    android:layout_gravity="center_horizontal|bottom"
+    app:columnCount="4"
     tools:context="com.example.kamyshovcorp.simplecalculator.MainActivity">
 
     <TextView
         android:id="@+id/operationTextView"
-        style="@android:style/TextAppearance.Small"
-        android:layout_column="0"
-        android:layout_columnSpan="4"
-        android:layout_gravity="fill"
-        android:gravity="right" />
+        android:layout_marginEnd="16dp"
+        android:gravity="end"
+        android:textColor="@color/colorPrimary"
+        android:textSize="32sp"
+        app:layout_column="0"
+        app:layout_columnSpan="4"
+        app:layout_gravity="fill_horizontal" />
 
     <TextView
         android:id="@+id/resultTextView"
-        style="@android:style/TextAppearance.Large"
-        android:layout_column="0"
-        android:layout_columnSpan="4"
-        android:layout_gravity="fill"
-        android:gravity="right" />
+        android:layout_marginEnd="16dp"
+        android:gravity="end"
+        android:textColor="@android:color/black"
+        android:textSize="42sp"
+        app:layout_column="0"
+        app:layout_columnSpan="4"
+        app:layout_gravity="fill_horizontal" />
 
     <Button
         android:id="@+id/clearButton"
+        android:layout_width="0dp"
         android:onClick="clearResult"
-        android:text="C" />
+        android:text="C"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="clearLastInput"
-        android:text="LC" />
+        android:text="LC"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addOperation"
-        android:text="*" />
+        android:text="*"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addOperation"
-        android:text="/" />
+        android:text="/"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addNumber"
-        android:text="1" />
+        android:text="1"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addNumber"
-        android:text="2" />
+        android:text="2"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addNumber"
-        android:text="3" />
+        android:text="3"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addOperation"
-        android:text="+" />
+        android:text="+"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addNumber"
-        android:text="4" />
+        android:text="4"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addNumber"
-        android:text="5" />
+        android:text="5"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addNumber"
-        android:text="6" />
+        android:text="6"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addOperation"
-        android:text="-" />
+        android:text="-"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addNumber"
-        android:text="7" />
+        android:text="7"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addNumber"
-        android:text="8" />
+        android:text="8"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addNumber"
-        android:text="9" />
+        android:text="9"
+        app:layout_columnWeight="1" />
 
     <Button
-        android:layout_gravity="fill"
-        android:layout_rowSpan="2"
+        android:layout_width="0dp"
         android:onClick="calculate"
-        android:text="=" />
-
-    <Button android:text="" />
+        android:text="="
+        android:textColor="@android:color/white"
+        app:layout_columnWeight="1"
+        android:textSize="36sp"
+        style="@style/OperationButton"
+        app:layout_gravity="fill_vertical"
+        app:layout_rowSpan="2" />
 
     <Button
+        android:layout_width="0dp"
+        android:text=""
+        app:layout_columnWeight="1" />
+
+    <Button
+        android:layout_width="0dp"
         android:onClick="addNumber"
-        android:text="0" />
+        android:text="0"
+        app:layout_columnWeight="1" />
 
     <Button
+        android:layout_width="0dp"
         android:onClick="addDot"
-        android:text="." />
-</GridLayout>
+        android:text="."
+        app:layout_columnWeight="1" />
+</android.support.v7.widget.GridLayout>
