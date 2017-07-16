@@ -1,28 +1,24 @@
 package com.example.kamyshovcorp.simplecalculator;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 public class MathHelper {
 
-    public static String executeOperation(double x, double y, String operation) {
-        Double result = 0d;
+    public static BigDecimal executeOperation(BigDecimal x, BigDecimal y, String operation) {
+        BigDecimal result = BigDecimal.ZERO;
         if ("+".equals(operation)) {
-            result = x + y;
+            result = x.add(y);
         } else if ("-".equals(operation)) {
-            result = x - y;
+            result = x.subtract(y);
         } else if ("*".equals(operation)) {
-            result = x * y;
+            result = x.multiply(y);
         } else if ("/".equals(operation)) {
             // На ноль делить нельзя
-            if (Double.compare(0d, y) == 0) {
-                result = 0d;
-            } else {
-                result = x / y;
+            if (BigDecimal.ZERO.compareTo(y) != 0) {
+                result = x.divide(y, MathContext.DECIMAL64);
             }
         }
-        return isInteger(result) ? String.valueOf(result.intValue()) : String.valueOf(result);
-    }
-
-    public static boolean isInteger(double x) {
-        // Если остаток по модулю 1 равен 0, то это целое число
-        return Double.compare(0d, x % 1) == 0;
+        return result;
     }
 }

@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView mResultTextView;
@@ -49,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Выполняет операцию, чтобы лишний раз не нажимать кнопку равно
         String[] split = mOperationTextView.getText().toString().split(" ");
-        double x = Double.valueOf(split[0]);
+        BigDecimal x = new BigDecimal(split[0]);
         String operationSign = split[1];
 
-        double y = Double.valueOf(mResultTextView.getText().toString());
+        BigDecimal y = new BigDecimal(mResultTextView.getText().toString());
 
-        String result = MathHelper.executeOperation(x, y, operationSign);
+        BigDecimal result = MathHelper.executeOperation(x, y, operationSign);
         Button operationButton = (Button) view;
         String pressButtonOperationSign = operationButton.getText().toString();
         mOperationTextView.setText(result + " " + pressButtonOperationSign);
@@ -66,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
         if (mResultTextView.getText().toString().isEmpty()) {
             if (!mOperationTextView.getText().toString().isEmpty()) {
                 String[] split = mOperationTextView.getText().toString().split(" ");
-                Double x = Double.valueOf(split[0]);
-                String result = MathHelper.isInteger(x) ? String.valueOf(x.intValue()) : String.valueOf(x);
-                mResultTextView.setText(result);
+                mResultTextView.setText(split[0]);
                 mOperationTextView.setText("");
                 return;
             }
@@ -77,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String[] split = mOperationTextView.getText().toString().split(" ");
-        double x = Double.valueOf(split[0]);
+        BigDecimal x = new BigDecimal(split[0]);
         String operationSign = split[1];
 
-        double y = Double.valueOf(mResultTextView.getText().toString());
+        BigDecimal y = new BigDecimal(mResultTextView.getText().toString());
 
         mOperationTextView.setText("");
-        String result = MathHelper.executeOperation(x, y, operationSign);
-        mResultTextView.setText(result);
+        BigDecimal result = MathHelper.executeOperation(x, y, operationSign);
+        mResultTextView.setText(result.toString());
     }
 
 
