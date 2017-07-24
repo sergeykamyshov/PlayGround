@@ -19,6 +19,11 @@ public class MathHelper {
                 result = x.divide(y, MathContext.DECIMAL64);
             }
         }
+
+        BigDecimal remainder = result.remainder(BigDecimal.ONE);
+        if (BigDecimal.ZERO.compareTo(remainder) == 0) {
+            return result.setScale(0);
+        }
         return result;
     }
 }
