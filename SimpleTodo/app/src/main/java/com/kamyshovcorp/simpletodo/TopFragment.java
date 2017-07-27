@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 
 public class TopFragment extends Fragment {
 
+    public static TopFragment newInstance() {
+        return new TopFragment();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

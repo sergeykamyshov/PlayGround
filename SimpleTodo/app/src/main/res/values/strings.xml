@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Simple Todo</string>
+
+    <array name="drawer_categories">
+        <item>Inbox</item>
+        <item>Today</item>
+        <item>Next 7 Days</item>
+    </array>
 </resources>
