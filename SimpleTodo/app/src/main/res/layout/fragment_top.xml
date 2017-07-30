@@ -19,5 +19,4 @@
         android:src="@drawable/ic_add_fab"
         app:layout_anchor="@id/list_todo"
         app:layout_anchorGravity="bottom|right|end" />
-
 </android.support.design.widget.CoordinatorLayout>
