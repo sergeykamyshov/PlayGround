@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.kamyshovcorp.simpletodo.R;
+import com.kamyshovcorp.simpletodo.TaskCollection;
+
+import java.util.List;
 
 public class TopFragment extends Fragment {
 
@@ -27,20 +30,19 @@ public class TopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top, container, false);
 
-        String[] inboxTasks = getResources().getStringArray(R.array.test_inbox_tasks);
-        inboxTasks = new String[0];
-        if (inboxTasks.length == 0) {
+        List<String> tasks = TaskCollection.getTasks();
+        if (tasks.isEmpty()) {
             setEmptyImageBackground((CoordinatorLayout) view);
         } else {
             ListView todoList = (ListView) view.findViewById(R.id.list_todo);
-            todoList.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.test_inbox_tasks)));
+            todoList.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, tasks.toArray()));
         }
 
         mFab = (FloatingActionButton) view.findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager()
+                getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.content_frame, TaskFragment.newInstance())
                         .addToBackStack(null)
