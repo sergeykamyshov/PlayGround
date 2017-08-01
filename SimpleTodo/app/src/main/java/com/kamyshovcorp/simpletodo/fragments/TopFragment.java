@@ -1,10 +1,9 @@
-package com.kamyshovcorp.simpletodo;
+package com.kamyshovcorp.simpletodo.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.kamyshovcorp.simpletodo.R;
 
 public class TopFragment extends Fragment {
 
@@ -39,7 +40,11 @@ public class TopFragment extends Fragment {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(getView(), "Test text", Snackbar.LENGTH_SHORT).show();
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, TaskFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
