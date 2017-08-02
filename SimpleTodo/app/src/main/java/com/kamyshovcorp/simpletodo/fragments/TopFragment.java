@@ -8,13 +8,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.kamyshovcorp.simpletodo.R;
 import com.kamyshovcorp.simpletodo.TaskCollection;
+import com.kamyshovcorp.simpletodo.adapters.TaskAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TopFragment extends Fragment {
@@ -35,7 +36,7 @@ public class TopFragment extends Fragment {
             setEmptyImageBackground((CoordinatorLayout) view);
         } else {
             ListView todoList = (ListView) view.findViewById(R.id.inboxList);
-            todoList.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, tasks.toArray()));
+            todoList.setAdapter(new TaskAdapter(getContext(), (ArrayList<String>) tasks));
         }
 
         mFab = (FloatingActionButton) view.findViewById(R.id.fragmentTopFab);
