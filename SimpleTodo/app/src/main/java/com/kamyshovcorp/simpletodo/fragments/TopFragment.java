@@ -34,11 +34,11 @@ public class TopFragment extends Fragment {
         if (tasks.isEmpty()) {
             setEmptyImageBackground((CoordinatorLayout) view);
         } else {
-            ListView todoList = (ListView) view.findViewById(R.id.list_todo);
+            ListView todoList = (ListView) view.findViewById(R.id.inboxList);
             todoList.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, tasks.toArray()));
         }
 
-        mFab = (FloatingActionButton) view.findViewById(R.id.fab);
+        mFab = (FloatingActionButton) view.findViewById(R.id.fragmentTopFab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
