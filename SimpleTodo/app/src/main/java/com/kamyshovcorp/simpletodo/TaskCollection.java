@@ -18,4 +18,8 @@ public class TaskCollection {
     public static void addTask(String task) {
         tasks.add(task);
     }
+
+    public static void removeTask(int position) {
+        tasks.remove(position);
+    }
 }
