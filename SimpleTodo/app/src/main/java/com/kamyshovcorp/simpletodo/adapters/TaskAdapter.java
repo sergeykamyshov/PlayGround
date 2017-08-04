@@ -1,6 +1,7 @@
 package com.kamyshovcorp.simpletodo.adapters;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kamyshovcorp.simpletodo.R;
 import com.kamyshovcorp.simpletodo.TaskCollection;
@@ -42,7 +44,7 @@ public class TaskAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         View view = convertView;
         if (view == null) {
             view = layoutInflater.inflate(R.layout.list_item_with_checkbox, parent, false);
@@ -62,10 +64,19 @@ public class TaskAdapter extends BaseAdapter {
                     notifyDataSetChanged();
                     // Unchecked the item
                     buttonView.setChecked(false);
+                    // Inform user that task is done, and propose to undo the changes
+                    Snackbar.make(parent, "Task Is Done", Snackbar.LENGTH_SHORT).setAction("Undo", undoListener).show();
                 }
             }
         });
 
         return view;
     }
+
+    private View.OnClickListener undoListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(context, "Undo action clicked", Toast.LENGTH_SHORT).show();
+        }
+    };
 }
