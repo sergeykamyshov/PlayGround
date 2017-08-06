@@ -12,17 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kamyshovcorp.simpletodo.R;
-import com.kamyshovcorp.simpletodo.TaskCollection;
+import com.kamyshovcorp.simpletodo.database.TaskStore;
+import com.kamyshovcorp.simpletodo.model.Task;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class TaskAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater layoutInflater;
-    ArrayList<String> tasks;
+    List<Task> tasks;
 
-    public TaskAdapter(Context context, ArrayList<String> tasks) {
+    public TaskAdapter(Context context, List<Task> tasks) {
         this.context = context;
         this.tasks = tasks;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,22 +45,24 @@ public class TaskAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, final View convertView, final ViewGroup parent) {
-        View view = convertView;
-        if (view == null) {
-            view = layoutInflater.inflate(R.layout.list_item_with_checkbox, parent, false);
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+        if (convertView == null) {
+            convertView = layoutInflater.inflate(R.layout.list_item_with_checkbox, parent, false);
         }
 
-        TextView listItemTextView = (TextView) view.findViewById(R.id.listItemTextView);
-        listItemTextView.setText(tasks.get(position));
+        TextView listItemTextView = (TextView) convertView.findViewById(R.id.listItemTextView);
+        listItemTextView.setText(tasks.get(position).getName());
 
-        CheckBox listItemCheckBox = (CheckBox) view.findViewById(R.id.listItemCheckBox);
+        CheckBox listItemCheckBox = (CheckBox) convertView.findViewById(R.id.listItemCheckBox);
         listItemCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // Delete the task if user checked the item
-                    TaskCollection.removeTask(position);
+                    // Delete the task from databse if user checked the item
+                    TaskStore taskStore = new TaskStore(context);
+                    taskStore.deleteTask(tasks.get(position));
+                    // Delete the task from adapter list, to show that it has changes
+                    tasks.remove(position);
                     // Ask to update the list
                     notifyDataSetChanged();
                     // Unchecked the item
@@ -70,7 +73,7 @@ public class TaskAdapter extends BaseAdapter {
             }
         });
 
-        return view;
+        return convertView;
     }
 
     private View.OnClickListener undoListener = new View.OnClickListener() {
