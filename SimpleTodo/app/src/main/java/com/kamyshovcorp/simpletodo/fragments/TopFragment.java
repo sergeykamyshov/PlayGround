@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.kamyshovcorp.simpletodo.MainActivity;
 import com.kamyshovcorp.simpletodo.R;
 import com.kamyshovcorp.simpletodo.adapters.TaskAdapter;
 import com.kamyshovcorp.simpletodo.database.TaskDbHelper;
@@ -59,6 +60,15 @@ public class TopFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity activity = (MainActivity) getActivity();
+        if (activity != null) {
+            activity.hideUpButton();
+        }
     }
 
     private List<String> readTasksFromDb() {

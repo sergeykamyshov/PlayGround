@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.kamyshovcorp.simpletodo.MainActivity;
 import com.kamyshovcorp.simpletodo.R;
 import com.kamyshovcorp.simpletodo.database.TaskDbHelper;
 import com.kamyshovcorp.simpletodo.database.TaskDbSchema;
@@ -42,6 +43,15 @@ public class TaskFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity activity = (MainActivity) getActivity();
+        if (activity != null) {
+            activity.showUpButton();
+        }
     }
 
     private void addTaskToDb(String task) {
