@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.kamyshovcorp.simpletodo.MainActivity;
 import com.kamyshovcorp.simpletodo.R;
@@ -24,6 +25,15 @@ public class TaskFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_task, container, false);
+
+        ImageView taskDateImageView = (ImageView) view.findViewById(R.id.taskDateImageView);
+        taskDateImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerFragment datePickerFragment = new DatePickerFragment();
+                datePickerFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fragmentTaskFab);
         fab.setOnClickListener(new View.OnClickListener() {
