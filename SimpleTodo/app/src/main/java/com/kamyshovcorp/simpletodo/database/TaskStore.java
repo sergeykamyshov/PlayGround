@@ -30,7 +30,8 @@ public class TaskStore {
 
     public void addTask(Task task) {
         ContentValues values = new ContentValues();
-        values.put(TaskDbSchema.Cols.COLUMN_NAME_TASK, task.getName());
+        values.put(TaskDbSchema.Cols.COLUMN_TASK, task.getName());
+        values.put(TaskDbSchema.Cols.COLUMN_DUE_DATE, task.getDueDate());
         mDatabase.insert(TaskDbSchema.TABLE_NAME, null, values);
     }
 
@@ -41,10 +42,12 @@ public class TaskStore {
             if (cursor.moveToFirst()) {
                 int idIndex = cursor.getColumnIndex("_id");
                 int nameIndex = cursor.getColumnIndex("task");
+                int dueDateIndex = cursor.getColumnIndex("due_date");
                 do {
                     String idFromDb = cursor.getString(idIndex);
                     String nameFromDb = cursor.getString(nameIndex);
-                    tasks.add(new Task(idFromDb, nameFromDb));
+                    String dueDateFromDb = cursor.getString(dueDateIndex);
+                    tasks.add(new Task(idFromDb, nameFromDb, dueDateFromDb));
                 } while (cursor.moveToNext());
             }
         } finally {

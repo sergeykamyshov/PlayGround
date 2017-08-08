@@ -39,9 +39,13 @@ public class TaskFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText taskNameEditText = (EditText) view.findViewById(R.id.taskNameEditText);
-                if (!taskNameEditText.getText().toString().isEmpty()) {
-                    Task task = new Task(taskNameEditText.getText().toString());
+                EditText nameEditText = (EditText) view.findViewById(R.id.taskNameEditText);
+                String taskName = nameEditText.getText().toString();
+                if (!taskName.isEmpty()) {
+                    EditText dateEditText = (EditText) view.findViewById(R.id.taskDateTextEdit);
+                    String dateString = dateEditText.getText().toString();
+
+                    Task task = new Task(taskName, dateString);
                     TaskStore taskStore = TaskStore.get(getContext());
                     taskStore.addTask(task);
                 }

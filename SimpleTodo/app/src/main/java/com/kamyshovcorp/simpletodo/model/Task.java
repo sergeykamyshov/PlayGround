@@ -4,14 +4,17 @@ public class Task {
 
     private String id;
     private String name;
+    private String dueDate;
 
-    public Task(String id, String name) {
-        this.id = id;
+    public Task(String name, String dueDate) {
         this.name = name;
+        this.dueDate = dueDate;
     }
 
-    public Task(String name) {
+    public Task(String id, String name, String dueDate) {
+        this.id = id;
         this.name = name;
+        this.dueDate = dueDate;
     }
 
     public String getId() {
@@ -28,5 +31,13 @@ public class Task {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
     }
 }
