@@ -17,14 +17,34 @@ import com.kamyshovcorp.simpletodo.model.Task;
 
 public class TaskFragment extends Fragment {
 
+    private String taskName;
+    private String taskDueDate;
+
     public static TaskFragment newInstance() {
         return new TaskFragment();
+    }
+
+    public static TaskFragment newInstance(Task task) {
+        TaskFragment fragment = new TaskFragment();
+
+        Bundle args = new Bundle();
+        args.putString("taskName", task.getName());
+        args.putString("taskDueDate", task.getDueDate());
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_task, container, false);
+
+        EditText taskNameEditText = (EditText) view.findViewById(R.id.taskNameEditText);
+        taskNameEditText.setText(getArguments().getString("taskName"));
+
+        EditText taskDueDateEditText = (EditText) view.findViewById(R.id.taskDateTextEdit);
+        taskDueDateEditText.setText(getArguments().getString("taskDueDate"));
 
         ImageView taskDateImageView = (ImageView) view.findViewById(R.id.taskDateImageView);
         taskDateImageView.setOnClickListener(new View.OnClickListener() {

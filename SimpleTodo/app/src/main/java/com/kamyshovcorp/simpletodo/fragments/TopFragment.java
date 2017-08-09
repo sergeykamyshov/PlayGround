@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -32,12 +33,23 @@ public class TopFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top, container, false);
 
-        List<Task> tasks = getTasksFromDb();
+        final List<Task> tasks = getTasksFromDb();
         if (tasks.isEmpty()) {
             setEmptyImageBackground((CoordinatorLayout) view);
         } else {
             ListView todoList = (ListView) view.findViewById(R.id.inboxList);
             todoList.setAdapter(new TaskAdapter(getContext(), tasks));
+
+            todoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.content_frame, TaskFragment.newInstance(tasks.get(position)))
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         }
 
         mFab = (FloatingActionButton) view.findViewById(R.id.fragmentTopFab);
