@@ -90,4 +90,14 @@ public class TaskFragment extends Fragment {
             activity.showUpButton();
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(getActivity());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
