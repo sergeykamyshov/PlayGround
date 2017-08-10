@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,8 +18,12 @@ import com.kamyshovcorp.simpletodo.model.Task;
 
 public class TaskFragment extends Fragment {
 
-    private String taskName;
-    private String taskDueDate;
+    public static final String ARG_TASK_ID = "taskId";
+    public static final String ARG_TASK_NAME = "taskName";
+    public static final String ARG_TASK_DUE_DATE = "taskDueDate";
+
+    private EditText mTaskNameEditText;
+    private EditText mTaskDueDateEditText;
 
     public static TaskFragment newInstance() {
         return new TaskFragment();
@@ -30,8 +33,9 @@ public class TaskFragment extends Fragment {
         TaskFragment fragment = new TaskFragment();
 
         Bundle args = new Bundle();
-        args.putString("taskName", task.getName());
-        args.putString("taskDueDate", task.getDueDate());
+        args.putString(ARG_TASK_ID, task.getId());
+        args.putString(ARG_TASK_NAME, task.getName());
+        args.putString(ARG_TASK_DUE_DATE, task.getDueDate());
         fragment.setArguments(args);
 
         return fragment;
@@ -42,13 +46,13 @@ public class TaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_task, container, false);
 
-        EditText taskNameEditText = (EditText) view.findViewById(R.id.taskNameEditText);
-        EditText taskDueDateEditText = (EditText) view.findViewById(R.id.taskDateTextEdit);
+        mTaskNameEditText = (EditText) view.findViewById(R.id.taskNameEditText);
+        mTaskDueDateEditText = (EditText) view.findViewById(R.id.taskDateTextEdit);
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            taskNameEditText.setText(arguments.getString("taskName"));
-            taskDueDateEditText.setText(arguments.getString("taskDueDate"));
+            mTaskNameEditText.setText(arguments.getString("taskName"));
+            mTaskDueDateEditText.setText(arguments.getString("taskDueDate"));
         }
 
         ImageView taskDateImageView = (ImageView) view.findViewById(R.id.taskDateImageView);
@@ -64,15 +68,19 @@ public class TaskFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText nameEditText = (EditText) view.findViewById(R.id.taskNameEditText);
-                String taskName = nameEditText.getText().toString();
+                String taskName = mTaskNameEditText.getText().toString();
                 if (!taskName.isEmpty()) {
-                    EditText dateEditText = (EditText) view.findViewById(R.id.taskDateTextEdit);
-                    String dateString = dateEditText.getText().toString();
+                    String dateString = mTaskDueDateEditText.getText().toString();
 
                     Task task = new Task(taskName, dateString);
                     TaskStore taskStore = TaskStore.get(getContext());
-                    taskStore.addTask(task);
+                    // If was opened for editing and task ID is exists - update the task
+                    if (getArguments() != null) {
+                        task.setId(getArguments().getString(ARG_TASK_ID));
+                        taskStore.updateTask(task);
+                    } else {
+                        taskStore.addTask(task);
+                    }
                 }
 
                 getActivity().getSupportFragmentManager().popBackStack();
@@ -95,7 +103,7 @@ public class TaskFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(getActivity());
+            getFragmentManager().popBackStack();
             return true;
         }
         return super.onOptionsItemSelected(item);

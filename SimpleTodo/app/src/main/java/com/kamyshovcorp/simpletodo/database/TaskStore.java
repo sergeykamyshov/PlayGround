@@ -35,6 +35,13 @@ public class TaskStore {
         mDatabase.insert(TaskDbSchema.TABLE_NAME, null, values);
     }
 
+    public void updateTask(Task task) {
+        ContentValues values = new ContentValues();
+        values.put(TaskDbSchema.Cols.COLUMN_TASK, task.getName());
+        values.put(TaskDbSchema.Cols.COLUMN_DUE_DATE, task.getDueDate());
+        mDatabase.update(TaskDbSchema.TABLE_NAME, values, TaskDbSchema._ID + " = ?", new String[] {task.getId()});
+    }
+
     public List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
         Cursor cursor = mDatabase.query(TaskDbSchema.TABLE_NAME, null, null, null, null, null, null);
