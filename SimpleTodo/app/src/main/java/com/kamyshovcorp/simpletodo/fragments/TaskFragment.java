@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -41,10 +43,13 @@ public class TaskFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_task, container, false);
 
         EditText taskNameEditText = (EditText) view.findViewById(R.id.taskNameEditText);
-        taskNameEditText.setText(getArguments().getString("taskName"));
-
         EditText taskDueDateEditText = (EditText) view.findViewById(R.id.taskDateTextEdit);
-        taskDueDateEditText.setText(getArguments().getString("taskDueDate"));
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            taskNameEditText.setText(arguments.getString("taskName"));
+            taskDueDateEditText.setText(arguments.getString("taskDueDate"));
+        }
 
         ImageView taskDateImageView = (ImageView) view.findViewById(R.id.taskDateImageView);
         taskDateImageView.setOnClickListener(new View.OnClickListener() {

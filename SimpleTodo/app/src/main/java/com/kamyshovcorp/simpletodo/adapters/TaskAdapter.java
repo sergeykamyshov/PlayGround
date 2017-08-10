@@ -50,9 +50,6 @@ public class TaskAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.list_item_with_checkbox, parent, false);
         }
 
-        TextView listItemTextView = (TextView) convertView.findViewById(R.id.listItemTextView);
-        listItemTextView.setText(tasks.get(position).getName());
-
         CheckBox listItemCheckBox = (CheckBox) convertView.findViewById(R.id.listItemCheckBox);
         listItemCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -72,6 +69,12 @@ public class TaskAdapter extends BaseAdapter {
                 }
             }
         });
+
+        TextView listItemTextView = (TextView) convertView.findViewById(R.id.listItemTextView);
+        listItemTextView.setText(tasks.get(position).getName());
+
+        TextView dueDate = (TextView) convertView.findViewById(R.id.listItemDueDateTextView);
+        dueDate.setText(tasks.get(position).getDueDate());
 
         return convertView;
     }
