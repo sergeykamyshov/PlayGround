@@ -19,9 +19,12 @@ import java.util.List;
 
 public class TaskAdapter extends BaseAdapter {
 
-    Context context;
-    LayoutInflater layoutInflater;
-    List<Task> tasks;
+    private Context context;
+    private LayoutInflater layoutInflater;
+    private List<Task> tasks;
+    // This fields contain info about removed tasks
+    private Task mRemovedTask;
+    private int mRemovedPosition;
 
     public TaskAdapter(Context context, List<Task> tasks) {
         this.context = context;
@@ -59,7 +62,8 @@ public class TaskAdapter extends BaseAdapter {
                     TaskStore taskStore = new TaskStore(context);
                     taskStore.deleteTask(tasks.get(position));
                     // Delete the task from adapter list, to show that it has changes
-                    tasks.remove(position);
+                    mRemovedTask = tasks.remove(position);
+                    mRemovedPosition = position;
                     // Ask to update the list
                     notifyDataSetChanged();
                     // Unchecked the item
@@ -81,8 +85,15 @@ public class TaskAdapter extends BaseAdapter {
 
     private View.OnClickListener undoListener = new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
-            Toast.makeText(context, "Undo action clicked", Toast.LENGTH_SHORT).show();
+        public void onClick(View view) {
+            // Add deleted task to database
+            TaskStore taskStore = new TaskStore(context);
+            taskStore.addTask(mRemovedTask);
+            // Add deleted task to list
+            tasks.add(mRemovedPosition, mRemovedTask);
+            // Ask to update the list
+            notifyDataSetChanged();
+            Snackbar.make(view, "Task Was Restored", Snackbar.LENGTH_SHORT).show();
         }
     };
 }

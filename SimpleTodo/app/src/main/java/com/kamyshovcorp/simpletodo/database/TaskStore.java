@@ -30,6 +30,9 @@ public class TaskStore {
 
     public void addTask(Task task) {
         ContentValues values = new ContentValues();
+        if (task.getId() != null) {
+            values.put(TaskDbSchema._ID, task.getId());
+        }
         values.put(TaskDbSchema.Cols.COLUMN_TASK, task.getName());
         values.put(TaskDbSchema.Cols.COLUMN_DUE_DATE, task.getDueDate());
         mDatabase.insert(TaskDbSchema.TABLE_NAME, null, values);
