@@ -1,6 +1,7 @@
 package com.kamyshovcorp.simpletodo;
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +13,7 @@ import com.kamyshovcorp.simpletodo.fragments.TopFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private String[] mDrawerCategories;
 
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 .addToBackStack(null)
                 .commit();
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.drawer_list);
         mDrawerCategories = getResources().getStringArray(R.array.drawer_categories);
 
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                 }
+                mDrawerLayout.closeDrawer(mDrawerList);
             }
         });
     }
