@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -29,12 +30,23 @@ public class TodayListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_today, container, false);
 
-        List<Task> tasks = getTodayTasksFromDb();
+        final List<Task> tasks = getTodayTasksFromDb();
         if (tasks.isEmpty()) {
             setEmptyImageBackground((CoordinatorLayout) view);
         } else {
             ListView todayList = (ListView) view.findViewById(R.id.todayListView);
             todayList.setAdapter(new TaskAdapter(getContext(), tasks));
+
+            todayList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.content_frame, TaskFragment.newInstance(tasks.get(position)))
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         }
 
         return view;
