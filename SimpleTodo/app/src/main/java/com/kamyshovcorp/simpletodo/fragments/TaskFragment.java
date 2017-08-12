@@ -102,6 +102,7 @@ public class TaskFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
             activity.showUpButton();
+            activity.setActionBarTitle("Task");
         }
     }
 

@@ -73,6 +73,7 @@ public class TopFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
             activity.hideUpButton();
+            activity.setActionBarTitle("Inbox");
         }
     }
 
