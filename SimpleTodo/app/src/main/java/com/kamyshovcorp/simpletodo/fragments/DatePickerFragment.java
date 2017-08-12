@@ -9,8 +9,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.kamyshovcorp.simpletodo.R;
+import com.kamyshovcorp.simpletodo.utils.DateUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -28,8 +28,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String pickedDate = simpleDateFormat.format(new GregorianCalendar(year, month, dayOfMonth).getTime());
+        String pickedDate = DateUtils.getFormatedDateYyyyMmDd(new GregorianCalendar(year, month, dayOfMonth).getTime());
         ((EditText) getActivity().findViewById(R.id.taskDateTextEdit)).setText(pickedDate);
     }
 }

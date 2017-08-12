@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.kamyshovcorp.simpletodo.model.Task;
+import com.kamyshovcorp.simpletodo.utils.DateUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +53,7 @@ public class TaskStore {
 
     public List<Task> readTodayTasks() {
         List<Task> tasks = new ArrayList<>();
-        String todayDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String todayDate = DateUtils.getFormatedDateYyyyMmDd(new Date());
         Cursor cursor = mDatabase.query(TaskDbSchema.TABLE_NAME, null, TaskDbSchema.Cols.COLUMN_DUE_DATE + " = ?", new String[]{todayDate}, null, null, null);
         try {
             if (cursor.moveToFirst()) {

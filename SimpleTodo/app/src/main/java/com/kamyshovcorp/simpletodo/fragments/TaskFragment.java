@@ -78,10 +78,10 @@ public class TaskFragment extends Fragment {
                 if (!taskName.isEmpty()) {
                     String dateString = mTaskDueDateEditText.getText().toString();
 
-                    Task task = new Task(taskName, dateString);
+                    Task task = new Task(null, taskName, dateString);
                     TaskStore taskStore = TaskStore.get(getContext());
                     // If was opened for editing and task ID is exists - update the task
-                    if (getArguments() != null) {
+                    if (getArguments() != null && getArguments().getString(ARG_TASK_ID) != null) {
                         task.setId(getArguments().getString(ARG_TASK_ID));
                         taskStore.updateTask(task);
                     } else {

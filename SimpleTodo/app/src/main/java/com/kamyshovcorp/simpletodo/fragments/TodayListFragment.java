@@ -3,6 +3,7 @@ package com.kamyshovcorp.simpletodo.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,9 @@ import com.kamyshovcorp.simpletodo.R;
 import com.kamyshovcorp.simpletodo.adapters.TaskAdapter;
 import com.kamyshovcorp.simpletodo.database.TaskStore;
 import com.kamyshovcorp.simpletodo.model.Task;
+import com.kamyshovcorp.simpletodo.utils.DateUtils;
 
+import java.util.Date;
 import java.util.List;
 
 public class TodayListFragment extends Fragment {
@@ -48,6 +51,20 @@ public class TodayListFragment extends Fragment {
                 }
             });
         }
+
+        FloatingActionButton todayListFab = (FloatingActionButton) view.findViewById(R.id.todayListFab);
+        todayListFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String todayDate = DateUtils.getFormatedDateYyyyMmDd(new Date());
+                Task task = new Task(null, null, todayDate);
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, TaskFragment.newInstance(task))
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         return view;
     }
