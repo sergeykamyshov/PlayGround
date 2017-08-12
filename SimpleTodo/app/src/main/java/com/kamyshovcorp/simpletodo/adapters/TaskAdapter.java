@@ -1,6 +1,7 @@
 package com.kamyshovcorp.simpletodo.adapters;
 
 import android.content.Context;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kamyshovcorp.simpletodo.R;
 import com.kamyshovcorp.simpletodo.database.TaskStore;
@@ -69,7 +70,22 @@ public class TaskAdapter extends BaseAdapter {
                     buttonView.setChecked(false);
                     // Inform user that task is done, and propose to undo the changes
                     Snackbar.make(parent, "Task Is Done", Snackbar.LENGTH_SHORT).setAction("Undo", undoListener).show();
+
+                    if (tasks.isEmpty()) {
+                        setEmptyImageBackground();
+                    }
                 }
+            }
+
+            private void setEmptyImageBackground() {
+                ImageView imageView = new ImageView(context);
+                imageView.setImageResource(R.drawable.ic_empty_inbox_background_24dp);
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                CoordinatorLayout.LayoutParams layoutParams = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                imageView.setLayoutParams(layoutParams);
+
+                CoordinatorLayout layout = (CoordinatorLayout) parent.getParent();
+                layout.addView(imageView);
             }
         });
 
