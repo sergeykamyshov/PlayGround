@@ -78,7 +78,7 @@ public class TopFragment extends Fragment {
 
     private List<Task> getTasksFromDb() {
         TaskStore taskStore = TaskStore.get(getContext());
-        return taskStore.getTasks();
+        return taskStore.readAllTasks();
     }
 
     private void setEmptyImageBackground(CoordinatorLayout view) {

@@ -22,7 +22,6 @@ public class TaskAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
     private List<Task> tasks;
-    // This fields contain info about removed tasks
     private Task mRemovedTask;
     private int mRemovedPosition;
 

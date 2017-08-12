@@ -8,9 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.kamyshovcorp.simpletodo.MainActivity;
 import com.kamyshovcorp.simpletodo.R;
+import com.kamyshovcorp.simpletodo.adapters.TaskAdapter;
+import com.kamyshovcorp.simpletodo.database.TaskStore;
+import com.kamyshovcorp.simpletodo.model.Task;
+
+import java.util.List;
 
 public class TodayListFragment extends Fragment {
 
@@ -22,7 +28,15 @@ public class TodayListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_today, container, false);
-        setEmptyImageBackground((CoordinatorLayout) view);
+
+        List<Task> tasks = getTodayTasksFromDb();
+        if (tasks.isEmpty()) {
+            setEmptyImageBackground((CoordinatorLayout) view);
+        } else {
+            ListView todayList = (ListView) view.findViewById(R.id.todayListView);
+            todayList.setAdapter(new TaskAdapter(getContext(), tasks));
+        }
+
         return view;
     }
 
@@ -43,5 +57,10 @@ public class TodayListFragment extends Fragment {
         imageView.setLayoutParams(layoutParams);
 
         view.addView(imageView);
+    }
+
+    private List<Task> getTodayTasksFromDb() {
+        TaskStore taskStore = new TaskStore(getContext());
+        return taskStore.readTodayTasks();
     }
 }

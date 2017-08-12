@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, TopFragment.newInstance())
+                .addToBackStack(null)
                 .commit();
 
         mDrawerList = (ListView) findViewById(R.id.drawer_list);
