@@ -17,30 +17,28 @@ import com.kamyshovcorp.simpletodo.R;
 import com.kamyshovcorp.simpletodo.adapters.TaskAdapter;
 import com.kamyshovcorp.simpletodo.database.TaskStore;
 import com.kamyshovcorp.simpletodo.model.Task;
-import com.kamyshovcorp.simpletodo.utils.DateUtils;
 
-import java.util.Date;
 import java.util.List;
 
-public class TodayListFragment extends Fragment {
+public class WeekListFragment extends Fragment {
 
-    public static TodayListFragment newInstance() {
-        return new TodayListFragment();
+    public static WeekListFragment newInstance() {
+        return new WeekListFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_today, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_week, container, false);
 
-        final List<Task> tasks = getTodayTasksFromDb();
+        final List<Task> tasks = getWeekTasksFromDb();
         if (tasks.isEmpty()) {
             setEmptyImageBackground((CoordinatorLayout) view);
         } else {
-            ListView todayList = (ListView) view.findViewById(R.id.todayListView);
-            todayList.setAdapter(new TaskAdapter(getContext(), tasks));
+            ListView weekList = (ListView) view.findViewById(R.id.weekListView);
+            weekList.setAdapter(new TaskAdapter(getContext(), tasks));
 
-            todayList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            weekList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     getFragmentManager()
@@ -52,15 +50,13 @@ public class TodayListFragment extends Fragment {
             });
         }
 
-        FloatingActionButton todayListFab = (FloatingActionButton) view.findViewById(R.id.todayListFab);
-        todayListFab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton weekListFab = (FloatingActionButton) view.findViewById(R.id.weekListFab);
+        weekListFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String todayDate = DateUtils.getFormatedDate(new Date());
-                Task task = new Task(null, null, todayDate);
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.content_frame, TaskFragment.newInstance(task))
+                        .replace(R.id.content_frame, TaskFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
             }
@@ -75,7 +71,7 @@ public class TodayListFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
             activity.showDrawerButton();
-            activity.setActionBarTitle("Today");
+            activity.setActionBarTitle("Next 7 Days");
         }
     }
 
@@ -89,8 +85,8 @@ public class TodayListFragment extends Fragment {
         view.addView(imageView);
     }
 
-    private List<Task> getTodayTasksFromDb() {
+    private List<Task> getWeekTasksFromDb() {
         TaskStore taskStore = new TaskStore(getContext());
-        return taskStore.readTodayTasks();
+        return taskStore.readWeekTasks();
     }
 }

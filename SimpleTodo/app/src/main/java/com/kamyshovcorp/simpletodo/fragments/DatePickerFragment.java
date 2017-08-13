@@ -28,7 +28,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String pickedDate = DateUtils.getFormatedDateYyyyMmDd(new GregorianCalendar(year, month, dayOfMonth).getTime());
+        String pickedDate = DateUtils.getFormatedDate(new GregorianCalendar(year, month, dayOfMonth).getTime());
         ((EditText) getActivity().findViewById(R.id.taskDateTextEdit)).setText(pickedDate);
     }
 }

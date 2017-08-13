@@ -12,8 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.kamyshovcorp.simpletodo.fragments.TodayListFragment;
 import com.kamyshovcorp.simpletodo.fragments.InboxFragment;
+import com.kamyshovcorp.simpletodo.fragments.TodayListFragment;
+import com.kamyshovcorp.simpletodo.fragments.WeekListFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.content_frame, TodayListFragment.newInstance())
+                                .addToBackStack(null)
+                                .commit();
+                        break;
+                    case 2:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content_frame, WeekListFragment.newInstance())
                                 .addToBackStack(null)
                                 .commit();
                         break;
