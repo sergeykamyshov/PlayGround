@@ -74,7 +74,7 @@ public class TodayListFragment extends Fragment {
         super.onResume();
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
-            activity.hideUpButton();
+            activity.showDrawerButton();
             activity.setActionBarTitle("Today");
         }
     }

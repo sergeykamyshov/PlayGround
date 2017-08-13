@@ -20,12 +20,12 @@ import com.kamyshovcorp.simpletodo.model.Task;
 
 import java.util.List;
 
-public class TopFragment extends Fragment {
+public class InboxFragment extends Fragment {
 
     private FloatingActionButton mFab;
 
-    public static TopFragment newInstance() {
-        return new TopFragment();
+    public static InboxFragment newInstance() {
+        return new InboxFragment();
     }
 
     @Nullable
@@ -72,7 +72,7 @@ public class TopFragment extends Fragment {
         super.onResume();
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
-            activity.hideUpButton();
+            activity.showDrawerButton();
             activity.setActionBarTitle("Inbox");
         }
     }
