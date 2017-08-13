@@ -69,7 +69,7 @@ public class TaskAdapter extends BaseAdapter {
                     // Unchecked the item
                     buttonView.setChecked(false);
                     // Inform user that task is done, and propose to undo the changes
-                    Snackbar.make(parent, "Task Is Done", Snackbar.LENGTH_SHORT).setAction("Undo", undoListener).show();
+                    Snackbar.make(parent, R.string.snackbar_task_done, Snackbar.LENGTH_LONG).setAction(R.string.snackbar_undo, undoListener).show();
 
                     if (tasks.isEmpty()) {
                         setEmptyImageBackground();
@@ -108,7 +108,7 @@ public class TaskAdapter extends BaseAdapter {
             tasks.add(mRemovedPosition, mRemovedTask);
             // Ask to update the list
             notifyDataSetChanged();
-            Snackbar.make(view, "Task Was Restored", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(view, R.string.snackbar_task_restored, Snackbar.LENGTH_LONG).show();
         }
     };
 }

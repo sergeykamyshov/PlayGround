@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Список Дел</string>
+
+    <!--ActionBar titles-->
+    <string name="actionbar_title_inbox">Входящие</string>
+    <string name="actionbar_title_today">Сегодня</string>
+    <string name="actionbar_title_next_week">Следующие 7 дней</string>
+    <string name="actionbar_title_task">Задача</string>
+
+    <!--Snackbrar notifications-->
+    <string name="snackbar_task_done">Задача выполнена</string>
+    <string name="snackbar_undo">Отменить</string>
+    <string name="snackbar_task_restored">Задача востановлена</string>
+
+    <!--TaskFragment descriptions-->
+    <string name="edit_task_desc">Что сделать?</string>
+    <string name="edit_due_date_desc">К какой дате?</string>
+
+    <!--DrawerLayout-->
+    <string name="open_drawer">Открыть выдвижную панель</string>
+    <string name="close_drawer">Закрыть выдвижную панель</string>
+
+    <array name="drawer_categories">
+        <item>Входящие</item>
+        <item>Сегодня</item>
+        <item>Следующие 7 дней</item>
+    </array>
+</resources>

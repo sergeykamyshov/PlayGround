@@ -102,7 +102,16 @@ public class TaskFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
             activity.showUpButton();
-            activity.setActionBarTitle("Task");
+            activity.setActionBarTitle(getString(R.string.actionbar_title_task));
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MainActivity activity = (MainActivity) getActivity();
+        if (activity != null) {
+            activity.hideKeyboard();
         }
     }
 

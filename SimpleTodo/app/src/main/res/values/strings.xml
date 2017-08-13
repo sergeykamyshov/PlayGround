@@ -1,9 +1,22 @@
 <resources>
     <string name="app_name">Simple Todo</string>
-    <string name="what_to_do">What To Do?</string>
-    <string name="due_date">Due Date</string>
 
-    <!--Drawer Layout-->
+    <!--ActionBar titles-->
+    <string name="actionbar_title_inbox">Inbox</string>
+    <string name="actionbar_title_today">Today</string>
+    <string name="actionbar_title_next_week">Next 7 days</string>
+    <string name="actionbar_title_task">Task</string>
+
+    <!--Snackbrar notifications-->
+    <string name="snackbar_task_done">Task done</string>
+    <string name="snackbar_undo">Undo</string>
+    <string name="snackbar_task_restored">Task restored</string>
+
+    <!--TaskFragment descriptions-->
+    <string name="edit_task_desc">What to do?</string>
+    <string name="edit_due_date_desc">Due date</string>
+
+    <!--DrawerLayout-->
     <string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
 

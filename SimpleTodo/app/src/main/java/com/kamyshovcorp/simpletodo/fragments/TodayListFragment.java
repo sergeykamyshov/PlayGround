@@ -75,7 +75,7 @@ public class TodayListFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
             activity.showDrawerButton();
-            activity.setActionBarTitle("Today");
+            activity.setActionBarTitle(getString(R.string.actionbar_title_today));
         }
     }
 

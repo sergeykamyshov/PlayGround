@@ -71,7 +71,7 @@ public class WeekListFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
             activity.showDrawerButton();
-            activity.setActionBarTitle("Next 7 Days");
+            activity.setActionBarTitle(getString(R.string.actionbar_title_next_week));
         }
     }
 

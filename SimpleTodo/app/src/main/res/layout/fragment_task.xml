@@ -17,7 +17,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="@string/what_to_do"
+            android:text="@string/edit_task_desc"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,6 +30,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:imeOptions="actionDone"
             android:ems="10"
             android:inputType="textCapSentences|textMultiLine"
             app:layout_constraintHorizontal_bias="0.0"
@@ -44,7 +45,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="@string/due_date"
+            android:text="@string/edit_due_date_desc"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/taskNameEditText" />
 

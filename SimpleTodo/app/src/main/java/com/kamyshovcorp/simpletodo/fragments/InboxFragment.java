@@ -73,7 +73,7 @@ public class InboxFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
             activity.showDrawerButton();
-            activity.setActionBarTitle("Inbox");
+            activity.setActionBarTitle(getString(R.string.actionbar_title_inbox));
         }
     }
 

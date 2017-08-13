@@ -27,6 +27,5 @@ public class TaskDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TaskDbSchema.TABLE_NAME);
         db.execSQL(SQL_CREATE_TABLE);
-//        db.execSQL("ALTER TABLE " + TaskDbSchema.TABLE_NAME + " ADD COLUMN " + TaskDbSchema.Cols.COLUMN_DUE_DATE + " TEXT");
     }
 }
