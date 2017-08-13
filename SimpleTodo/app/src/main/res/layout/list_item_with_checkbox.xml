@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <CheckBox
         android:id="@+id/listItemCheckBox"
         android:layout_width="wrap_content"
@@ -19,19 +18,19 @@
     <TextView
         android:id="@+id/listItemTextView"
         style="@android:style/TextAppearance.Medium"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_margin="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/listItemCheckBox"
-        app:layout_constraintLeft_toRightOf="@+id/listItemCheckBox" />
+        app:layout_constraintLeft_toRightOf="@+id/listItemCheckBox"
+        app:layout_constraintRight_toLeftOf="@+id/listItemDueDateTextView" />
 
     <TextView
         android:id="@+id/listItemDueDateTextView"
+        style="@android:style/TextAppearance.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        style="@android:style/TextAppearance.Small"
-        app:layout_constraintLeft_toRightOf="@+id/listItemCheckBox"
-        app:layout_constraintTop_toBottomOf="@+id/listItemTextView" />
+        android:layout_margin="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/listItemCheckBox"
+        app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>

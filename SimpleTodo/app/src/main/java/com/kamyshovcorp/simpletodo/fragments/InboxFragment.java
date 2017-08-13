@@ -31,7 +31,7 @@ public class InboxFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_top, container, false);
+        View view = inflater.inflate(R.layout.fragment_inbox, container, false);
 
         final List<Task> tasks = getTasksFromDb();
         if (tasks.isEmpty()) {
