@@ -82,7 +82,7 @@ public class TaskStore {
 
         String selection = TaskDbSchema.Cols.COLUMN_DUE_DATE + " BETWEEN ? AND ?";
         String[] selectionArgs = {todayDate, afterWeekDate};
-        Cursor cursor = mDatabase.query(TaskDbSchema.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        Cursor cursor = mDatabase.query(TaskDbSchema.TABLE_NAME, null, selection, selectionArgs, null, null, TaskDbSchema.Cols.COLUMN_DUE_DATE);
         try {
             if (cursor.moveToFirst()) {
                 int idIndex = cursor.getColumnIndex("_id");
