@@ -14,6 +14,8 @@ import java.util.List;
 
 import ru.kamyshovcorp.weekplanner.R;
 import ru.kamyshovcorp.weekplanner.adapters.WeekRecyclerAdapter;
+import ru.kamyshovcorp.weekplanner.model.Category;
+import ru.kamyshovcorp.weekplanner.model.Task;
 
 public class WeekFragment extends Fragment {
 
@@ -29,20 +31,27 @@ public class WeekFragment extends Fragment {
         RecyclerView recylerView = view.findViewById(R.id.week_recycler_view);
         recylerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<String> data = new ArrayList<>();
-        data.add("Category example 1");
-        data.add("Category example 2");
-        data.add("Category example 3");
-        data.add("Category example 4");
-        data.add("Category example 5");
-        data.add("Category example 6");
-        data.add("Category example 7");
-        data.add("Category example 8");
-        data.add("Category example 9");
-        data.add("Category example 10");
+        List<Category> data = generateTestData();
 
-        recylerView.setAdapter(new WeekRecyclerAdapter(data));
+        recylerView.setAdapter(new WeekRecyclerAdapter(getContext(), data));
 
         return view;
+    }
+
+    private List<Category> generateTestData() {
+        List<Category> categories = new ArrayList<>();
+
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(new Task(true, "Task 1. Long long long long long long long long long description"));
+        tasks.add(new Task(true, "Task 2"));
+        tasks.add(new Task(false, "Task 3"));
+
+        categories.add(new Category("Category 1", tasks));
+        categories.add(new Category("Category 2", tasks));
+        categories.add(new Category("Category 3", tasks));
+        categories.add(new Category("Category 4", tasks));
+        categories.add(new Category("Category 5", tasks));
+
+        return categories;
     }
 }
