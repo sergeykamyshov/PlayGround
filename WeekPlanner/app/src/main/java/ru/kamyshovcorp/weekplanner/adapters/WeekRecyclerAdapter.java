@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,10 +76,14 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
         taskLayout.setOrientation(LinearLayout.HORIZONTAL);
 
         CheckBox taskCheckBox = new CheckBox(mContext);
+        taskCheckBox.setGravity(Gravity.TOP);
         taskCheckBox.setChecked(task.isDone());
         taskLayout.addView(taskCheckBox);
 
         TextView taskDescriptionTextView = new TextView(mContext);
+        LinearLayout.LayoutParams taskDescriptionParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        taskDescriptionParams.gravity = Gravity.CENTER;
+        taskDescriptionTextView.setLayoutParams(taskDescriptionParams);
         taskDescriptionTextView.setText(task.getDescription());
         taskLayout.addView(taskDescriptionTextView);
 
