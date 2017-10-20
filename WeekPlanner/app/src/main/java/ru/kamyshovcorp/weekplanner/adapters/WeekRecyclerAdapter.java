@@ -1,6 +1,8 @@
 package ru.kamyshovcorp.weekplanner.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +17,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import ru.kamyshovcorp.weekplanner.R;
+import ru.kamyshovcorp.weekplanner.activities.CardActivity;
 import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.model.Task;
+
+import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD;
 
 public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapter.ViewHolder> {
 
@@ -35,7 +40,7 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         Card card = mDataSet.get(position);
         holder.mCardTitleTextView.setText(card.getTitle());
         LinearLayout linearLayout = createTasksLayout(card);
@@ -44,7 +49,11 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(mContext, CardActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(EXTRA_CARD, mDataSet.get(position));
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             }
         });
     }
