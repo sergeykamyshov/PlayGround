@@ -2,27 +2,27 @@ package ru.kamyshovcorp.weekplanner.model;
 
 public class Task {
 
-    private boolean done;
-    private String description;
+    private boolean mDoneFlag;
+    private String mDescription;
 
     public Task(boolean done, String description) {
-        this.done = done;
-        this.description = description;
+        mDoneFlag = done;
+        mDescription = description;
     }
 
     public boolean isDone() {
-        return done;
+        return mDoneFlag;
     }
 
     public void setDone(boolean done) {
-        this.done = done;
+        mDoneFlag = done;
     }
 
     public String getDescription() {
-        return description;
+        return mDescription;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        mDescription = description;
     }
 }

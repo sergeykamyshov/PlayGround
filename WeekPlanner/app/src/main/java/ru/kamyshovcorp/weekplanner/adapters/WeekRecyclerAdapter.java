@@ -2,6 +2,7 @@ package ru.kamyshovcorp.weekplanner.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +14,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import ru.kamyshovcorp.weekplanner.R;
-import ru.kamyshovcorp.weekplanner.model.Category;
+import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.model.Task;
 
 public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<Category> mDataSet;
+    private List<Card> mDataSet;
 
-    public WeekRecyclerAdapter(Context context, List<Category> dataSet) {
+    public WeekRecyclerAdapter(Context context, List<Card> dataSet) {
         mContext = context;
         mDataSet = dataSet;
     }
@@ -33,11 +34,18 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Category category = mDataSet.get(position);
-        holder.mCategoryTitleTextView.setText(category.getTitle());
-        LinearLayout linearLayout = createTasksLayout(category);
-        holder.mItemLayout.addView(linearLayout);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        Card card = mDataSet.get(position);
+        holder.mCardTitleTextView.setText(card.getTitle());
+        LinearLayout linearLayout = createTasksLayout(card);
+        holder.mRecyclerItemLayout.addView(linearLayout);
+
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
@@ -46,7 +54,7 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
     }
 
     @NonNull
-    private LinearLayout createTasksLayout(Category category) {
+    private LinearLayout createTasksLayout(Card card) {
         LinearLayout linearLayout = new LinearLayout(mContext);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         int tasksLayoutTopMargin = (int) mContext.getResources().getDimension(R.dimen.tasks_layout_top_margin);
@@ -54,7 +62,7 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
         linearLayout.setLayoutParams(params);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-        for (Task task : category.getTasks()) {
+        for (Task task : card.getTasks()) {
             createTaskItemLayout(linearLayout, task);
         }
         return linearLayout;
@@ -78,13 +86,15 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mCategoryTitleTextView;
-        public LinearLayout mItemLayout;
+        public CardView mCardView;
+        public TextView mCardTitleTextView;
+        public LinearLayout mRecyclerItemLayout;
 
         public ViewHolder(View view) {
             super(view);
-            mCategoryTitleTextView = view.findViewById(R.id.category_title);
-            mItemLayout = view.findViewById(R.id.item_layout);
+            mCardView = view.findViewById(R.id.recycler_card_view);
+            mCardTitleTextView = view.findViewById(R.id.card_title);
+            mRecyclerItemLayout = view.findViewById(R.id.recycler_item_layout);
         }
     }
 }

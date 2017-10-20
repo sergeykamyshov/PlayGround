@@ -14,7 +14,7 @@ import java.util.List;
 
 import ru.kamyshovcorp.weekplanner.R;
 import ru.kamyshovcorp.weekplanner.adapters.WeekRecyclerAdapter;
-import ru.kamyshovcorp.weekplanner.model.Category;
+import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.model.Task;
 
 public class WeekFragment extends Fragment {
@@ -31,26 +31,26 @@ public class WeekFragment extends Fragment {
         RecyclerView recylerView = view.findViewById(R.id.week_recycler_view);
         recylerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<Category> data = generateTestData();
+        List<Card> data = generateTestData();
 
         recylerView.setAdapter(new WeekRecyclerAdapter(getContext(), data));
 
         return view;
     }
 
-    private List<Category> generateTestData() {
-        List<Category> categories = new ArrayList<>();
+    private List<Card> generateTestData() {
+        List<Card> categories = new ArrayList<>();
 
         List<Task> tasks = new ArrayList<>();
         tasks.add(new Task(true, "Task 1. Long long long long long long long long long description"));
         tasks.add(new Task(true, "Task 2"));
         tasks.add(new Task(false, "Task 3"));
 
-        categories.add(new Category("Category 1", tasks));
-        categories.add(new Category("Category 2", tasks));
-        categories.add(new Category("Category 3", tasks));
-        categories.add(new Category("Category 4", tasks));
-        categories.add(new Category("Category 5", tasks));
+        categories.add(new Card("Category 1", tasks));
+        categories.add(new Card("Category 2", tasks));
+        categories.add(new Card("Category 3", tasks));
+        categories.add(new Card("Category 4", tasks));
+        categories.add(new Card("Category 5", tasks));
 
         return categories;
     }
