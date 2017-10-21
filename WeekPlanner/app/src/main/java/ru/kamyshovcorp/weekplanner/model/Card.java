@@ -3,6 +3,7 @@ package ru.kamyshovcorp.weekplanner.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Card implements Parcelable {
@@ -17,6 +18,8 @@ public class Card implements Parcelable {
 
     protected Card(Parcel in) {
         mTitle = in.readString();
+        mTasks = new ArrayList<>();
+        in.readTypedList(mTasks, Task.CREATOR);
     }
 
     public static final Creator<Card> CREATOR = new Creator<Card>() {
