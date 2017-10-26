@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Week Planner</string>
+
+    <!--Меню-->
+    <string name="menu_add_task">Add task</string>
+    <string name="menu_delete_card">Delete card</string>
 </resources>

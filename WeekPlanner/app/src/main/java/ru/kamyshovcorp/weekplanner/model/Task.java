@@ -8,6 +8,10 @@ public class Task implements Parcelable {
     private boolean mDoneFlag;
     private String mDescription;
 
+    public Task() {
+
+    }
+
     public Task(boolean done, String description) {
         mDoneFlag = done;
         mDescription = description;

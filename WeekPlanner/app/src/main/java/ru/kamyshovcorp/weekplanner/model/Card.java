@@ -60,4 +60,8 @@ public class Card implements Parcelable {
     public void setTasks(List<Task> tasks) {
         mTasks = tasks;
     }
+
+    public void addTask(Task task) {
+        mTasks.add(task);
+    }
 }

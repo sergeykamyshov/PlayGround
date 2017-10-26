@@ -2,7 +2,6 @@ package ru.kamyshovcorp.weekplanner.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,7 @@ import ru.kamyshovcorp.weekplanner.activities.CardActivity;
 import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.model.Task;
 
-import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD;
+import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_INDEX;
 
 public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapter.ViewHolder> {
 
@@ -50,9 +49,7 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, CardActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(EXTRA_CARD, mDataSet.get(position));
-                intent.putExtras(bundle);
+                intent.putExtra(EXTRA_CARD_INDEX, position);
                 mContext.startActivity(intent);
             }
         });
