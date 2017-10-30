@@ -3,22 +3,27 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_margin="16dp"
+              android:layout_margin="8dp"
               android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/card_title"
-        style="@android:style/TextAppearance.Large"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        tools:text="Card Title"/>
+    <!--<EditText-->
+        <!--android:id="@+id/card_title"-->
+        <!--style="@android:style/TextAppearance.Large"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--tools:text="Card Title"/>-->
 
-    <LinearLayout
-        android:id="@+id/tasks_layout"
+    <!--<LinearLayout-->
+        <!--android:id="@+id/tasks_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:orientation="vertical"/>-->
+
+    <ListView
+        android:id="@+id/list_card_tasks"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
