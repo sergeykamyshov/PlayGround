@@ -5,15 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.kamyshovcorp.weekplanner.R;
+import ru.kamyshovcorp.weekplanner.adapters.CardAdapter;
 import ru.kamyshovcorp.weekplanner.database.CardStore;
 import ru.kamyshovcorp.weekplanner.model.Card;
 
@@ -41,11 +38,7 @@ public class CardActivity extends AppCompatActivity {
         }
 
         ListView tasksListView = (ListView) findViewById(R.id.list_card_tasks);
-        List<String> testData = new ArrayList<>();
-        testData.add("One");
-        testData.add("Two");
-        testData.add("Three");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, testData);
+        CardAdapter adapter = new CardAdapter(this, mCard.getTasks());
         tasksListView.setAdapter(adapter);
 
 //        initView();
