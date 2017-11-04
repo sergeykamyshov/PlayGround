@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import ru.kamyshovcorp.weekplanner.R;
 import ru.kamyshovcorp.weekplanner.adapters.CardAdapter;
@@ -34,10 +36,13 @@ public class CardActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle(mCard.getTitle());
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("");
+            TextView cardTitle = findViewById(R.id.txt_card_title);
+            cardTitle.setText(mCard.getTitle());
         }
 
-        ListView tasksListView = (ListView) findViewById(R.id.list_card_tasks);
+        ListView tasksListView = findViewById(R.id.list_card_tasks);
         CardAdapter adapter = new CardAdapter(this, mCard.getTasks());
         tasksListView.setAdapter(adapter);
 
@@ -47,7 +52,17 @@ public class CardActivity extends AppCompatActivity {
 //        fillTasksList();
     }
 
-//    private void initView() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //    private void initView() {
 //        mCardTitle = (EditText) findViewById(R.id.card_title);
 //        mTasksLayout = (LinearLayout) findViewById(R.id.tasks_layout);
 //    }
