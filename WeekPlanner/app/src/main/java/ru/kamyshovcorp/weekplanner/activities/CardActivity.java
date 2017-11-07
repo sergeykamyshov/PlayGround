@@ -59,13 +59,11 @@ public class CardActivity extends AppCompatActivity {
     }
 
     public void addNewTaskAction(View view) {
-        mCard.addTask(new Task(Task.DEFAULT_DONE, Task.DEFAULT_DESCRIPTION));
-        mRecyclerAdapter.notifyDataSetChanged();
+        mRecyclerAdapter.addTask(new Task(Task.DEFAULT_DONE, Task.DEFAULT_DESCRIPTION));
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-
         super.onSaveInstanceState(outState);
     }
 }

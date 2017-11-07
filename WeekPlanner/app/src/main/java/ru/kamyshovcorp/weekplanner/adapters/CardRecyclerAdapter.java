@@ -33,13 +33,13 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Task task = mTasks.get(position);
         holder.mIsDone.setChecked(task.isDone());
         holder.mIsDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mTasks.get(position).setDone(isChecked);
+                mTasks.get(holder.getAdapterPosition()).setDone(isChecked);
             }
         });
         holder.mTaskDesc.setText(task.getDescription());
@@ -54,7 +54,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
             @Override
             public void afterTextChanged(Editable s) {
-                mTasks.get(position).setDescription(s.toString());
+                mTasks.get(holder.getAdapterPosition()).setDescription(s.toString());
             }
         });
     }
@@ -76,7 +76,18 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
         }
     }
 
+    public List<Task> getTasks() {
+        return mTasks;
+    }
+
     public void setTasks(List<Task> tasks) {
-        mTasks = tasks;
+        tasks.clear();
+        mTasks.addAll(tasks);
+        notifyDataSetChanged();
+    }
+
+    public void addTask(Task task) {
+        mTasks.add(task);
+        notifyDataSetChanged();
     }
 }
