@@ -5,16 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.view.View;
 import android.widget.TextView;
 
 import ru.kamyshovcorp.weekplanner.R;
-import ru.kamyshovcorp.weekplanner.adapters.CardAdapter;
+import ru.kamyshovcorp.weekplanner.adapters.CardRecyclerAdapter;
 import ru.kamyshovcorp.weekplanner.database.CardStore;
 import ru.kamyshovcorp.weekplanner.model.Card;
+import ru.kamyshovcorp.weekplanner.model.Task;
 
 public class CardActivity extends AppCompatActivity {
 
@@ -22,8 +23,7 @@ public class CardActivity extends AppCompatActivity {
 
     private CardStore mCardStore = CardStore.getInstance();
     private Card mCard;
-    private EditText mCardTitle;
-    private LinearLayout mTasksLayout;
+    private CardRecyclerAdapter mRecyclerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,14 +42,10 @@ public class CardActivity extends AppCompatActivity {
             cardTitle.setText(mCard.getTitle());
         }
 
-        ListView tasksListView = findViewById(R.id.list_card_tasks);
-        CardAdapter adapter = new CardAdapter(this, mCard.getTasks());
-        tasksListView.setAdapter(adapter);
-
-//        initView();
-
-//        fillCardTitle();
-//        fillTasksList();
+        RecyclerView recyclerTasks = findViewById(R.id.recycler_tasks);
+        recyclerTasks.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerAdapter = new CardRecyclerAdapter(this, mCard.getTasks());
+        recyclerTasks.setAdapter(mRecyclerAdapter);
     }
 
     @Override
@@ -62,51 +58,14 @@ public class CardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //    private void initView() {
-//        mCardTitle = (EditText) findViewById(R.id.card_title);
-//        mTasksLayout = (LinearLayout) findViewById(R.id.tasks_layout);
-//    }
+    public void addNewTaskAction(View view) {
+        mCard.addTask(new Task(Task.DEFAULT_DONE, Task.DEFAULT_DESCRIPTION));
+        mRecyclerAdapter.notifyDataSetChanged();
+    }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_card, menu);
-//        return true;
-//    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_add_task:
-//                Task task = new Task();
-//                mCard.addTask(task);
-//                createTaskItemLayout(task);
-//                return true;
-//            case R.id.action_delete_card:
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
-
-//    private void fillCardTitle() {
-//        mCardTitle.setText(mCard.getTitle());
-//    }
-//
-//    private void fillTasksList() {
-//        for (Task task : mCard.getTasks()) {
-//            createTaskItemLayout(task);
-//        }
-//    }
-
-//    private void createTaskItemLayout(Task task) {
-//        LinearLayout taskLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.task_item, mTasksLayout, false);
-//
-//        CheckBox doneCheckBox = taskLayout.findViewById(R.id.done_task_check_box);
-//        doneCheckBox.setChecked(task.isDone());
-//
-//        EditText descriptionEditText = taskLayout.findViewById(R.id.description_task_edit_text);
-//        descriptionEditText.setText(task.getDescription());
-//
-//        mTasksLayout.addView(taskLayout);
-//    }
+        super.onSaveInstanceState(outState);
+    }
 }

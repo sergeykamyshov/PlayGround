@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CardActivity"/>
+        <activity android:name=".activities.CardActivity" android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 public class Task implements Parcelable {
 
+    public static final boolean DEFAULT_DONE = false;
+    public static final String DEFAULT_DESCRIPTION = "";
+
     private boolean mDoneFlag;
     private String mDescription;
 

@@ -18,6 +18,8 @@ import ru.kamyshovcorp.weekplanner.model.Card;
 
 public class WeekFragment extends Fragment {
 
+    private WeekRecyclerAdapter mWeekRecyclerAdapter;
+
     public static WeekFragment newInstance() {
         return new WeekFragment();
     }
@@ -32,8 +34,15 @@ public class WeekFragment extends Fragment {
 
         List<Card> data = CardStore.getInstance().getCards();
 
-        recylerView.setAdapter(new WeekRecyclerAdapter(getContext(), data));
+        mWeekRecyclerAdapter = new WeekRecyclerAdapter(getContext(), data);
+        recylerView.setAdapter(mWeekRecyclerAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mWeekRecyclerAdapter.notifyDataSetChanged();
     }
 }

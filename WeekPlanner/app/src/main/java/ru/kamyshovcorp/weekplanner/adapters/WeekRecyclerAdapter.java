@@ -42,6 +42,9 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Card card = mDataSet.get(position);
         holder.mCardTitleTextView.setText(card.getTitle());
+
+        // Очищаем список задач для карточки перед заполнением
+        holder.mRecyclerItemLayout.removeAllViews();
         LinearLayout linearLayout = createTasksLayout(card);
         holder.mRecyclerItemLayout.addView(linearLayout);
 
@@ -104,8 +107,8 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
         public ViewHolder(View view) {
             super(view);
             mCardView = view.findViewById(R.id.recycler_card_view);
-            mCardTitleTextView = view.findViewById(R.id.card_title);
-            mRecyclerItemLayout = view.findViewById(R.id.recycler_item_layout);
+            mCardTitleTextView = view.findViewById(R.id.txt_card_title);
+            mRecyclerItemLayout = view.findViewById(R.id.list_tasks);
         }
     }
 }

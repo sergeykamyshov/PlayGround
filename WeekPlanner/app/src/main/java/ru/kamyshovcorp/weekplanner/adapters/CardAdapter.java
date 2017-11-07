@@ -41,15 +41,15 @@ public class CardAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (view == null) {
             view = mLayoutInflater.inflate(R.layout.task_item, parent, false);
         }
 
         Task task = mTasks.get(position);
-        EditText desctiptionTask = view.findViewById(R.id.description_task_edit_text);
-        desctiptionTask.setText(task.getDescription());
+        EditText descriptionTask = view.findViewById(R.id.description_task_edit_text);
+        descriptionTask.setText(task.getDescription());
         CheckBox doneTask = view.findViewById(R.id.done_task_check_box);
         doneTask.setChecked(task.isDone());
 
