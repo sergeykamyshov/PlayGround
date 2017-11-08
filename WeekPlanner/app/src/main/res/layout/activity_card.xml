@@ -17,12 +17,6 @@
             android:textSize="24sp"
             android:textStyle="bold"/>
 
-        <!--<ListView-->
-            <!--android:id="@+id/list_card_tasks"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:divider="@android:color/transparent"/>-->
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_tasks"
             android:layout_width="match_parent"
