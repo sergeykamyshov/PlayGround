@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -22,30 +23,39 @@ public class CardActivity extends AppCompatActivity {
     public static final String EXTRA_CARD_INDEX = "cardIndex";
 
     private CardStore mCardStore = CardStore.getInstance();
-    private Card mCard;
-    private CardRecyclerAdapter mRecyclerAdapter;
+    private int mCardIndex;
+    private CardRecyclerAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
 
+        // Получаем данные из вызванного интента
         Intent intent = getIntent();
-        int cardIndex = intent.getIntExtra(EXTRA_CARD_INDEX, 0);
-        mCard = mCardStore.getCard(cardIndex);
+        mCardIndex = intent.getIntExtra(EXTRA_CARD_INDEX, 0);
+        Card card = mCardStore.getCard(mCardIndex);
 
+        // Настраиваем ActionBar
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("");
             TextView cardTitle = findViewById(R.id.txt_card_title);
-            cardTitle.setText(mCard.getTitle());
+            cardTitle.setText(card.getTitle());
         }
 
+        // Устанавливаем адаптер
         RecyclerView recyclerTasks = findViewById(R.id.recycler_tasks);
         recyclerTasks.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerAdapter = new CardRecyclerAdapter(this, mCard.getTasks());
-        recyclerTasks.setAdapter(mRecyclerAdapter);
+        mAdapter = new CardRecyclerAdapter(this, card.getTasks());
+        recyclerTasks.setAdapter(mAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_card, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -54,16 +64,15 @@ public class CardActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
+            case R.id.action_delete_card:
+                CardStore.removeCard(mCardIndex);
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void addNewTaskAction(View view) {
-        mRecyclerAdapter.addTask(new Task(Task.DEFAULT_DONE, Task.DEFAULT_DESCRIPTION));
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        mAdapter.addTask(new Task(Task.DEFAULT_DONE, Task.DEFAULT_DESCRIPTION));
     }
 }

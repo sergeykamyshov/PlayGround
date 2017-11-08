@@ -45,15 +45,15 @@ public class CardStore {
         mCards.add(new Card("Category 3", tasks3));
     }
 
-    public Card getCard(int index) {
-        return mCards.get(index);
-    }
-
-    public List<Card> getCards() {
+    public static List<Card> getCards() {
         return mCards;
     }
 
-    public void setCards(List<Card> cards) {
-        mCards = cards;
+    public static Card getCard(int index) {
+        return mCards.get(index);
+    }
+
+    public static void removeCard(int index) {
+        mCards.remove(index);
     }
 }
