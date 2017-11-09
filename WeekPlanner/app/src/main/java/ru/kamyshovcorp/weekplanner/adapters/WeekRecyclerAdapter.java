@@ -34,28 +34,19 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.week_recycler_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Card card = mDataSet.get(position);
-        holder.mCardTitleTextView.setText(card.getTitle());
+        holder.mCardTitle.setText(card.getTitle());
 
         // Очищаем список задач для карточки перед заполнением
         holder.mRecyclerItemLayout.removeAllViews();
         LinearLayout linearLayout = createTasksLayout(card);
         holder.mRecyclerItemLayout.addView(linearLayout);
-
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, CardActivity.class);
-                intent.putExtra(EXTRA_CARD_INDEX, position);
-                mContext.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -99,16 +90,25 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
         linearLayout.addView(taskLayout);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public CardView mCardView;
-        public TextView mCardTitleTextView;
+        public TextView mCardTitle;
         public LinearLayout mRecyclerItemLayout;
 
         public ViewHolder(View view) {
             super(view);
             mCardView = view.findViewById(R.id.recycler_card_view);
-            mCardTitleTextView = view.findViewById(R.id.txt_card_title);
+            mCardTitle = view.findViewById(R.id.txt_card_title);
             mRecyclerItemLayout = view.findViewById(R.id.list_tasks);
+
+            mCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, CardActivity.class);
+                    intent.putExtra(EXTRA_CARD_INDEX, getAdapterPosition());
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 }

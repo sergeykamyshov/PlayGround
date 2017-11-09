@@ -7,9 +7,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import ru.kamyshovcorp.weekplanner.R;
@@ -45,11 +49,40 @@ public class CardActivity extends AppCompatActivity {
             cardTitle.setText(card.getTitle());
         }
 
+        final EditText cardTitle = findViewById(R.id.txt_card_title);
+        // Делаем заголовок карточки доступным для редактирования при касании
+        cardTitle.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                cardTitle.setFocusable(true);
+                cardTitle.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+        // Обновляем данные после изменения заголовка карточки
+        cardTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                CardStore.changeCardTitle(mCardIndex, s.toString());
+            }
+        });
+
         // Устанавливаем адаптер
         RecyclerView recyclerTasks = findViewById(R.id.recycler_tasks);
         recyclerTasks.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new CardRecyclerAdapter(this, card.getTasks());
         recyclerTasks.setAdapter(mAdapter);
+
     }
 
     @Override

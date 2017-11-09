@@ -30,7 +30,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_recycler_item, parent, false);
         return new CardRecyclerAdapter.ViewHolder(view);
     }
 
@@ -59,7 +59,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             mIsDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    mTasks.get(ViewHolder.this.getAdapterPosition()).setDone(isChecked);
+                    mTasks.get(getAdapterPosition()).setDone(isChecked);
                 }
             });
 
@@ -76,7 +76,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    mTasks.get(ViewHolder.this.getAdapterPosition()).setDescription(s.toString());
+                    mTasks.get(getAdapterPosition()).setDescription(s.toString());
                 }
             });
             // Делаем описание задачи доступным для редактирования при касании
@@ -105,7 +105,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             mDeleteTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    removeTask(ViewHolder.this.getAdapterPosition());
+                    removeTask(getAdapterPosition());
                 }
             });
         }

@@ -4,4 +4,8 @@
     <!--Меню-->
     <string name="menu_add_task">Add task</string>
     <string name="menu_delete_card">Delete card</string>
+
+    <!--Подсказки-->
+    <string name="hint_card_title">Enter Card Title</string>
+    <string name="hint_task_description">Enter Task Description</string>
 </resources>

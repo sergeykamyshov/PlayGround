@@ -45,6 +45,10 @@ public class CardStore {
         mCards.add(new Card("Category 3", tasks3));
     }
 
+    public static void addCard(Card card) {
+        mCards.add(card);
+    }
+
     public static List<Card> getCards() {
         return mCards;
     }
@@ -55,5 +59,10 @@ public class CardStore {
 
     public static void removeCard(int index) {
         mCards.remove(index);
+    }
+
+    public static void changeCardTitle(int index, String title) {
+        Card card = mCards.get(index);
+        card.setTitle(title);
     }
 }
