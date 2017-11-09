@@ -96,7 +96,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                     if (hasFocus) {
                         mDeleteTask.setVisibility(View.VISIBLE);
                     } else {
-                        mDeleteTask.setVisibility(View.GONE);
+                        mDeleteTask.setVisibility(View.INVISIBLE);
                     }
                 }
             });
