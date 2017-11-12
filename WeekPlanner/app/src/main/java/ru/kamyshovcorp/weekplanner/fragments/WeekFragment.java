@@ -11,21 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import io.realm.Realm;
+import io.realm.RealmResults;
 import ru.kamyshovcorp.weekplanner.R;
 import ru.kamyshovcorp.weekplanner.activities.CardActivity;
 import ru.kamyshovcorp.weekplanner.adapters.WeekRecyclerAdapter;
-import ru.kamyshovcorp.weekplanner.database.CardStore;
 import ru.kamyshovcorp.weekplanner.model.Card;
-import ru.kamyshovcorp.weekplanner.model.Task;
 
-import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_INDEX;
+import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_ID;
 
 public class WeekFragment extends Fragment {
 
     private WeekRecyclerAdapter mWeekRecyclerAdapter;
+    private Realm mRealm;
 
     public static WeekFragment newInstance() {
         return new WeekFragment();
@@ -39,29 +37,32 @@ public class WeekFragment extends Fragment {
         // Создаем и настраиваем адаптер
         RecyclerView recylerView = view.findViewById(R.id.week_recycler_view);
         recylerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        List<Card> data = CardStore.getInstance().getCards();
-        mWeekRecyclerAdapter = new WeekRecyclerAdapter(getContext(), data);
+
+        mRealm = Realm.getDefaultInstance();
+        RealmResults<Card> allCards = mRealm.where(Card.class).findAll();
+        mWeekRecyclerAdapter = new WeekRecyclerAdapter(getContext(), allCards);
+
         recylerView.setAdapter(mWeekRecyclerAdapter);
 
-        // Настраиваем экшин для FloatingActionButton
+        // Нажатие на FloatingActionButton создает новую карточку
         FloatingActionButton fab = view.findViewById(R.id.fab_add_card);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CardStore.addCard(new Card("", new ArrayList<Task>()));
+                mRealm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        Card card = realm.copyToRealm(new Card());
+                        String cardId = card.getId();
 
-                Intent intent = new Intent(getContext(), CardActivity.class);
-                intent.putExtra(EXTRA_CARD_INDEX, CardStore.getCards().size() - 1);
-                getContext().startActivity(intent);
+                        Intent intent = new Intent(getContext(), CardActivity.class);
+                        intent.putExtra(EXTRA_CARD_ID, cardId);
+                        getContext().startActivity(intent);
+                    }
+                });
             }
         });
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mWeekRecyclerAdapter.notifyDataSetChanged();
     }
 }

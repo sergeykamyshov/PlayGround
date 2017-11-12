@@ -6,6 +6,6 @@
     <string name="menu_delete_card">Delete card</string>
 
     <!--Подсказки-->
-    <string name="hint_card_title">Enter Card Title</string>
-    <string name="hint_task_description">Enter Task Description</string>
+    <string name="hint_card_title">Title</string>
+    <string name="hint_task">Task</string>
 </resources>

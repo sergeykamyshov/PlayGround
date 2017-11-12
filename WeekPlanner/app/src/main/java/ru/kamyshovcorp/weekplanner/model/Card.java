@@ -1,67 +1,39 @@
 package ru.kamyshovcorp.weekplanner.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.util.UUID;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-public class Card implements Parcelable {
+public class Card extends RealmObject {
 
-    private String mTitle;
-    private List<Task> mTasks;
+    @PrimaryKey
+    private String id = UUID.randomUUID().toString();
+    private String title;
+    private RealmList<Task> tasks = new RealmList<>();
 
-    public Card(String title, List<Task> tasks) {
-        mTitle = title;
-        mTasks = tasks;
-    }
-
-    protected Card(Parcel in) {
-        mTitle = in.readString();
-        mTasks = new ArrayList<>();
-        in.readTypedList(mTasks, Task.CREATOR);
-    }
-
-    public static final Creator<Card> CREATOR = new Creator<Card>() {
-        @Override
-        public Card createFromParcel(Parcel in) {
-            return new Card(in);
-        }
-
-        @Override
-        public Card[] newArray(int size) {
-            return new Card[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mTitle);
-        dest.writeTypedList(mTasks);
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public void setTitle(String title) {
-        mTitle = title;
+        this.title = title;
     }
 
-    public List<Task> getTasks() {
-        return mTasks;
+    public RealmList<Task> getTasks() {
+        return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
-        mTasks = tasks;
+    public void setTasks(RealmList<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public void addTask(Task task) {
-        mTasks.add(task);
+        tasks.add(task);
     }
 }

@@ -13,17 +13,17 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import java.util.List;
-
+import io.realm.Realm;
+import io.realm.RealmList;
 import ru.kamyshovcorp.weekplanner.R;
 import ru.kamyshovcorp.weekplanner.model.Task;
 
 public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<Task> mTasks;
+    private RealmList<Task> mTasks;
 
-    public CardRecyclerAdapter(Context context, List<Task> tasks) {
+    public CardRecyclerAdapter(Context context, RealmList<Task> tasks) {
         mContext = context;
         mTasks = tasks;
     }
@@ -35,10 +35,10 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         Task task = mTasks.get(position);
         holder.mIsDone.setChecked(task.isDone());
-        holder.mTaskDesc.setText(task.getDescription());
+        holder.mTaskDesc.setText(task.getTask());
     }
 
     @Override
@@ -58,8 +58,14 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             mIsDone = itemView.findViewById(R.id.done_task_check_box);
             mIsDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    mTasks.get(getAdapterPosition()).setDone(isChecked);
+                public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            mTasks.get(getAdapterPosition()).setDone(isChecked);
+                        }
+                    });
                 }
             });
 
@@ -72,11 +78,19 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    final String changedText = s.toString();
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            Task task = mTasks.get(getAdapterPosition());
+                            task.setTask(changedText);
+                        }
+                    });
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    mTasks.get(getAdapterPosition()).setDescription(s.toString());
                 }
             });
             // Делаем описание задачи доступным для редактирования при касании
@@ -105,19 +119,17 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             mDeleteTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    removeTask(getAdapterPosition());
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            int position = getAdapterPosition();
+                            mTasks.remove(position);
+                            notifyItemRemoved(position);
+                        }
+                    });
                 }
             });
         }
-    }
-
-    public void addTask(Task task) {
-        mTasks.add(task);
-        notifyDataSetChanged();
-    }
-
-    public void removeTask(int position) {
-        mTasks.remove(position);
-        notifyDataSetChanged();
     }
 }

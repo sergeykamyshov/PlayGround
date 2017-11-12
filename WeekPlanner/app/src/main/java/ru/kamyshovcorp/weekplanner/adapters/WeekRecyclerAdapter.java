@@ -2,7 +2,6 @@ package ru.kamyshovcorp.weekplanner.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -13,23 +12,30 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.List;
-
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 import ru.kamyshovcorp.weekplanner.R;
 import ru.kamyshovcorp.weekplanner.activities.CardActivity;
 import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.model.Task;
 
-import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_INDEX;
+import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_ID;
 
 public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<Card> mDataSet;
+    private RealmResults<Card> mCards;
 
-    public WeekRecyclerAdapter(Context context, List<Card> dataSet) {
+    public WeekRecyclerAdapter(Context context, RealmResults<Card> cards) {
         mContext = context;
-        mDataSet = dataSet;
+        mCards = cards;
+
+        mCards.addChangeListener(new RealmChangeListener<RealmResults<Card>>() {
+            @Override
+            public void onChange(RealmResults<Card> cards) {
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -40,7 +46,7 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Card card = mDataSet.get(position);
+        Card card = mCards.get(position);
         holder.mCardTitle.setText(card.getTitle());
 
         // Очищаем список задач для карточки перед заполнением
@@ -51,10 +57,9 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return mDataSet.size();
+        return mCards.size();
     }
 
-    @NonNull
     private LinearLayout createTasksLayout(Card card) {
         LinearLayout linearLayout = new LinearLayout(mContext);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -78,13 +83,14 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
         CheckBox taskCheckBox = new CheckBox(mContext);
         taskCheckBox.setGravity(Gravity.TOP);
         taskCheckBox.setChecked(task.isDone());
+        taskCheckBox.setClickable(false);
         taskLayout.addView(taskCheckBox);
 
         TextView taskDescriptionTextView = new TextView(mContext);
         LinearLayout.LayoutParams taskDescriptionParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         taskDescriptionParams.gravity = Gravity.CENTER;
         taskDescriptionTextView.setLayoutParams(taskDescriptionParams);
-        taskDescriptionTextView.setText(task.getDescription());
+        taskDescriptionTextView.setText(task.getTask());
         taskLayout.addView(taskDescriptionTextView);
 
         linearLayout.addView(taskLayout);
@@ -105,7 +111,7 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, CardActivity.class);
-                    intent.putExtra(EXTRA_CARD_INDEX, getAdapterPosition());
+                    intent.putExtra(EXTRA_CARD_ID, mCards.get(getAdapterPosition()).getId());
                     mContext.startActivity(intent);
                 }
             });

@@ -1,66 +1,25 @@
 package ru.kamyshovcorp.weekplanner.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import io.realm.RealmObject;
 
-public class Task implements Parcelable {
+public class Task extends RealmObject {
 
-    public static final boolean DEFAULT_DONE = false;
-    public static final String DEFAULT_DESCRIPTION = "";
-
-    private boolean mDoneFlag;
-    private String mDescription;
-
-    public Task() {
-
-    }
-
-    public Task(boolean done, String description) {
-        mDoneFlag = done;
-        mDescription = description;
-    }
-
-    protected Task(Parcel in) {
-        mDoneFlag = in.readByte() != 0;
-        mDescription = in.readString();
-    }
-
-    public static final Creator<Task> CREATOR = new Creator<Task>() {
-        @Override
-        public Task createFromParcel(Parcel in) {
-            return new Task(in);
-        }
-
-        @Override
-        public Task[] newArray(int size) {
-            return new Task[size];
-        }
-    };
+    private boolean done;
+    private String task;
 
     public boolean isDone() {
-        return mDoneFlag;
+        return done;
     }
 
     public void setDone(boolean done) {
-        mDoneFlag = done;
+        this.done = done;
     }
 
-    public String getDescription() {
-        return mDescription;
+    public String getTask() {
+        return task;
     }
 
-    public void setDescription(String description) {
-        mDescription = description;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte((byte) (mDoneFlag ? 1 : 0));
-        dest.writeString(mDescription);
+    public void setTask(String task) {
+        this.task = task;
     }
 }

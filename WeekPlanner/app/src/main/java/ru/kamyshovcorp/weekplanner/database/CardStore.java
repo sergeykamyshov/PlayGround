@@ -24,25 +24,25 @@ public class CardStore {
     }
 
     public static void generateCards() {
-        List<Task> tasks1 = new ArrayList<>();
-        tasks1.add(new Task(true, "Task 1. Long long long long long long long long long description"));
-        tasks1.add(new Task(true, "Task 2"));
-        tasks1.add(new Task(false, "Task 3"));
-
-        List<Task> tasks2 = new ArrayList<>();
-        tasks2.add(new Task(true, "Task 4"));
-        tasks2.add(new Task(false, "Task 5"));
-
-        List<Task> tasks3 = new ArrayList<>();
-        tasks3.add(new Task(true, "Task 6"));
-        tasks3.add(new Task(false, "Task 7"));
-        tasks3.add(new Task(true, "Task 8"));
-        tasks3.add(new Task(true, "Task 9"));
-        tasks3.add(new Task(false, "Task 10"));
-
-        mCards.add(new Card("Category 1", tasks1));
-        mCards.add(new Card("Category 2", tasks2));
-        mCards.add(new Card("Category 3", tasks3));
+//        List<Task> tasks1 = new ArrayList<>();
+//        tasks1.add(new Task(true, "Task 1. Long long long long long long long long long description"));
+//        tasks1.add(new Task(true, "Task 2"));
+//        tasks1.add(new Task(false, "Task 3"));
+//
+//        List<Task> tasks2 = new ArrayList<>();
+//        tasks2.add(new Task(true, "Task 4"));
+//        tasks2.add(new Task(false, "Task 5"));
+//
+//        List<Task> tasks3 = new ArrayList<>();
+//        tasks3.add(new Task(true, "Task 6"));
+//        tasks3.add(new Task(false, "Task 7"));
+//        tasks3.add(new Task(true, "Task 8"));
+//        tasks3.add(new Task(true, "Task 9"));
+//        tasks3.add(new Task(false, "Task 10"));
+//
+//        mCards.add(new Card("Category 1", tasks1));
+//        mCards.add(new Card("Category 2", tasks2));
+//        mCards.add(new Card("Category 3", tasks3));
     }
 
     public static void addCard(Card card) {
