@@ -1,5 +1,6 @@
 package ru.kamyshovcorp.weekplanner.model;
 
+import java.util.Date;
 import java.util.UUID;
 
 import io.realm.RealmList;
@@ -11,6 +12,7 @@ public class Card extends RealmObject {
     @PrimaryKey
     private String id = UUID.randomUUID().toString();
     private String title;
+    private Date creationDate = new Date();
     private RealmList<Task> tasks = new RealmList<>();
 
     public String getId() {

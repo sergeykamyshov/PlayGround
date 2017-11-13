@@ -15,8 +15,9 @@ public class WeekPlannerApplication extends Application {
         instance = this;
 
         Realm.init(instance);
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-        realmConfiguration.shouldDeleteRealmIfMigrationNeeded();
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
         Realm.setDefaultConfiguration(realmConfiguration);
     }
 
