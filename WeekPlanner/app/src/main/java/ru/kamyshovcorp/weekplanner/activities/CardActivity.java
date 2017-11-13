@@ -7,6 +7,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -36,7 +38,7 @@ public class CardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
 
-        // Получаем данные из вызванного интента
+        // Получаем данные из вызываемого интента
         Intent intent = getIntent();
         mCardId = intent.getStringExtra(EXTRA_CARD_ID);
 
@@ -63,26 +65,36 @@ public class CardActivity extends AppCompatActivity {
                 return false;
             }
         });
+        // Сохраняем текст заголовка при изменении
+        mCardTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                final String editedText = s.toString();
+                Realm realm = Realm.getDefaultInstance();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        mCard.setTitle(editedText);
+                    }
+                });
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         // Устанавливаем адаптер
         RecyclerView recyclerTasks = findViewById(R.id.recycler_tasks);
         recyclerTasks.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new CardRecyclerAdapter(this, mCard.getTasks());
         recyclerTasks.setAdapter(mAdapter);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Сохраняем заголовок карточки
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                if (mCardTitle != null) {
-                    mCard.setTitle(mCardTitle.getText().toString());
-                }
-            }
-        });
     }
 
     @Override
