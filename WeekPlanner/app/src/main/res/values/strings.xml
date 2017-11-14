@@ -1,9 +1,14 @@
 <resources>
     <string name="app_name">Week Planner</string>
 
+    <!--Заголовки-->
+    <string name="title_archive">Archive</string>
+
     <!--Меню навигации-->
     <string name="nav_item_current_week">Current Week</string>
     <string name="nav_item_archive">Archive</string>
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
 
     <!--Меню-->
     <string name="menu_add_task">Add task</string>

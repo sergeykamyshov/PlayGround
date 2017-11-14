@@ -20,13 +20,13 @@ import ru.kamyshovcorp.weekplanner.model.Card;
 
 import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_ID;
 
-public class WeekFragment extends Fragment {
+public class CurrentWeekFragment extends Fragment {
 
     private WeekRecyclerAdapter mWeekRecyclerAdapter;
     private Realm mRealm;
 
-    public static WeekFragment newInstance() {
-        return new WeekFragment();
+    public static CurrentWeekFragment newInstance() {
+        return new CurrentWeekFragment();
     }
 
     @Nullable
