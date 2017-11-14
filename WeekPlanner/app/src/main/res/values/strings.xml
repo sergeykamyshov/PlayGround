@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Week Planner</string>
 
+    <!--Меню навигации-->
+    <string name="nav_item_current_week">Current Week</string>
+    <string name="nav_item_archive">Archive</string>
+
     <!--Меню-->
     <string name="menu_add_task">Add task</string>
     <string name="menu_delete_card">Delete card</string>
@@ -8,4 +12,5 @@
     <!--Подсказки-->
     <string name="hint_card_title">Title</string>
     <string name="hint_task">Task</string>
+
 </resources>
