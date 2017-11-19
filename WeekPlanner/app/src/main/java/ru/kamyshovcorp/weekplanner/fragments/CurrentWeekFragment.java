@@ -11,12 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Date;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 import ru.kamyshovcorp.weekplanner.R;
 import ru.kamyshovcorp.weekplanner.activities.CardActivity;
 import ru.kamyshovcorp.weekplanner.adapters.WeekRecyclerAdapter;
 import ru.kamyshovcorp.weekplanner.model.Card;
+import ru.kamyshovcorp.weekplanner.utils.DateUtils;
 
 import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_ID;
 
@@ -35,14 +38,21 @@ public class CurrentWeekFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_week, container, false);
 
         // Создаем и настраиваем адаптер
-        RecyclerView recylerView = view.findViewById(R.id.week_recycler_view);
-        recylerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerView recyclerView = view.findViewById(R.id.week_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mRealm = Realm.getDefaultInstance();
-        RealmResults<Card> allCards = mRealm.where(Card.class).findAll();
+        Date today = new Date();
+        Date weekStartDate = DateUtils.getWeekStartDate(today);
+        Date weekEndDate = DateUtils.getWeekEndDate(today);
+        RealmResults<Card> allCards = mRealm.where(Card.class)
+                .between("creationDate", weekStartDate, weekEndDate)
+                .findAll();
+
+
         mWeekRecyclerAdapter = new WeekRecyclerAdapter(getContext(), allCards);
 
-        recylerView.setAdapter(mWeekRecyclerAdapter);
+        recyclerView.setAdapter(mWeekRecyclerAdapter);
 
         // Нажатие на FloatingActionButton создает новую карточку
         FloatingActionButton fab = view.findViewById(R.id.fab_add_card);

@@ -27,6 +27,14 @@ public class Card extends RealmObject {
         this.title = title;
     }
 
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
     public RealmList<Task> getTasks() {
         return tasks;
     }
