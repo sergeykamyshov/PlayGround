@@ -13,6 +13,7 @@
     <!--Меню-->
     <string name="menu_add_task">Add task</string>
     <string name="menu_delete_card">Delete card</string>
+    <string name="menu_select_week">Select a week</string>
 
     <!--Подсказки-->
     <string name="hint_card_title">Title</string>

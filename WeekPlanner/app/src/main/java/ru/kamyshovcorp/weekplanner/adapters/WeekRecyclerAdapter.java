@@ -38,6 +38,11 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
         });
     }
 
+    public void setCards(RealmResults<Card> cards) {
+        mCards = cards;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.week_recycler_item, parent, false);

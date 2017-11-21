@@ -1,5 +1,6 @@
 package ru.kamyshovcorp.weekplanner.fragments;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,10 +9,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -27,9 +33,17 @@ public class ArchiveWeekFragment extends Fragment {
 
     private WeekRecyclerAdapter mWeekRecyclerAdapter;
     private Realm mRealm;
+    private Date mWeekStartDate;
+    private Date mWeekEndDate;
 
     public static ArchiveWeekFragment newInstance() {
         return new ArchiveWeekFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -42,16 +56,15 @@ public class ArchiveWeekFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mRealm = Realm.getDefaultInstance();
+        // Показываем прошлую неделю по умолчанию
         Date today = new Date();
-        Date previousWeekStartDate = DateUtils.getPreviousWeekStartDate(today);
-        final Date previousWeekEndDate = DateUtils.getPreviousWeekEndDate(today);
+        mWeekStartDate = DateUtils.getPreviousWeekStartDate(today);
+        mWeekEndDate = DateUtils.getPreviousWeekEndDate(today);
         RealmResults<Card> cards = mRealm.where(Card.class)
-                .between("creationDate", previousWeekStartDate, previousWeekEndDate)
+                .between("creationDate", mWeekStartDate, mWeekEndDate)
                 .findAll();
 
-
         mWeekRecyclerAdapter = new WeekRecyclerAdapter(getContext(), cards);
-
         recyclerView.setAdapter(mWeekRecyclerAdapter);
 
         // Нажатие на FloatingActionButton создает новую карточку в архиве на выбранной неделе
@@ -65,7 +78,7 @@ public class ArchiveWeekFragment extends Fragment {
                         Card card = new Card();
                         String cardId = card.getId();
                         // При создании карточки в архиве, указываем дату выбранной недели
-                        card.setCreationDate(previousWeekEndDate);
+                        card.setCreationDate(mWeekEndDate);
 
                         realm.insertOrUpdate(card);
 
@@ -78,5 +91,34 @@ public class ArchiveWeekFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_archive, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_select_week:
+                DatePickerFragment datePicker = new DatePickerFragment();
+                datePicker.setCallBack(new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth);
+                        mWeekStartDate = DateUtils.getWeekStartDate(calendar.getTime());
+                        mWeekEndDate = DateUtils.getWeekEndDate(calendar.getTime());
+                        RealmResults<Card> cards = mRealm.where(Card.class)
+                                .between("creationDate", mWeekStartDate, mWeekEndDate)
+                                .findAll();
+                        mWeekRecyclerAdapter.setCards(cards);
+                    }
+                });
+                datePicker.show(getFragmentManager(), "datePicker");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
