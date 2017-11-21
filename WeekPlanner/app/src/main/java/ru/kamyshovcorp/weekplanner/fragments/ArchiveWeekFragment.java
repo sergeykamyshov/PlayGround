@@ -44,7 +44,7 @@ public class ArchiveWeekFragment extends Fragment {
         mRealm = Realm.getDefaultInstance();
         Date today = new Date();
         Date previousWeekStartDate = DateUtils.getPreviousWeekStartDate(today);
-        Date previousWeekEndDate = DateUtils.getPreviousWeekEndDate(today);
+        final Date previousWeekEndDate = DateUtils.getPreviousWeekEndDate(today);
         RealmResults<Card> cards = mRealm.where(Card.class)
                 .between("creationDate", previousWeekStartDate, previousWeekEndDate)
                 .findAll();
@@ -54,7 +54,7 @@ public class ArchiveWeekFragment extends Fragment {
 
         recyclerView.setAdapter(mWeekRecyclerAdapter);
 
-        // Нажатие на FloatingActionButton создает новую карточку
+        // Нажатие на FloatingActionButton создает новую карточку в архиве на выбранной неделе
         FloatingActionButton fab = view.findViewById(R.id.fab_add_card);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,8 +62,12 @@ public class ArchiveWeekFragment extends Fragment {
                 mRealm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        Card card = realm.copyToRealm(new Card());
+                        Card card = new Card();
                         String cardId = card.getId();
+                        // При создании карточки в архиве, указываем дату выбранной недели
+                        card.setCreationDate(previousWeekEndDate);
+
+                        realm.insertOrUpdate(card);
 
                         Intent intent = new Intent(getContext(), CardActivity.class);
                         intent.putExtra(EXTRA_CARD_ID, cardId);
