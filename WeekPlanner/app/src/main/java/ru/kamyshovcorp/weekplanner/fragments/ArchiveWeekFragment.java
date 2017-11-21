@@ -23,13 +23,13 @@ import ru.kamyshovcorp.weekplanner.utils.DateUtils;
 
 import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_ID;
 
-public class CurrentWeekFragment extends Fragment {
+public class ArchiveWeekFragment extends Fragment {
 
     private WeekRecyclerAdapter mWeekRecyclerAdapter;
     private Realm mRealm;
 
-    public static CurrentWeekFragment newInstance() {
-        return new CurrentWeekFragment();
+    public static ArchiveWeekFragment newInstance() {
+        return new ArchiveWeekFragment();
     }
 
     @Nullable
@@ -43,10 +43,10 @@ public class CurrentWeekFragment extends Fragment {
 
         mRealm = Realm.getDefaultInstance();
         Date today = new Date();
-        Date weekStartDate = DateUtils.getWeekStartDate(today);
-        Date weekEndDate = DateUtils.getWeekEndDate(today);
+        Date previousWeekStartDate = DateUtils.getPreviousWeekStartDate(today);
+        Date previousWeekEndDate = DateUtils.getPreviousWeekEndDate(today);
         RealmResults<Card> cards = mRealm.where(Card.class)
-                .between("creationDate", weekStartDate, weekEndDate)
+                .between("creationDate", previousWeekStartDate, previousWeekEndDate)
                 .findAll();
 
 
