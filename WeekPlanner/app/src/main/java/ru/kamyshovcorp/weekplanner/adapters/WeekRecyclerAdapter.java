@@ -89,6 +89,7 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
         taskCheckBox.setGravity(Gravity.TOP);
         taskCheckBox.setChecked(task.isDone());
         taskCheckBox.setClickable(false);
+        taskCheckBox.setBackgroundResource(android.R.color.transparent);
         taskLayout.addView(taskCheckBox);
 
         TextView taskDescriptionTextView = new TextView(mContext);

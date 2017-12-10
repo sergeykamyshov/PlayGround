@@ -49,7 +49,6 @@ public class CurrentWeekFragment extends Fragment {
                 .between("creationDate", weekStartDate, weekEndDate)
                 .findAll();
 
-
         mWeekRecyclerAdapter = new WeekRecyclerAdapter(getContext(), cards);
 
         recyclerView.setAdapter(mWeekRecyclerAdapter);
