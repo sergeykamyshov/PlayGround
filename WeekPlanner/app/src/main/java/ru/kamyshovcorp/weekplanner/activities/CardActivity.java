@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
+import io.realm.RealmList;
 import ru.kamyshovcorp.weekplanner.R;
 import ru.kamyshovcorp.weekplanner.adapters.CardRecyclerAdapter;
 import ru.kamyshovcorp.weekplanner.model.Card;
@@ -113,8 +113,18 @@ public class CardActivity extends AppCompatActivity {
                 mRealm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        RealmResults<Card> cardsById = realm.where(Card.class).equalTo("id", mCardId).findAll();
-                        cardsById.deleteAllFromRealm();
+                        Card card = realm.where(Card.class).equalTo("id", mCardId).findFirst();
+                        if (card != null) {
+                            RealmList<Task> tasks = card.getTasks();
+                            // Удаляем все задачи, которые были внутри карточки
+                            for (int i = tasks.size() - 1; tasks.size() > 0; i--) {
+                                Task task = tasks.get(i);
+                                if (task != null) {
+                                    task.deleteFromRealm();
+                                }
+                            }
+                            card.deleteFromRealm();
+                        }
                     }
                 });
                 finish();
