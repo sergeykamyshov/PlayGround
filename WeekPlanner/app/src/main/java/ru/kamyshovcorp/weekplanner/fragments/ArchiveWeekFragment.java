@@ -28,6 +28,7 @@ import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.utils.DateUtils;
 
 import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_ID;
+import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_NEW_CARD_FLAG;
 
 public class ArchiveWeekFragment extends Fragment {
 
@@ -84,6 +85,7 @@ public class ArchiveWeekFragment extends Fragment {
 
                         Intent intent = new Intent(getContext(), CardActivity.class);
                         intent.putExtra(EXTRA_CARD_ID, cardId);
+                        intent.putExtra(EXTRA_NEW_CARD_FLAG, true);
                         getContext().startActivity(intent);
                     }
                 });

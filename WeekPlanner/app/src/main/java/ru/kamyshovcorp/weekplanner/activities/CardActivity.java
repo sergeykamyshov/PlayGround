@@ -26,6 +26,7 @@ import ru.kamyshovcorp.weekplanner.model.Task;
 public class CardActivity extends AppCompatActivity {
 
     public static final String EXTRA_CARD_ID = "cardId";
+    public static final String EXTRA_NEW_CARD_FLAG = "newCardFlag";
 
     private CardRecyclerAdapter mAdapter;
     private Realm mRealm;
@@ -56,6 +57,11 @@ public class CardActivity extends AppCompatActivity {
         }
 
         mCardTitle = findViewById(R.id.txt_card_title);
+        // При создании новой карточки даем полю фокус чтобы показать клавиатуру для ввода
+        if (intent.getBooleanExtra(EXTRA_NEW_CARD_FLAG, false)) {
+            mCardTitle.setFocusable(true);
+            mCardTitle.setFocusableInTouchMode(true);
+        }
         // Делаем заголовок карточки доступным для редактирования при касании
         mCardTitle.setOnTouchListener(new View.OnTouchListener() {
             @Override
