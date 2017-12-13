@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.CardActivity"/>
+        <activity android:name=".activities.TaskActivity"/>
     </application>
 
 </manifest>
