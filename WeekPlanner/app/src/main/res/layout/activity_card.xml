@@ -5,32 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_tasks"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!--<EditText-->
-            <!--android:id="@+id/txt_card_title"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="16dp"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--android:focusable="false"-->
-            <!--android:focusableInTouchMode="false"-->
-            <!--android:hint="@string/hint_card_title"-->
-            <!--android:inputType="textCapSentences"-->
-            <!--android:textSize="24sp"-->
-            <!--android:textStyle="bold"-->
-            <!--tools:text="Card Title"/>-->
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_tasks"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
-
-    </LinearLayout>
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_task"

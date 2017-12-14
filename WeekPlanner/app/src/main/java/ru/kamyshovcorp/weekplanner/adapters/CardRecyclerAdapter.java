@@ -1,22 +1,27 @@
 package ru.kamyshovcorp.weekplanner.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 import ru.kamyshovcorp.weekplanner.R;
+import ru.kamyshovcorp.weekplanner.activities.CardActivity;
+import ru.kamyshovcorp.weekplanner.activities.TaskActivity;
 import ru.kamyshovcorp.weekplanner.model.Task;
+
+import static ru.kamyshovcorp.weekplanner.activities.TaskActivity.EXTRA_CARD_ID;
+import static ru.kamyshovcorp.weekplanner.activities.TaskActivity.EXTRA_TASK_ID;
 
 public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapter.ViewHolder> {
 
@@ -37,8 +42,9 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Task task = mTasks.get(position);
-        holder.mIsDone.setChecked(task.isDone());
-        holder.mTaskDesc.setText(task.getTask());
+//        holder.mIsDone.setChecked(task.isDone());
+//        holder.mTaskTitle.setText(task.getTask());
+        holder.bind(task);
     }
 
     @Override
@@ -49,13 +55,34 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CheckBox mIsDone;
-        EditText mTaskDesc;
-        ImageView mDeleteTask;
+        TextView mTaskTitle;
+        ImageView mMoreImg;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mIsDone = itemView.findViewById(R.id.done_task_check_box);
+            mIsDone = itemView.findViewById(R.id.cb_is_done);
+//            mIsDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+//                    Realm realm = Realm.getDefaultInstance();
+//                    realm.executeTransaction(new Realm.Transaction() {
+//                        @Override
+//                        public void execute(Realm realm) {
+//                            mTasks.get(getAdapterPosition()).setDone(isChecked);
+//                        }
+//                    });
+//                }
+//            });
+
+            mTaskTitle = itemView.findViewById(R.id.txt_task_title);
+            mMoreImg = itemView.findViewById(R.id.img_more);
+
+//            itemView.setOnClickListener(new OnTaskItemClickListener());
+        }
+
+        public void bind(Task task) {
+            mIsDone.setChecked(task.isDone());
             mIsDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
@@ -68,68 +95,23 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                     });
                 }
             });
+            mTaskTitle.setOnClickListener(new OnTaskItemClickListener());
+            // TODO: impl it here
+//            itemView.setOnClickListener();
+        }
 
-            mTaskDesc = itemView.findViewById(R.id.description_task_edit_text);
-            // Обновляем данные после изменения описания задачи
-            mTaskDesc.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    final String changedText = s.toString();
-                    Realm realm = Realm.getDefaultInstance();
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            Task task = mTasks.get(getAdapterPosition());
-                            task.setTask(changedText);
-                        }
-                    });
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                }
-            });
-            // Делаем описание задачи доступным для редактирования при касании
-            mTaskDesc.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    mTaskDesc.setFocusable(true);
-                    mTaskDesc.setFocusableInTouchMode(true);
-                    return false;
-                }
-            });
-            mDeleteTask = itemView.findViewById(R.id.img_more);
-            // Показываем/скрываем View для удаления задачи в зависимости от фокуса
-            mTaskDesc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        mDeleteTask.setVisibility(View.VISIBLE);
-                    } else {
-                        mDeleteTask.setVisibility(View.INVISIBLE);
-                    }
-                }
-            });
-
-            // Удаляем задачу
-            mDeleteTask.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Realm realm = Realm.getDefaultInstance();
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            int position = getAdapterPosition();
-                            mTasks.remove(position);
-                            notifyItemRemoved(position);
-                        }
-                    });
-                }
-            });
+        /**
+         * Реализация обработчика нажатия элемента в списке задач
+         */
+        class OnTaskItemClickListener implements View.OnClickListener {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, TaskActivity.class);
+                intent.putExtra(EXTRA_CARD_ID, "");
+                intent.putExtra(EXTRA_TASK_ID, "");
+                mContext.startActivity(intent);
+//                Toast.makeText(mContext, "Position: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

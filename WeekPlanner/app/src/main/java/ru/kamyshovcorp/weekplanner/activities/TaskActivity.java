@@ -52,13 +52,15 @@ public class TaskActivity extends AppCompatActivity {
                 public void execute(Realm realm) {
                     Card card = realm.where(Card.class).equalTo("id", mCardId).findFirst();
                     mTask = new Task();
-                    card.addTask(mTask);
+                    if (card != null) {
+                        card.addTask(mTask);
+                    }
                 }
             });
         } else {
             // Загружаем данные из задачи
             mTask = mRealm.where(Task.class).equalTo("id", mTaskId).findFirst();
-            String taskTitle = mTask.getTask();
+            String taskTitle = mTask != null ? mTask.getTask() : null;
             mTaskTitle.setText(taskTitle);
         }
     }

@@ -9,6 +9,7 @@
         android:id="@+id/txt_task_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_task"/>
+        android:hint="@string/hint_task"
+        android:inputType="textCapSentences"/>
 
 </LinearLayout>
