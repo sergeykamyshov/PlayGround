@@ -8,8 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import java.util.UUID;
+
 import io.realm.Realm;
-import io.realm.RealmList;
 import ru.kamyshovcorp.weekplanner.R;
 import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.model.Task;
@@ -51,9 +52,10 @@ public class TaskActivity extends AppCompatActivity {
                 @Override
                 public void execute(Realm realm) {
                     Card card = realm.where(Card.class).equalTo("id", mCardId).findFirst();
-                    mTask = new Task();
                     if (card != null) {
+                        mTask = realm.createObject(Task.class, UUID.randomUUID().toString());
                         card.addTask(mTask);
+                        realm.insertOrUpdate(card);
                     }
                 }
             });
@@ -74,12 +76,7 @@ public class TaskActivity extends AppCompatActivity {
             mRealm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    Card card = realm.where(Card.class).equalTo("id", mCardId).findFirst();
-                    RealmList<Task> tasks = card.getTasks();
-                    if (!tasks.isEmpty()) {
-                        Task task = tasks.get(tasks.size() - 1);
-                        task.deleteFromRealm();
-                    }
+                    mTask.deleteFromRealm();
                 }
             });
             return;

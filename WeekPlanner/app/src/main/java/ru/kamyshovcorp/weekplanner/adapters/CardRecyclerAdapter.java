@@ -1,7 +1,6 @@
 package ru.kamyshovcorp.weekplanner.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,28 +8,24 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 import ru.kamyshovcorp.weekplanner.R;
-import ru.kamyshovcorp.weekplanner.activities.CardActivity;
-import ru.kamyshovcorp.weekplanner.activities.TaskActivity;
+import ru.kamyshovcorp.weekplanner.activities.OnTaskItemClickListener;
 import ru.kamyshovcorp.weekplanner.model.Task;
-
-import static ru.kamyshovcorp.weekplanner.activities.TaskActivity.EXTRA_CARD_ID;
-import static ru.kamyshovcorp.weekplanner.activities.TaskActivity.EXTRA_TASK_ID;
 
 public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
     private RealmList<Task> mTasks;
+    private OnTaskItemClickListener mOnTaskItemClickListener;
 
-    public CardRecyclerAdapter(Context context, RealmList<Task> tasks) {
+    public CardRecyclerAdapter(Context context, RealmList<Task> tasks, OnTaskItemClickListener onTaskItemClickListener) {
         mContext = context;
         mTasks = tasks;
+        mOnTaskItemClickListener = onTaskItemClickListener;
     }
 
     @Override
@@ -41,10 +36,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        Task task = mTasks.get(position);
-//        holder.mIsDone.setChecked(task.isDone());
-//        holder.mTaskTitle.setText(task.getTask());
-        holder.bind(task);
+        holder.bind(mTasks.get(position), mOnTaskItemClickListener);
     }
 
     @Override
@@ -60,28 +52,12 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             mIsDone = itemView.findViewById(R.id.cb_is_done);
-//            mIsDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
-//                    Realm realm = Realm.getDefaultInstance();
-//                    realm.executeTransaction(new Realm.Transaction() {
-//                        @Override
-//                        public void execute(Realm realm) {
-//                            mTasks.get(getAdapterPosition()).setDone(isChecked);
-//                        }
-//                    });
-//                }
-//            });
-
             mTaskTitle = itemView.findViewById(R.id.txt_task_title);
             mMoreImg = itemView.findViewById(R.id.img_more);
-
-//            itemView.setOnClickListener(new OnTaskItemClickListener());
         }
 
-        public void bind(Task task) {
+        public void bind(final Task task, OnTaskItemClickListener onTaskItemClickListener) {
             mIsDone.setChecked(task.isDone());
             mIsDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -95,23 +71,15 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                     });
                 }
             });
-            mTaskTitle.setOnClickListener(new OnTaskItemClickListener());
-            // TODO: impl it here
-//            itemView.setOnClickListener();
-        }
 
-        /**
-         * Реализация обработчика нажатия элемента в списке задач
-         */
-        class OnTaskItemClickListener implements View.OnClickListener {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, TaskActivity.class);
-                intent.putExtra(EXTRA_CARD_ID, "");
-                intent.putExtra(EXTRA_TASK_ID, "");
-                mContext.startActivity(intent);
-//                Toast.makeText(mContext, "Position: " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
-            }
+            mTaskTitle.setText(task.getTask());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnTaskItemClickListener.onClick(task);
+                }
+            });
         }
     }
 }

@@ -19,6 +19,8 @@ import ru.kamyshovcorp.weekplanner.adapters.CardRecyclerAdapter;
 import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.model.Task;
 
+import static ru.kamyshovcorp.weekplanner.activities.TaskActivity.EXTRA_TASK_ID;
+
 public class CardActivity extends AppCompatActivity {
 
     public static final String EXTRA_CARD_ID = "cardId";
@@ -53,7 +55,16 @@ public class CardActivity extends AppCompatActivity {
         // Устанавливаем адаптер
         RecyclerView recyclerTasks = findViewById(R.id.recycler_tasks);
         recyclerTasks.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new CardRecyclerAdapter(this, mCard.getTasks());
+        mAdapter = new CardRecyclerAdapter(this, mCard.getTasks(), new OnTaskItemClickListener() {
+            // Реализация обработчика нажатия задачи в списке
+            @Override
+            public void onClick(Task task) {
+                Intent intent = new Intent(CardActivity.this, TaskActivity.class);
+                intent.putExtra(EXTRA_CARD_ID, mCardId);
+                intent.putExtra(EXTRA_TASK_ID, task.getId());
+                startActivity(intent);
+            }
+        });
         recyclerTasks.setAdapter(mAdapter);
     }
 
@@ -70,7 +81,7 @@ public class CardActivity extends AppCompatActivity {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                if ((mCard.getTitle() == null || mCard.getTitle().isEmpty()) && mCard.getTasks().isEmpty()) {
+                if (mCard.isValid() && (mCard.getTitle() == null || mCard.getTitle().isEmpty()) && mCard.getTasks().isEmpty()) {
                     mCard.deleteFromRealm();
                 }
             }
@@ -93,18 +104,15 @@ public class CardActivity extends AppCompatActivity {
                 mRealm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        Card card = realm.where(Card.class).equalTo("id", mCardId).findFirst();
-                        if (card != null) {
-                            RealmList<Task> tasks = card.getTasks();
-                            // Удаляем все задачи, которые были внутри карточки
-                            for (int i = tasks.size() - 1; tasks.size() > 0; i--) {
-                                Task task = tasks.get(i);
-                                if (task != null) {
-                                    task.deleteFromRealm();
-                                }
+                        RealmList<Task> tasks = mCard.getTasks();
+                        // Удаляем все задачи, которые были внутри карточки
+                        for (int i = tasks.size() - 1; tasks.size() > 0; i--) {
+                            Task task = tasks.get(i);
+                            if (task != null) {
+                                task.deleteFromRealm();
                             }
-                            card.deleteFromRealm();
                         }
+                        mCard.deleteFromRealm();
                     }
                 });
                 finish();
