@@ -37,7 +37,7 @@ public class TaskActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("");
+            actionBar.setTitle(getString(R.string.title_task));
         }
 
         mRealm = Realm.getDefaultInstance();

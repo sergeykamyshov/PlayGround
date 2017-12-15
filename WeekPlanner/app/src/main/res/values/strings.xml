@@ -3,6 +3,8 @@
 
     <!--Заголовки-->
     <string name="title_archive">Archive</string>
+    <string name="title_task">Task</string>
+    <string name="title_set_card_title">Set title</string>
 
     <!--Меню навигации-->
     <string name="nav_item_current_week">Current Week</string>
@@ -15,6 +17,8 @@
     <string name="menu_delete_card">Delete card</string>
     <string name="menu_delete_task">Delete task</string>
     <string name="menu_select_week">Select a week</string>
+    <string name="menu_set_cart_title">Set title</string>
+    <string name="menu_apply_cart_title">Apply</string>
 
     <!--Подсказки-->
     <string name="hint_card_title">Title</string>

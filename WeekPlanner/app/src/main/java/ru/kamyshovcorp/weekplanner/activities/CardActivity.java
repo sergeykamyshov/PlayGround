@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -19,18 +18,19 @@ import ru.kamyshovcorp.weekplanner.adapters.CardRecyclerAdapter;
 import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.model.Task;
 
+import static ru.kamyshovcorp.weekplanner.activities.CardTitleActivity.EXTRA_CARD_TITLE;
 import static ru.kamyshovcorp.weekplanner.activities.TaskActivity.EXTRA_TASK_ID;
 
 public class CardActivity extends AppCompatActivity {
 
     public static final String EXTRA_CARD_ID = "cardId";
     public static final String EXTRA_NEW_CARD_FLAG = "newCardFlag";
+    public static final int REQUEST_CODE_SET_CARD_TITLE = 1;
 
     private CardRecyclerAdapter mAdapter;
     private Realm mRealm;
     private Card mCard;
     private String mCardId;
-    private EditText mCardTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,8 +117,38 @@ public class CardActivity extends AppCompatActivity {
                 });
                 finish();
                 return true;
+            case R.id.action_set_card_title:
+                Intent intent = new Intent(this, CardTitleActivity.class);
+                intent.putExtra(EXTRA_CARD_TITLE, mCard.getTitle());
+                startActivityForResult(intent, REQUEST_CODE_SET_CARD_TITLE);
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_SET_CARD_TITLE:
+                    final String cardTitle = data.getStringExtra(EXTRA_CARD_TITLE);
+                    // Меняем заголовок карточки
+                    ActionBar actionBar = getSupportActionBar();
+                    if (actionBar != null) {
+                        actionBar.setTitle(cardTitle);
+                    }
+                    // Сохраняем заголовок карточки в базу
+                    mRealm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            mCard.setTitle(cardTitle);
+                            realm.insertOrUpdate(mCard);
+                        }
+                    });
+                    break;
+            }
+        }
     }
 
     public void addNewTaskAction(View view) {
