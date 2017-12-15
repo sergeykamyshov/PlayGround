@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
@@ -76,7 +77,9 @@ public class TaskActivity extends AppCompatActivity {
             mRealm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    mTask.deleteFromRealm();
+                    if (mTask.isValid()) {
+                        mTask.deleteFromRealm();
+                    }
                 }
             });
             return;
@@ -85,10 +88,18 @@ public class TaskActivity extends AppCompatActivity {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                mTask.setTask(taskTitle);
-                mRealm.copyToRealmOrUpdate(mTask);
+                if (mTask.isValid()) {
+                    mTask.setTask(taskTitle);
+                    mRealm.copyToRealmOrUpdate(mTask);
+                }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_task, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -96,6 +107,15 @@ public class TaskActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                return true;
+            case R.id.action_delete_task:
+                mRealm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        mTask.deleteFromRealm();
+                    }
+                });
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
