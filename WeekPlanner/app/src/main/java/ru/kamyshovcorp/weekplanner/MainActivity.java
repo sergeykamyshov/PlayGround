@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // --- Card 1 ---
                 Card card1 = new Card();
-                card1.setTitle("Card title 1");
+                card1.setTitle("Card title 10");
                 card1.setCreationDate(new GregorianCalendar(2017, 11, 10, 10, 30).getTime());
 
                 Task task1 = new Task();
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // --- Card 2 ---
                 Card card2 = new Card();
-                card2.setTitle("Card title 2");
+                card2.setTitle("Card title 12");
                 card2.setCreationDate(new GregorianCalendar(2017, 11, 12, 10, 30).getTime());
 
                 Task task21 = new Task();
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // --- Card 3 ---
                 Card card3 = new Card();
-                card3.setTitle("Card title 3");
+                card3.setTitle("Card title 16");
                 card3.setCreationDate(new GregorianCalendar(2017, 11, 16, 10, 30).getTime());
 
                 Task task31 = new Task();
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 // Last week
                 // --- Card 4 ---
                 Card card4 = new Card();
-                card4.setTitle("Card title 4");
+                card4.setTitle("Card title 9");
                 card4.setCreationDate(new GregorianCalendar(2017, 11, 9, 10, 30).getTime());
 
                 Task task41 = new Task();

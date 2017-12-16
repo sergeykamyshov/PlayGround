@@ -58,6 +58,7 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
             holder.mCardTitle.setVisibility(View.GONE);
         } else {
             holder.mCardTitle.setText(cardTitle);
+            holder.mCardTitle.setVisibility(View.VISIBLE);
         }
 
         // Очищаем список задач для карточки перед заполнением

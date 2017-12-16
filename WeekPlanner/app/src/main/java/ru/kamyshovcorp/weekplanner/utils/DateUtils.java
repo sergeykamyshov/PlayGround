@@ -15,13 +15,12 @@ public class DateUtils {
         calendar.set(Calendar.MILLISECOND, 0);
 
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        if (dayOfWeek == 1) {
-            return calendar.getTime();
-        } else if (dayOfWeek == 7) {
-            calendar.add(Calendar.DATE, -dayOfWeek + 1);
+        int firstDayOfWeek = calendar.getFirstDayOfWeek();
+
+        if (dayOfWeek == firstDayOfWeek) {
             return calendar.getTime();
         } else {
-            calendar.add(Calendar.DATE, -dayOfWeek + 1);
+            setFirstDayOfWeek(calendar, dayOfWeek, firstDayOfWeek);
             return calendar.getTime();
         }
     }
@@ -35,13 +34,15 @@ public class DateUtils {
         calendar.set(Calendar.MILLISECOND, 0);
 
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        if (dayOfWeek == 1) {
+        int firstDayOfWeek = calendar.getFirstDayOfWeek();
+
+        if (dayOfWeek == firstDayOfWeek) {
             calendar.add(Calendar.DATE, 6);
             return calendar.getTime();
-        } else if (dayOfWeek == 7) {
-            return calendar.getTime();
         } else {
-            calendar.add(Calendar.DATE, 7 - dayOfWeek);
+            setFirstDayOfWeek(calendar, dayOfWeek, firstDayOfWeek);
+            // Устанавливаем последний день недели
+            calendar.add(Calendar.DATE, 6);
             return calendar.getTime();
         }
     }
@@ -55,14 +56,15 @@ public class DateUtils {
         calendar.set(Calendar.MILLISECOND, 0);
 
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        if (dayOfWeek == 1) {
+        int firstDayOfWeek = calendar.getFirstDayOfWeek();
+
+        if (dayOfWeek == firstDayOfWeek) {
             calendar.add(Calendar.DATE, -7);
             return calendar.getTime();
-        } else if (dayOfWeek == 7) {
-            calendar.add(Calendar.DATE, (-dayOfWeek + 1) - 7);
-            return calendar.getTime();
         } else {
-            calendar.add(Calendar.DATE, (-dayOfWeek + 1) - 7);
+            setFirstDayOfWeek(calendar, dayOfWeek, firstDayOfWeek);
+            // Уставливаем как день на прошлой неделе
+            calendar.add(Calendar.DATE, -7);
             return calendar.getTime();
         }
     }
@@ -76,16 +78,31 @@ public class DateUtils {
         calendar.set(Calendar.MILLISECOND, 0);
 
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        if (dayOfWeek == 1) {
-            calendar.add(Calendar.DATE, -1);
-            return calendar.getTime();
-        } else if (dayOfWeek == 7) {
+        int firstDayOfWeek = calendar.getFirstDayOfWeek();
+
+        if (dayOfWeek == firstDayOfWeek) {
+            calendar.add(Calendar.DATE, 6);
             calendar.add(Calendar.DATE, -7);
             return calendar.getTime();
         } else {
-            calendar.add(Calendar.DATE, (7 - dayOfWeek) - 7);
+            setFirstDayOfWeek(calendar, dayOfWeek, firstDayOfWeek);
+            // Устанавливаем последний день недели
+            calendar.add(Calendar.DATE, 6);
+            // Устанавливаем как день на прошлой неделе
+            calendar.add(Calendar.DATE, -7);
             return calendar.getTime();
         }
+    }
+
+    private static void setFirstDayOfWeek(Calendar calendar, int dayOfWeek, int firstDayOfWeek) {
+        int dif = firstDayOfWeek - dayOfWeek;
+        // Для локалей, отличных от "US" подобных, разница будет равна "1".
+        // Поэтому мы можем быть уверены что текущий день это конец недели
+        if (dif > 0) {
+            dif = -6;
+        }
+        // Устанавливаем первый день недели
+        calendar.add(Calendar.DATE, dif);
     }
 
 }
