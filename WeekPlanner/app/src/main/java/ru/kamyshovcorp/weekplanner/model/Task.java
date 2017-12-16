@@ -10,7 +10,7 @@ public class Task extends RealmObject {
     @PrimaryKey
     private String id = UUID.randomUUID().toString();
     private boolean done;
-    private String task;
+    private String title;
 
     public String getId() {
         return id;
@@ -24,11 +24,11 @@ public class Task extends RealmObject {
         this.done = done;
     }
 
-    public String getTask() {
-        return task;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

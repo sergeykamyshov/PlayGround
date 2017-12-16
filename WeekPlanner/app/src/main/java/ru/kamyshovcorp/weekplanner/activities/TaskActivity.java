@@ -22,11 +22,9 @@ public class TaskActivity extends AppCompatActivity {
     public static final String EXTRA_TASK_ID = "taskId";
 
     private Realm mRealm;
-    private Task mTask;
     private String mCardId;
     private String mTaskId;
-
-    private EditText mTaskTitle;
+    private EditText mTaskTitleEditText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,58 +40,18 @@ public class TaskActivity extends AppCompatActivity {
 
         mRealm = Realm.getDefaultInstance();
 
-        mTaskTitle = findViewById(R.id.txt_task_title);
+        mTaskTitleEditText = findViewById(R.id.txt_task_title);
 
         Intent intent = getIntent();
         mCardId = intent.getStringExtra(EXTRA_CARD_ID);
         mTaskId = intent.getStringExtra(EXTRA_TASK_ID);
-        if (mTaskId == null) {
-            // Создаем новую задачу
-            mRealm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    Card card = realm.where(Card.class).equalTo("id", mCardId).findFirst();
-                    if (card != null) {
-                        mTask = realm.createObject(Task.class, UUID.randomUUID().toString());
-                        card.addTask(mTask);
-                        realm.insertOrUpdate(card);
-                    }
-                }
-            });
-        } else {
-            // Загружаем данные из задачи
-            mTask = mRealm.where(Task.class).equalTo("id", mTaskId).findFirst();
-            String taskTitle = mTask != null ? mTask.getTask() : null;
-            mTaskTitle.setText(taskTitle);
-        }
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        final String taskTitle = mTaskTitle.getText().toString();
-        if (taskTitle.isEmpty()) {
-            // Удаляем пустую задачу
-            mRealm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    if (mTask.isValid()) {
-                        mTask.deleteFromRealm();
-                    }
-                }
-            });
-            return;
+        if (mTaskId != null) {
+            // Загружаем данные из задачи
+            Task task = mRealm.where(Task.class).equalTo("id", mTaskId).findFirst();
+            String taskTitle = task != null ? task.getTitle() : null;
+            mTaskTitleEditText.setText(taskTitle);
         }
-        // Обновляем задачу
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                if (mTask.isValid()) {
-                    mTask.setTask(taskTitle);
-                    mRealm.copyToRealmOrUpdate(mTask);
-                }
-            }
-        });
     }
 
     @Override
@@ -108,11 +66,45 @@ public class TaskActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
+            case R.id.action_save_task:
+                final String taskTitle = mTaskTitleEditText.getText().toString();
+                if (mTaskId != null) {
+                    // Задача уже была создана и ее трубуется только обновить
+                    mRealm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            Task task = mRealm.where(Task.class).equalTo("id", mTaskId).findFirst();
+                            if (task != null) {
+                                task.setTitle(taskTitle);
+                                mRealm.insertOrUpdate(task);
+                            }
+                        }
+                    });
+                } else {
+                    // Создаем новую задачу с заполненными данными
+                    mRealm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            Card card = realm.where(Card.class).equalTo("id", mCardId).findFirst();
+                            if (card != null) {
+                                Task task = realm.createObject(Task.class, UUID.randomUUID().toString());
+                                task.setTitle(taskTitle);
+                                card.addTask(task);
+                                realm.insertOrUpdate(card);
+                            }
+                        }
+                    });
+                }
+                finish();
+                return true;
             case R.id.action_delete_task:
                 mRealm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        mTask.deleteFromRealm();
+                        Task task = mRealm.where(Task.class).equalTo("id", mTaskId).findFirst();
+                        if (task != null) {
+                            task.deleteFromRealm();
+                        }
                     }
                 });
                 finish();

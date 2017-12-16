@@ -9,11 +9,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import io.realm.Realm;
 import ru.kamyshovcorp.weekplanner.R;
+import ru.kamyshovcorp.weekplanner.model.Card;
+
+import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_ID;
+import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_TITLE;
 
 public class CardTitleActivity extends AppCompatActivity {
 
-    public static final String EXTRA_CARD_TITLE = "cardTitle";
+    private String mCardId;
+    private EditText mTitleEditText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,9 +34,10 @@ public class CardTitleActivity extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        String currentCardTitle = intent.getStringExtra(EXTRA_CARD_TITLE);
-        EditText cardTitleEditText = findViewById(R.id.txt_card_title);
-        cardTitleEditText.setText(currentCardTitle);
+        mCardId = intent.getStringExtra(EXTRA_CARD_ID);
+        String cardTitle = intent.getStringExtra(EXTRA_CARD_TITLE);
+        mTitleEditText = findViewById(R.id.txt_card_title);
+        mTitleEditText.setText(cardTitle);
     }
 
     @Override
@@ -45,12 +52,19 @@ public class CardTitleActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.action_apply_card_title:
-                EditText cardTitleEditText = findViewById(R.id.txt_card_title);
-                String cardTitle = cardTitleEditText.getText().toString();
-                Intent intent = new Intent();
-                intent.putExtra(EXTRA_CARD_TITLE, cardTitle);
-                setResult(RESULT_OK, intent);
+            case R.id.action_save_card_title:
+                final String cardTitle = mTitleEditText.getText().toString();
+                Realm realm = Realm.getDefaultInstance();
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        Card card = realm.where(Card.class).equalTo("id", mCardId).findFirst();
+                        if (card != null) {
+                            card.setTitle(cardTitle);
+                            realm.insertOrUpdate(card);
+                        }
+                    }
+                });
                 finish();
                 return true;
         }

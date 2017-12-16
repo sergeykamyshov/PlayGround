@@ -96,7 +96,7 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
         LinearLayout.LayoutParams taskDescriptionParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         taskDescriptionParams.gravity = Gravity.CENTER;
         taskDescriptionTextView.setLayoutParams(taskDescriptionParams);
-        taskDescriptionTextView.setText(task.getTask());
+        taskDescriptionTextView.setText(task.getTitle());
         taskLayout.addView(taskDescriptionTextView);
 
         linearLayout.addView(taskLayout);

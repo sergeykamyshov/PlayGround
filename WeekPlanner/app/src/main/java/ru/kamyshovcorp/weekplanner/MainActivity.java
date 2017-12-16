@@ -96,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
                 card1.setCreationDate(new GregorianCalendar(2017, 11, 10, 10, 30).getTime());
 
                 Task task1 = new Task();
-                task1.setTask("Task 1");
+                task1.setTitle("Task 1");
                 task1.setDone(true);
                 Task task2 = new Task();
-                task2.setTask("Task 2");
+                task2.setTitle("Task 2");
                 task2.setDone(true);
                 Task task3 = new Task();
-                task3.setTask("Task 3");
+                task3.setTitle("Task 3");
 
                 card1.addTask(task1);
                 card1.addTask(task2);
@@ -114,12 +114,12 @@ public class MainActivity extends AppCompatActivity {
                 card2.setCreationDate(new GregorianCalendar(2017, 11, 12, 10, 30).getTime());
 
                 Task task21 = new Task();
-                task21.setTask("Task 1");
+                task21.setTitle("Task 1");
                 task21.setDone(true);
                 Task task22 = new Task();
-                task22.setTask("Task 2");
+                task22.setTitle("Task 2");
                 Task task23 = new Task();
-                task23.setTask("Task 3");
+                task23.setTitle("Task 3");
 
                 card2.addTask(task21);
                 card2.addTask(task22);
@@ -131,12 +131,12 @@ public class MainActivity extends AppCompatActivity {
                 card3.setCreationDate(new GregorianCalendar(2017, 11, 16, 10, 30).getTime());
 
                 Task task31 = new Task();
-                task31.setTask("Task 1");
+                task31.setTitle("Task 1");
                 task31.setDone(true);
                 Task task32 = new Task();
-                task32.setTask("Task 2");
+                task32.setTitle("Task 2");
                 Task task33 = new Task();
-                task33.setTask("Task 3");
+                task33.setTitle("Task 3");
 
                 card3.addTask(task31);
                 card3.addTask(task32);
@@ -149,12 +149,12 @@ public class MainActivity extends AppCompatActivity {
                 card4.setCreationDate(new GregorianCalendar(2017, 11, 9, 10, 30).getTime());
 
                 Task task41 = new Task();
-                task41.setTask("Task 1");
+                task41.setTitle("Task 1");
                 task41.setDone(true);
                 Task task42 = new Task();
-                task42.setTask("Task 2");
+                task42.setTitle("Task 2");
                 Task task43 = new Task();
-                task43.setTask("Task 3");
+                task43.setTitle("Task 3");
 
                 card4.addTask(task41);
                 card4.addTask(task42);

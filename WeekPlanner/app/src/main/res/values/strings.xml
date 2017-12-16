@@ -18,7 +18,8 @@
     <string name="menu_delete_task">Delete task</string>
     <string name="menu_select_week">Select a week</string>
     <string name="menu_set_cart_title">Set title</string>
-    <string name="menu_apply_cart_title">Apply</string>
+    <string name="menu_save_cart_title">Save</string>
+    <string name="menu_save_task_title">Save</string>
 
     <!--Подсказки-->
     <string name="hint_card_title">Title</string>

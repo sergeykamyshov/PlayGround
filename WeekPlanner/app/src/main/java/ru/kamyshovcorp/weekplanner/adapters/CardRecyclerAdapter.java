@@ -72,7 +72,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 }
             });
 
-            mTaskTitle.setText(task.getTask());
+            mTaskTitle.setText(task.getTitle());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
