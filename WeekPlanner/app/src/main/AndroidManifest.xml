@@ -18,8 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.CardActivity"/>
-        <activity android:name=".activities.TaskActivity"/>
-        <activity android:name=".activities.CardTitleActivity"/>
+        <activity android:name=".activities.TaskActivity" android:windowSoftInputMode="stateAlwaysVisible"/>
+        <activity android:name=".activities.CardTitleActivity" android:windowSoftInputMode="stateAlwaysVisible"/>
     </application>
 
 </manifest>

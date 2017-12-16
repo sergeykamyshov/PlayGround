@@ -38,6 +38,7 @@ public class CardTitleActivity extends AppCompatActivity {
         String cardTitle = intent.getStringExtra(EXTRA_CARD_TITLE);
         mTitleEditText = findViewById(R.id.txt_card_title);
         mTitleEditText.setText(cardTitle);
+        mTitleEditText.setSelection(mTitleEditText.getText().length());
     }
 
     @Override

@@ -51,6 +51,7 @@ public class TaskActivity extends AppCompatActivity {
             Task task = mRealm.where(Task.class).equalTo("id", mTaskId).findFirst();
             String taskTitle = task != null ? task.getTitle() : null;
             mTaskTitleEditText.setText(taskTitle);
+            mTaskTitleEditText.setSelection(mTaskTitleEditText.getText().length());
         }
     }
 
