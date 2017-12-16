@@ -25,7 +25,6 @@ public class CardActivity extends AppCompatActivity {
     public static final String EXTRA_CARD_ID = "cardId";
     public static final String EXTRA_CARD_TITLE = "cardTitle";
     public static final String EXTRA_NEW_CARD_FLAG = "newCardFlag";
-    public static final int REQUEST_CODE_SET_CARD_TITLE = 1;
 
     private CardRecyclerAdapter mAdapter;
     private Realm mRealm;
@@ -131,31 +130,6 @@ public class CardActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK) {
-//            switch (requestCode) {
-//                case REQUEST_CODE_SET_CARD_TITLE:
-//                    final String cardTitle = data.getStringExtra(EXTRA_CARD_TITLE);
-//                    // Меняем заголовок карточки
-//                    ActionBar actionBar = getSupportActionBar();
-//                    if (actionBar != null) {
-//                        actionBar.setTitle(cardTitle);
-//                    }
-//                    // Сохраняем заголовок карточки в базу
-//                    mRealm.executeTransaction(new Realm.Transaction() {
-//                        @Override
-//                        public void execute(Realm realm) {
-//                            mCard.setTitle(cardTitle);
-//                            realm.insertOrUpdate(mCard);
-//                        }
-//                    });
-//                    break;
-//            }
-//        }
-//    }
 
     public void addNewTaskAction(View view) {
         Intent intent = new Intent(this, TaskActivity.class);

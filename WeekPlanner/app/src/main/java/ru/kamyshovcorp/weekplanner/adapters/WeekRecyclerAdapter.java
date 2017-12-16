@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,12 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Card card = mCards.get(position);
-        holder.mCardTitle.setText(card.getTitle());
+        String cardTitle = card != null ? card.getTitle() : "";
+        if (TextUtils.isEmpty(cardTitle)) {
+            holder.mCardTitle.setVisibility(View.GONE);
+        } else {
+            holder.mCardTitle.setText(cardTitle);
+        }
 
         // Очищаем список задач для карточки перед заполнением
         holder.mRecyclerItemLayout.removeAllViews();
