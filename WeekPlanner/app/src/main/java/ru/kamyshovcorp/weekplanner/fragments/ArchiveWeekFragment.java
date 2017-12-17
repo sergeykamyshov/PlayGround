@@ -27,8 +27,9 @@ import ru.kamyshovcorp.weekplanner.adapters.WeekRecyclerAdapter;
 import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.utils.DateUtils;
 
-import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_ID;
+import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_ARCHIVE_FLAG;
 import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_NEW_CARD_FLAG;
+import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_WEEK_END_DATE;
 
 public class ArchiveWeekFragment extends Fragment {
 
@@ -73,19 +74,14 @@ public class ArchiveWeekFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Переходим к созданию новой карточки на выбранной неделе архива
                 mRealm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        Card card = new Card();
-                        String cardId = card.getId();
-                        // При создании карточки в архиве, указываем дату выбранной недели
-                        card.setCreationDate(mWeekEndDate);
-
-                        realm.insertOrUpdate(card);
-
                         Intent intent = new Intent(getContext(), CardActivity.class);
-                        intent.putExtra(EXTRA_CARD_ID, cardId);
                         intent.putExtra(EXTRA_NEW_CARD_FLAG, true);
+                        intent.putExtra(EXTRA_ARCHIVE_FLAG, true);
+                        intent.putExtra(EXTRA_WEEK_END_DATE, mWeekEndDate);
                         getContext().startActivity(intent);
                     }
                 });

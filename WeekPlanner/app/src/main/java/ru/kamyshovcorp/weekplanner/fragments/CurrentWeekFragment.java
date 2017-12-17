@@ -21,7 +21,6 @@ import ru.kamyshovcorp.weekplanner.adapters.WeekRecyclerAdapter;
 import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.utils.DateUtils;
 
-import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_CARD_ID;
 import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_NEW_CARD_FLAG;
 
 public class CurrentWeekFragment extends Fragment {
@@ -59,14 +58,11 @@ public class CurrentWeekFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Переходим к созданию новой карточки
                 mRealm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        Card card = realm.copyToRealm(new Card());
-                        String cardId = card.getId();
-
                         Intent intent = new Intent(getContext(), CardActivity.class);
-                        intent.putExtra(EXTRA_CARD_ID, cardId);
                         intent.putExtra(EXTRA_NEW_CARD_FLAG, true);
                         getContext().startActivity(intent);
                     }

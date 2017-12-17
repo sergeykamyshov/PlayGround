@@ -11,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.Date;
+import java.util.UUID;
+
 import io.realm.Realm;
 import io.realm.RealmList;
 import ru.kamyshovcorp.weekplanner.R;
@@ -24,7 +27,9 @@ public class CardActivity extends AppCompatActivity {
 
     public static final String EXTRA_CARD_ID = "cardId";
     public static final String EXTRA_CARD_TITLE = "cardTitle";
+    public static final String EXTRA_WEEK_END_DATE = "weekEndDate";
     public static final String EXTRA_NEW_CARD_FLAG = "newCardFlag";
+    public static final String EXTRA_ARCHIVE_FLAG = "archiveFlag";
 
     private CardRecyclerAdapter mAdapter;
     private Realm mRealm;
@@ -38,10 +43,27 @@ public class CardActivity extends AppCompatActivity {
 
         // Получаем данные из вызываемого интента
         Intent intent = getIntent();
-        mCardId = intent.getStringExtra(EXTRA_CARD_ID);
+        boolean isNewCard = intent.getBooleanExtra(EXTRA_NEW_CARD_FLAG, false);
+        final boolean isArchive = intent.getBooleanExtra(EXTRA_ARCHIVE_FLAG, false);
+        final Date weekEndDate = (Date) intent.getSerializableExtra(EXTRA_WEEK_END_DATE);
 
-        // Загружаем выбранную карточку
         mRealm = Realm.getDefaultInstance();
+        if (isNewCard) {
+            // Создаем новую карточку
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    mCardId = UUID.randomUUID().toString();
+                    Card card = realm.createObject(Card.class, mCardId);
+                    if (isArchive) {
+                        card.setCreationDate(weekEndDate);
+                    }
+                    realm.insertOrUpdate(card);
+                }
+            });
+        } else {
+            mCardId = intent.getStringExtra(EXTRA_CARD_ID);
+        }
         mCard = mRealm.where(Card.class).equalTo("id", mCardId).findFirst();
 
         // Настраиваем ActionBar
