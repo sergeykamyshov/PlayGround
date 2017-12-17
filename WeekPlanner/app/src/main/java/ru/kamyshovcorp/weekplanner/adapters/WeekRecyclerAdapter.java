@@ -30,18 +30,23 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
     public WeekRecyclerAdapter(Context context, RealmResults<Card> cards) {
         mContext = context;
         mCards = cards;
+        addChangeListerForCards();
+    }
 
+    public void setCards(RealmResults<Card> cards) {
+        mCards = cards;
+        notifyDataSetChanged();
+        addChangeListerForCards();
+    }
+
+    private void addChangeListerForCards() {
+        mCards.removeAllChangeListeners();
         mCards.addChangeListener(new RealmChangeListener<RealmResults<Card>>() {
             @Override
             public void onChange(RealmResults<Card> cards) {
                 notifyDataSetChanged();
             }
         });
-    }
-
-    public void setCards(RealmResults<Card> cards) {
-        mCards = cards;
-        notifyDataSetChanged();
     }
 
     @Override
