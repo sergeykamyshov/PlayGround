@@ -80,8 +80,8 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
     private LinearLayout createTasksLayout(Card card) {
         LinearLayout linearLayout = new LinearLayout(mContext);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        int tasksLayoutTopMargin = (int) mContext.getResources().getDimension(R.dimen.tasks_layout_top_margin);
-        params.setMargins(0, tasksLayoutTopMargin, 0, 0);
+//        int tasksLayoutTopMargin = (int) mContext.getResources().getDimension(R.dimen.tasks_layout_top_margin);
+//        params.setMargins(0, 0, 0, 0);
         linearLayout.setLayoutParams(params);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
