@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +20,7 @@ import ru.kamyshovcorp.weekplanner.R;
 import ru.kamyshovcorp.weekplanner.adapters.CardRecyclerAdapter;
 import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.model.Task;
+import ru.kamyshovcorp.weekplanner.views.EmptyRecyclerView;
 
 import static ru.kamyshovcorp.weekplanner.activities.TaskActivity.EXTRA_TASK_ID;
 
@@ -75,8 +75,9 @@ public class CardActivity extends AppCompatActivity {
         }
 
         // Устанавливаем адаптер
-        RecyclerView recyclerTasks = findViewById(R.id.recycler_tasks);
+        EmptyRecyclerView recyclerTasks = findViewById(R.id.recycler_tasks);
         recyclerTasks.setLayoutManager(new LinearLayoutManager(this));
+        recyclerTasks.setEmptyView(findViewById(R.id.layout_empty_task_list));
         mAdapter = new CardRecyclerAdapter(this, mCard.getTasks(), new OnTaskItemClickListener() {
             // Реализация обработчика нажатия задачи в списке
             @Override

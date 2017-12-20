@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import ru.kamyshovcorp.weekplanner.activities.CardActivity;
 import ru.kamyshovcorp.weekplanner.adapters.WeekRecyclerAdapter;
 import ru.kamyshovcorp.weekplanner.model.Card;
 import ru.kamyshovcorp.weekplanner.utils.DateUtils;
+import ru.kamyshovcorp.weekplanner.views.EmptyRecyclerView;
 
 import static ru.kamyshovcorp.weekplanner.activities.CardActivity.EXTRA_NEW_CARD_FLAG;
 
@@ -38,8 +38,9 @@ public class CurrentWeekFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_week, container, false);
 
         // Создаем и настраиваем адаптер
-        RecyclerView recyclerView = view.findViewById(R.id.week_recycler_view);
+        EmptyRecyclerView recyclerView = view.findViewById(R.id.week_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setEmptyView(view.findViewById(R.id.layout_empty_card_list));
 
         mRealm = Realm.getDefaultInstance();
         Date today = new Date();

@@ -4,11 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <ru.kamyshovcorp.weekplanner.views.EmptyRecyclerView
         android:id="@+id/recycler_tasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+    </ru.kamyshovcorp.weekplanner.views.EmptyRecyclerView>
+
+    <LinearLayout
+        android:id="@+id/layout_empty_task_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_task_list"/>
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_task"

@@ -25,4 +25,7 @@
     <string name="hint_card_title">Title</string>
     <string name="hint_task">Task</string>
 
+    <string name="empty_task_list">No tasks</string>
+    <string name="empty_card_list">No cards</string>
+
 </resources>
