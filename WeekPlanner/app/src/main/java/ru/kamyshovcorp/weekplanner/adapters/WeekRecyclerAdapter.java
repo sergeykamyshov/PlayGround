@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,8 +79,6 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
     private LinearLayout createTasksLayout(Card card) {
         LinearLayout linearLayout = new LinearLayout(mContext);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//        int tasksLayoutTopMargin = (int) mContext.getResources().getDimension(R.dimen.tasks_layout_top_margin);
-//        params.setMargins(0, 0, 0, 0);
         linearLayout.setLayoutParams(params);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -92,26 +89,12 @@ public class WeekRecyclerAdapter extends RecyclerView.Adapter<WeekRecyclerAdapte
     }
 
     private void createTaskItemLayout(LinearLayout linearLayout, Task task) {
-        LinearLayout taskLayout = new LinearLayout(mContext);
-        LinearLayout.LayoutParams taskParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        taskLayout.setLayoutParams(taskParams);
-        taskLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-        CheckBox taskCheckBox = new CheckBox(mContext);
-        taskCheckBox.setGravity(Gravity.TOP);
-        taskCheckBox.setChecked(task.isDone());
-        taskCheckBox.setClickable(false);
-        taskCheckBox.setBackgroundResource(android.R.color.transparent);
-        taskLayout.addView(taskCheckBox);
-
-        TextView taskDescriptionTextView = new TextView(mContext);
-        LinearLayout.LayoutParams taskDescriptionParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        taskDescriptionParams.gravity = Gravity.CENTER;
-        taskDescriptionTextView.setLayoutParams(taskDescriptionParams);
-        taskDescriptionTextView.setText(task.getTitle());
-        taskLayout.addView(taskDescriptionTextView);
-
-        linearLayout.addView(taskLayout);
+        View view = LayoutInflater.from(linearLayout.getContext()).inflate(R.layout.week_card_task_item, linearLayout, false);
+        CheckBox taskDone = view.findViewById(R.id.cb_task_done);
+        taskDone.setChecked(task.isDone());
+        TextView taskTitle = view.findViewById(R.id.txt_task_title);
+        taskTitle.setText(task.getTitle());
+        linearLayout.addView(view);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

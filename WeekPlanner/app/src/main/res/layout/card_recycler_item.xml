@@ -20,14 +20,13 @@
 
     <TextView
         android:id="@+id/txt_task_title"
+        style="@style/CardTask"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/img_more"
         app:layout_constraintHorizontal_bias="0.0"
