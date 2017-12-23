@@ -7,7 +7,8 @@
     <string name="title_set_card_title">Set title</string>
 
     <!--Меню навигации-->
-    <string name="nav_item_current_week">Current Week</string>
+    <string name="nav_item_current_week">Current week</string>
+    <string name="nav_item_next_week">Next week</string>
     <string name="nav_item_archive">Archive</string>
     <string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>
