@@ -42,7 +42,7 @@ public class DateUtilsTest {
     @Test
     public void getWeekEndDate_whenMondayTest() throws Exception {
         Date mondayDate = new GregorianCalendar(2017, 10, 12, 10, 30).getTime();
-        Date expectedDateTime = new GregorianCalendar(2017, 10, 18, 23,59,59).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 18, 23, 59, 59).getTime();
 
         Date weekEndDate = DateUtils.getWeekEndDate(mondayDate);
 
@@ -52,7 +52,7 @@ public class DateUtilsTest {
     @Test
     public void getWeekEndDate_whenWednesdayTest() throws Exception {
         Date wednesdayDate = new GregorianCalendar(2017, 10, 15, 10, 30).getTime();
-        Date expectedDateTime = new GregorianCalendar(2017, 10, 18, 23,59,59).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 18, 23, 59, 59).getTime();
 
         Date weekEndDate = DateUtils.getWeekEndDate(wednesdayDate);
 
@@ -62,11 +62,71 @@ public class DateUtilsTest {
     @Test
     public void getWeekEndDate_whenSaturdayTest() throws Exception {
         Date saturdayDate = new GregorianCalendar(2017, 10, 18, 10, 30).getTime();
-        Date expectedDateTime = new GregorianCalendar(2017, 10, 18, 23,59,59).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 18, 23, 59, 59).getTime();
 
         Date weekEndDate = DateUtils.getWeekEndDate(saturdayDate);
 
         assertEquals(expectedDateTime, weekEndDate);
+    }
+
+    @Test
+    public void getNextWeekStartDate_whenMondayTest() throws Exception {
+        Date mondayDate = new GregorianCalendar(2017, 10, 12, 10, 30).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 19).getTime();
+
+        Date nextWeekStartDate = DateUtils.getNextWeekStartDate(mondayDate);
+
+        assertEquals(expectedDateTime, nextWeekStartDate);
+    }
+
+    @Test
+    public void getNextWeekStartDate_whenWednesdayTest() throws Exception {
+        Date mondayDate = new GregorianCalendar(2017, 10, 15, 10, 30).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 19).getTime();
+
+        Date nextWeekStartDate = DateUtils.getNextWeekStartDate(mondayDate);
+
+        assertEquals(expectedDateTime, nextWeekStartDate);
+    }
+
+    @Test
+    public void getNextWeekStartDate_whenSaturdayTest() throws Exception {
+        Date mondayDate = new GregorianCalendar(2017, 10, 18, 10, 30).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 19).getTime();
+
+        Date nextWeekStartDate = DateUtils.getNextWeekStartDate(mondayDate);
+
+        assertEquals(expectedDateTime, nextWeekStartDate);
+    }
+
+    @Test
+    public void getNextWeekEndDate_whenMondayTest() throws Exception {
+        Date mondayDate = new GregorianCalendar(2017, 10, 12, 10, 30).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 25, 23, 59, 59).getTime();
+
+        Date nextWeekEndDate = DateUtils.getNextWeekEndDate(mondayDate);
+
+        assertEquals(expectedDateTime, nextWeekEndDate);
+    }
+
+    @Test
+    public void getNextWeekEndDate_whenWednesdayTest() throws Exception {
+        Date mondayDate = new GregorianCalendar(2017, 10, 15, 10, 30).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 25, 23, 59, 59).getTime();
+
+        Date nextWeekEndDate = DateUtils.getNextWeekEndDate(mondayDate);
+
+        assertEquals(expectedDateTime, nextWeekEndDate);
+    }
+
+    @Test
+    public void getNextWeekEndDate_whenSundayTest() throws Exception {
+        Date mondayDate = new GregorianCalendar(2017, 10, 18, 10, 30).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 25, 23, 59, 59).getTime();
+
+        Date nextWeekEndDate = DateUtils.getNextWeekEndDate(mondayDate);
+
+        assertEquals(expectedDateTime, nextWeekEndDate);
     }
 
     @Test
@@ -102,7 +162,7 @@ public class DateUtilsTest {
     @Test
     public void getPreviousWeekEndDate_whenMondayTest() throws Exception {
         Date mondayDate = new GregorianCalendar(2017, 10, 12, 10, 30).getTime();
-        Date expectedDateTime = new GregorianCalendar(2017, 10, 11, 23,59,59).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 11, 23, 59, 59).getTime();
 
         Date previousWeekEndDate = DateUtils.getPreviousWeekEndDate(mondayDate);
 
@@ -112,7 +172,7 @@ public class DateUtilsTest {
     @Test
     public void getPreviousWeekEndDate_whenWednesdayTest() throws Exception {
         Date mondayDate = new GregorianCalendar(2017, 10, 15, 10, 30).getTime();
-        Date expectedDateTime = new GregorianCalendar(2017, 10, 11, 23,59,59).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 11, 23, 59, 59).getTime();
 
         Date previousWeekEndDate = DateUtils.getPreviousWeekEndDate(mondayDate);
 
@@ -122,7 +182,7 @@ public class DateUtilsTest {
     @Test
     public void getPreviousWeekEndDate_whenSundayTest() throws Exception {
         Date mondayDate = new GregorianCalendar(2017, 10, 18, 10, 30).getTime();
-        Date expectedDateTime = new GregorianCalendar(2017, 10, 11, 23,59,59).getTime();
+        Date expectedDateTime = new GregorianCalendar(2017, 10, 11, 23, 59, 59).getTime();
 
         Date previousWeekEndDate = DateUtils.getPreviousWeekEndDate(mondayDate);
 

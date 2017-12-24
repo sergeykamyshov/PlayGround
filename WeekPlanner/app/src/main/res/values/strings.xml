@@ -2,6 +2,7 @@
     <string name="app_name">Week Planner</string>
 
     <!--Заголовки-->
+    <string name="title_next_week">Next week</string>
     <string name="title_archive">Archive</string>
     <string name="title_task">Task</string>
     <string name="title_set_card_title">Set title</string>

@@ -7,12 +7,7 @@ import java.util.GregorianCalendar;
 public class DateUtils {
 
     public static Date getWeekStartDate(Date date) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        Calendar calendar = getStartDateByTime(date);
 
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         int firstDayOfWeek = calendar.getFirstDayOfWeek();
@@ -26,12 +21,7 @@ public class DateUtils {
     }
 
     public static Date getWeekEndDate(Date date) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
-        calendar.set(Calendar.MILLISECOND, 0);
+        Calendar calendar = getEndDateByTime(date);
 
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         int firstDayOfWeek = calendar.getFirstDayOfWeek();
@@ -47,13 +37,45 @@ public class DateUtils {
         }
     }
 
+    public static Date getNextWeekStartDate(Date date) {
+        Calendar calendar = getStartDateByTime(date);
+
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        int firstDayOfWeek = calendar.getFirstDayOfWeek();
+
+        if (dayOfWeek == firstDayOfWeek) {
+            calendar.add(Calendar.DATE, 7);
+            return calendar.getTime();
+        } else {
+            setFirstDayOfWeek(calendar, dayOfWeek, firstDayOfWeek);
+            // Уставливаем как день на следующей неделе
+            calendar.add(Calendar.DATE, 7);
+            return calendar.getTime();
+        }
+    }
+
+    public static Date getNextWeekEndDate(Date date) {
+        Calendar calendar = getEndDateByTime(date);
+
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        int firstDayOfWeek = calendar.getFirstDayOfWeek();
+
+        if (dayOfWeek == firstDayOfWeek) {
+            calendar.add(Calendar.DATE, 6);
+            calendar.add(Calendar.DATE, 7);
+            return calendar.getTime();
+        } else {
+            setFirstDayOfWeek(calendar, dayOfWeek, firstDayOfWeek);
+            // Устанавливаем последний день недели
+            calendar.add(Calendar.DATE, 6);
+            // Устанавливаем как день на следующей неделе
+            calendar.add(Calendar.DATE, 7);
+            return calendar.getTime();
+        }
+    }
+
     public static Date getPreviousWeekStartDate(Date date) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        Calendar calendar = getStartDateByTime(date);
 
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         int firstDayOfWeek = calendar.getFirstDayOfWeek();
@@ -70,12 +92,7 @@ public class DateUtils {
     }
 
     public static Date getPreviousWeekEndDate(Date date) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
-        calendar.set(Calendar.MILLISECOND, 0);
+        Calendar calendar = getEndDateByTime(date);
 
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         int firstDayOfWeek = calendar.getFirstDayOfWeek();
@@ -103,6 +120,26 @@ public class DateUtils {
         }
         // Устанавливаем первый день недели
         calendar.add(Calendar.DATE, dif);
+    }
+
+    private static Calendar getStartDateByTime(Date date) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
+    }
+
+    private static Calendar getEndDateByTime(Date date) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
     }
 
 }
