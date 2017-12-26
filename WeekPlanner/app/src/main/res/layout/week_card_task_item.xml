@@ -10,7 +10,6 @@
         android:id="@+id/cb_task_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:background="@android:color/transparent"
         android:clickable="false"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,10 +20,13 @@
         style="@style/WeekCardTask"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/cb_task_done"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cb_task_done"
+        app:layout_constraintTop_toTopOf="@+id/cb_task_done"
         tools:text="Task description"/>
 </android.support.constraint.ConstraintLayout>
