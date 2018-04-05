@@ -1,4 +1,4 @@
-package ru.sergeykamyshov.emotiondiary;
+package ru.sergeykamyshov.emotiondiary.list;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ru.sergeykamyshov.emotiondiary.R;
 import ru.sergeykamyshov.emotiondiary.model.Event;
 
 public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAdapter.ViewHolder> {

@@ -1,4 +1,4 @@
-package ru.sergeykamyshov.emotiondiary;
+package ru.sergeykamyshov.emotiondiary.list;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ru.sergeykamyshov.emotiondiary.R;
+import ru.sergeykamyshov.emotiondiary.list.EventsRecyclerAdapter;
 import ru.sergeykamyshov.emotiondiary.model.Event;
 
-public class MainActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity {
 
     public static final boolean HAS_FIXED_SIZE = true;
 
