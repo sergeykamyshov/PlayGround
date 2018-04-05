@@ -10,18 +10,18 @@ import android.widget.TextView;
 import java.util.List;
 
 import ru.sergeykamyshov.emotiondiary.R;
-import ru.sergeykamyshov.emotiondiary.model.Event;
+import ru.sergeykamyshov.emotiondiary.database.Entry;
 
-public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAdapter.ViewHolder> {
+public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapter.ViewHolder> {
 
     // Контекст используется для создания разметки
     private Context mContext;
     // Список элементов, который нужно показывать
-    private List<Event> mEvents;
+    private List<Entry> mEntries;
 
-    public EventsRecyclerAdapter(Context context, List<Event> events) {
+    public ListRecyclerAdapter(Context context, List<Entry> entries) {
         mContext = context;
-        mEvents = events;
+        mEntries = entries;
     }
 
     @Override
@@ -34,13 +34,17 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Заполняем/перезаполняем ViewHolder данными из списка
-        String situation = mEvents.get(position).getSituation();
+        String situation = mEntries.get(position).getSituation();
         holder.mSituation.setText(situation);
     }
 
     @Override
     public int getItemCount() {
-        return mEvents.size();
+        return mEntries.size();
+    }
+
+    public void setEntries(List<Entry> entries) {
+        mEntries = entries;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
