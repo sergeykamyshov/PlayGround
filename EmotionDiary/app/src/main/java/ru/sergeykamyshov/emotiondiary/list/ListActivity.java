@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 import ru.sergeykamyshov.emotiondiary.R;
-import ru.sergeykamyshov.emotiondiary.list.EventsRecyclerAdapter;
 import ru.sergeykamyshov.emotiondiary.model.Event;
 
 public class ListActivity extends AppCompatActivity {
@@ -20,7 +19,7 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_list);
 
         RecyclerView recylerView = findViewById(R.id.recyler_view);
         recylerView.setLayoutManager(new LinearLayoutManager(this));
