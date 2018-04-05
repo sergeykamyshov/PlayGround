@@ -18,6 +18,9 @@ import ru.sergeykamyshov.emotiondiary.model.Event;
 
 public class ListActivity extends AppCompatActivity {
 
+    /**
+     * Параметр определяет будет ли размер элемента списка всегда одинаковой по высоте и ширине
+     */
     public static final boolean HAS_FIXED_SIZE = true;
 
     @Override

@@ -10,6 +10,9 @@ import ru.sergeykamyshov.emotiondiary.R;
 
 public class CreateEntryActivity extends AppCompatActivity {
 
+    /**
+     * Параметр определяет показывать ли кнопку "Назад"
+     */
     public static final boolean SHOW_HOME_AS_UP = true;
 
     @Override
