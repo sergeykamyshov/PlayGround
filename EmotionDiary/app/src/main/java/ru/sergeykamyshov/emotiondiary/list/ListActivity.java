@@ -12,13 +12,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.util.Collections;
 import java.util.List;
 
 import ru.sergeykamyshov.emotiondiary.R;
 import ru.sergeykamyshov.emotiondiary.create.CreateEntryActivity;
 import ru.sergeykamyshov.emotiondiary.database.Entry;
 import ru.sergeykamyshov.emotiondiary.database.Repository;
+
+import static ru.sergeykamyshov.emotiondiary.create.CreateEntryActivity.EXTRA_ENTRY_ID;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -38,8 +39,17 @@ public class ListActivity extends AppCompatActivity {
         RecyclerView recylerView = findViewById(R.id.recyler_view);
         recylerView.setLayoutManager(new LinearLayoutManager(this));
         recylerView.setHasFixedSize(HAS_FIXED_SIZE);
-        mRecyclerAdapter = new ListRecyclerAdapter(this, Collections.<Entry>emptyList());
+        mRecyclerAdapter = new ListRecyclerAdapter(this);
         recylerView.setAdapter(mRecyclerAdapter);
+        recylerView.addOnItemTouchListener(new RecyclerTouchListener(this, new RecyclerTouchListener.OnClickListener() {
+            @Override
+            public void onClick(View child, int position) {
+                Entry entry = mRecyclerAdapter.getEntryByPosition(position);
+                Intent intent = new Intent(getApplicationContext(), CreateEntryActivity.class);
+                intent.putExtra(EXTRA_ENTRY_ID, entry.getId());
+                startActivity(intent);
+            }
+        }));
 
 //        clearDatabase();
 

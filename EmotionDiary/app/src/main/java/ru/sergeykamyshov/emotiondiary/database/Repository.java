@@ -24,12 +24,28 @@ public class Repository {
         return entryDao.getAll();
     }
 
+    public LiveData<Entry> getEntry(long id) {
+        EntryDao entryDao = mDatabase.entryDao();
+        return entryDao.getEntry(id);
+    }
+
     public void insert(Entry... entry) {
         new AsyncTask<Entry, Void, Void>() {
             @Override
             protected Void doInBackground(Entry... entries) {
                 EntryDao entryDao = App.getInstance().getDatabase().entryDao();
                 entryDao.insert(entries);
+                return null;
+            }
+        }.execute(entry);
+    }
+
+    public void update(Entry entry) {
+        new AsyncTask<Entry, Void, Void>() {
+            @Override
+            protected Void doInBackground(Entry... entries) {
+                EntryDao entryDao = mDatabase.entryDao();
+                entryDao.update(entries[0]);
                 return null;
             }
         }.execute(entry);

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.sergeykamyshov.emotiondiary.R;
@@ -17,11 +18,10 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
     // Контекст используется для создания разметки
     private Context mContext;
     // Список элементов, который нужно показывать
-    private List<Entry> mEntries;
+    private List<Entry> mEntries = new ArrayList<>();
 
-    public ListRecyclerAdapter(Context context, List<Entry> entries) {
+    public ListRecyclerAdapter(Context context) {
         mContext = context;
-        mEntries = entries;
     }
 
     @Override
@@ -46,6 +46,10 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
     public void setEntries(List<Entry> entries) {
         mEntries = entries;
+    }
+
+    public Entry getEntryByPosition(int position) {
+        return mEntries.get(position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
