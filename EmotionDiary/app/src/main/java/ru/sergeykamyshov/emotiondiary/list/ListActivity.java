@@ -12,15 +12,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import ru.sergeykamyshov.emotiondiary.R;
 import ru.sergeykamyshov.emotiondiary.create.CreateEntryActivity;
 import ru.sergeykamyshov.emotiondiary.database.Entry;
-import ru.sergeykamyshov.emotiondiary.model.Event;
+import ru.sergeykamyshov.emotiondiary.database.Repository;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -28,6 +26,9 @@ public class ListActivity extends AppCompatActivity {
      * Параметр определяет будет ли размер элемента списка всегда одинаковой по высоте и ширине
      */
     public static final boolean HAS_FIXED_SIZE = true;
+
+    private ListViewModel mListViewModel;
+    private ListRecyclerAdapter mRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +38,12 @@ public class ListActivity extends AppCompatActivity {
         RecyclerView recylerView = findViewById(R.id.recyler_view);
         recylerView.setLayoutManager(new LinearLayoutManager(this));
         recylerView.setHasFixedSize(HAS_FIXED_SIZE);
-        final ListRecyclerAdapter recyclerAdapter = new ListRecyclerAdapter(this, Collections.<Entry>emptyList());
-        recylerView.setAdapter(recyclerAdapter);
+        mRecyclerAdapter = new ListRecyclerAdapter(this, Collections.<Entry>emptyList());
+        recylerView.setAdapter(mRecyclerAdapter);
 
-        ListViewModel viewModel = ViewModelProviders.of(this).get(ListViewModel.class);
-        LiveData<List<Entry>> liveData = viewModel.getData();
-        liveData.observe(this, new Observer<List<Entry>>() {
-            @Override
-            public void onChanged(@Nullable List<Entry> entries) {
-                recyclerAdapter.setEntries(entries);
-            }
-        });
+//        clearDatabase();
+
+        mListViewModel = ViewModelProviders.of(this).get(ListViewModel.class);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,13 +55,21 @@ public class ListActivity extends AppCompatActivity {
         });
     }
 
-    private List<Event> generateTestEvents() {
-        List<Event> events = new ArrayList<>();
-        String empty = "";
-        for (int i = 0; i < 50; i++) {
-            events.add(new Event(new Date(), "Situation " + i + ". And long long long long " +
-                    "long long long long long long long long long long long ", empty, empty, empty));
-        }
-        return events;
+    private void clearDatabase() {
+        Repository.getRepository().clear();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        LiveData<List<Entry>> liveData = mListViewModel.getData();
+        liveData.observe(this, new Observer<List<Entry>>() {
+            @Override
+            public void onChanged(@Nullable List<Entry> entries) {
+                mRecyclerAdapter.setEntries(entries);
+                mRecyclerAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

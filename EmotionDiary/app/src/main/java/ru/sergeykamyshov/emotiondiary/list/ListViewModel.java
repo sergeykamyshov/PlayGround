@@ -1,35 +1,35 @@
 package ru.sergeykamyshov.emotiondiary.list;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import ru.sergeykamyshov.emotiondiary.App;
 import ru.sergeykamyshov.emotiondiary.database.Entry;
 
-public class ListViewModel extends ViewModel {
+public class ListViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<Entry>> mLiveData;
+//    private MutableLiveData<List<Entry>> mLiveData;
 
-    public LiveData<List<Entry>> getData() {
-        if (mLiveData == null) {
-            mLiveData = new MutableLiveData<>();
-            loadTestData();
-        }
-        return mLiveData;
+    public ListViewModel(@NonNull Application application) {
+        super(application);
+//        loadData();
     }
 
-    private void loadTestData() {
-        // generate test data
-        List<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            Entry entry = new Entry();
-            entry.setSituation("Situation " + i);
-            entries.add(entry);
-        }
-        mLiveData.postValue(entries);
+    public LiveData<List<Entry>> getData() {
+//        if (mLiveData == null) {
+//            mLiveData = new MutableLiveData<>();
+//        }
+//        return mLiveData;
+
+        return App.getInstance().getDatabase().entryDao().getAll();
+    }
+
+    public void loadData() {
+
     }
 
 }

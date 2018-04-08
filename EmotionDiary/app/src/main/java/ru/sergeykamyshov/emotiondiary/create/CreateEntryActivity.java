@@ -14,6 +14,7 @@ import java.util.Date;
 
 import ru.sergeykamyshov.emotiondiary.R;
 import ru.sergeykamyshov.emotiondiary.database.Entry;
+import ru.sergeykamyshov.emotiondiary.database.Repository;
 
 public class CreateEntryActivity extends AppCompatActivity {
 
@@ -77,8 +78,21 @@ public class CreateEntryActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
             case R.id.menu_action_save:
                 // save entry to database
+                Entry entry = new Entry();
+                entry.setSituation("Test situation");
+                entry.setThoughts("Test thoughts");
+                entry.setEmotion("Test emotions");
+                entry.setReaction("Test reaction");
+                entry.setDate(new Date().getTime());
+
+                Repository repository = Repository.getRepository();
+                repository.insert(entry);
+
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

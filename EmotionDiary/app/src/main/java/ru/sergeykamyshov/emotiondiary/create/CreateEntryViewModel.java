@@ -23,9 +23,9 @@ public class CreateEntryViewModel extends ViewModel {
     private void loadData() {
         Entry entry = new Entry();
         entry.setSituation("Test situation");
-        entry.setThoughts("Test situation");
-        entry.setEmotion("Test situation");
-        entry.setReaction("Test situation");
+        entry.setThoughts("Test thoughts");
+        entry.setEmotion("Test emotions");
+        entry.setReaction("Test reaction");
         entry.setDate(new Date().getTime());
 
         mLiveData.setValue(entry);
