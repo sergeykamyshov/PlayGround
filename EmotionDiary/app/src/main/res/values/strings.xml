@@ -2,4 +2,11 @@
     <string name="app_name">Emotion Diary</string>
 
     <string name="menu_action_save">Save</string>
+
+    <string name="title_situation">Situation</string>
+    <string name="title_thoughts">Thoughts</string>
+    <string name="title_emotions">Emotions</string>
+    <string name="title_reaction">Reaction</string>
+    <string name="title_date">Date</string>
+    <string name="action_button_delete">Delete</string>
 </resources>

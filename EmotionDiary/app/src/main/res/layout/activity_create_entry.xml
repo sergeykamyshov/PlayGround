@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Situation"
+            android:text="@string/title_situation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -25,7 +25,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="@integer/edit_text_max_lines"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_situation"/>
@@ -36,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Thoughts"
+            android:text="@string/title_thoughts"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_situation"/>
 
@@ -47,7 +48,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="@integer/edit_text_max_lines"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Emotions"
+            android:text="@string/title_emotions"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_thoughts"/>
 
@@ -70,7 +72,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="@integer/edit_text_max_lines"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Reaction"
+            android:text="@string/title_reaction"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_emotions"/>
 
@@ -93,7 +96,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="@integer/edit_text_max_lines"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Date"
+            android:text="@string/title_date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_reaction"/>
 
@@ -131,7 +135,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@color/colorDeleteButton"
-            android:text="Delete"
+            android:text="@string/action_button_delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
