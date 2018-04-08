@@ -15,7 +15,7 @@ public class CreateEntryViewModel extends ViewModel {
     public LiveData<Entry> getData() {
         if (mLiveData == null) {
             mLiveData = new MutableLiveData<>();
-            loadData();
+//            loadData();
         }
         return mLiveData;
     }

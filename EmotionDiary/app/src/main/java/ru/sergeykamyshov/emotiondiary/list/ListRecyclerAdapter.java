@@ -34,8 +34,9 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Заполняем/перезаполняем ViewHolder данными из списка
-        String situation = mEntries.get(position).getSituation();
-        holder.mSituation.setText(situation);
+        Entry entry = mEntries.get(position);
+        holder.mSituation.setText(entry.getSituation());
+        holder.mThoughts.setText(entry.getThoughts());
     }
 
     @Override
@@ -49,10 +50,12 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView mSituation;
+        TextView mThoughts;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mSituation = itemView.findViewById(R.id.situation);
+            mThoughts = itemView.findViewById(R.id.thoughts);
         }
     }
 }

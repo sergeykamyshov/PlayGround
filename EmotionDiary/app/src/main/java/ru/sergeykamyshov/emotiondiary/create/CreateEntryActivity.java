@@ -82,10 +82,10 @@ public class CreateEntryActivity extends AppCompatActivity {
             case R.id.menu_action_save:
                 // save entry to database
                 Entry entry = new Entry();
-                entry.setSituation("Test situation");
-                entry.setThoughts("Test thoughts");
-                entry.setEmotion("Test emotions");
-                entry.setReaction("Test reaction");
+                entry.setSituation(mSituation.getText().toString());
+                entry.setThoughts(mThoughts.getText().toString());
+                entry.setEmotion(mEmotions.getText().toString());
+                entry.setReaction(mReaction.getText().toString());
                 entry.setDate(new Date().getTime());
 
                 Repository repository = Repository.getRepository();
