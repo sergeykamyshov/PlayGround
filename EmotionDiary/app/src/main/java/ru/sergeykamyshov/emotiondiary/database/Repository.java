@@ -51,6 +51,17 @@ public class Repository {
         }.execute(entry);
     }
 
+    public void delete(long id) {
+        new AsyncTask<Long, Void, Void>() {
+            @Override
+            protected Void doInBackground(Long... ids) {
+                EntryDao entryDao = mDatabase.entryDao();
+                entryDao.delete(ids[0]);
+                return null;
+            }
+        }.execute(id);
+    }
+
     public void clear() {
         new AsyncTask<Void, Void, Void>() {
             @Override

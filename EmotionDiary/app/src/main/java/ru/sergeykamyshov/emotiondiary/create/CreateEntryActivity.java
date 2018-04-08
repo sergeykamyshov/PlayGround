@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +29,7 @@ public class CreateEntryActivity extends AppCompatActivity {
     public static final boolean SHOW_HOME_AS_UP = true;
     public static final String EXTRA_ENTRY_ID = "entryId";
 
+    private Repository mRepository = Repository.getRepository();
     private long mEntryId;
     private LiveData<Entry> mLiveData;
 
@@ -35,6 +38,7 @@ public class CreateEntryActivity extends AppCompatActivity {
     private EditText mEmotions;
     private EditText mReaction;
     private EditText mDate;
+    private Button mDeleteButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,16 +59,18 @@ public class CreateEntryActivity extends AppCompatActivity {
             mLiveData.observe(this, new Observer<Entry>() {
                 @Override
                 public void onChanged(@Nullable Entry entry) {
-                    mSituation.setText(entry.getSituation());
-                    if (mSituation.getText() != null) {
-                        mSituation.setSelection(mSituation.getText().length());
+                    if (entry != null) {
+                        mSituation.setText(entry.getSituation());
+                        if (mSituation.getText() != null) {
+                            mSituation.setSelection(mSituation.getText().length());
+                        }
+                        mThoughts.setText(entry.getThoughts());
+                        mEmotions.setText(entry.getEmotion());
+                        mReaction.setText(entry.getReaction());
+                        Date date = new Date();
+                        date.setTime(entry.getDate());
+                        mDate.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(date));
                     }
-                    mThoughts.setText(entry.getThoughts());
-                    mEmotions.setText(entry.getEmotion());
-                    mReaction.setText(entry.getReaction());
-                    Date date = new Date();
-                    date.setTime(entry.getDate());
-                    mDate.setText(new SimpleDateFormat("dd.MM.yyyy hh:mm", Locale.getDefault()).format(date));
                 }
             });
         }
@@ -76,6 +82,16 @@ public class CreateEntryActivity extends AppCompatActivity {
         mEmotions = findViewById(R.id.edit_emotions);
         mReaction = findViewById(R.id.edit_reaction);
         mDate = findViewById(R.id.edit_date);
+        mDeleteButton = findViewById(R.id.btn_delete);
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mEntryId != 0L) {
+                    mRepository.delete(mEntryId);
+                }
+                finish();
+            }
+        });
     }
 
     @Override
@@ -92,7 +108,6 @@ public class CreateEntryActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_action_save:
 
-                Repository repository = Repository.getRepository();
                 if (mEntryId != 0L) {
                     Entry entry = mLiveData.getValue();
                     if (entry != null) {
@@ -100,7 +115,7 @@ public class CreateEntryActivity extends AppCompatActivity {
                         entry.setThoughts(mThoughts.getText().toString());
                         entry.setEmotion(mEmotions.getText().toString());
                         entry.setReaction(mReaction.getText().toString());
-                        repository.update(entry);
+                        mRepository.update(entry);
                     }
                 } else {
                     Entry entry = new Entry();
@@ -109,7 +124,7 @@ public class CreateEntryActivity extends AppCompatActivity {
                     entry.setEmotion(mEmotions.getText().toString());
                     entry.setReaction(mReaction.getText().toString());
                     entry.setDate(new Date().getTime());
-                    repository.insert(entry);
+                    mRepository.insert(entry);
                 }
 
                 finish();

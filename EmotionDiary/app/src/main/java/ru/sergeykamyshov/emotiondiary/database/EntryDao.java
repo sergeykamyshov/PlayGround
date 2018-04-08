@@ -23,6 +23,9 @@ public interface EntryDao {
     @Update
     void update(Entry... entry);
 
+    @Query("delete from entry where id = :id")
+    void delete(long id);
+
     @Query("delete from entry")
     void clear();
 }
