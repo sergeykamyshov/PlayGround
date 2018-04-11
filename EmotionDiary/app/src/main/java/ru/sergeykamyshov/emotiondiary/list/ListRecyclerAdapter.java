@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import ru.sergeykamyshov.emotiondiary.R;
 import ru.sergeykamyshov.emotiondiary.database.Entry;
@@ -35,6 +37,7 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Заполняем/перезаполняем ViewHolder данными из списка
         Entry entry = mEntries.get(position);
+        holder.mDate.setText(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(entry.getDate()));
         holder.mSituation.setText(entry.getSituation());
         holder.mThoughts.setText(entry.getThoughts());
     }
@@ -53,11 +56,13 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView mDate;
         TextView mSituation;
         TextView mThoughts;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            mDate = itemView.findViewById(R.id.date);
             mSituation = itemView.findViewById(R.id.situation);
             mThoughts = itemView.findViewById(R.id.thoughts);
         }

@@ -7,6 +7,13 @@
               android:orientation="vertical">
 
     <TextView
+        android:id="@+id/date"
+        style="@android:style/TextAppearance.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Date text"/>
+
+    <TextView
         android:id="@+id/situation"
         style="@android:style/TextAppearance.Medium"
         android:layout_width="match_parent"
