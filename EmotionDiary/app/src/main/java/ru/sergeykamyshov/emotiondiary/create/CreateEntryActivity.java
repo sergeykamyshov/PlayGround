@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -73,6 +74,11 @@ public class CreateEntryActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            TextView dateTextView = findViewById(R.id.txt_date);
+            dateTextView.setVisibility(View.VISIBLE);
+            mDate.setVisibility(View.VISIBLE);
+            mDeleteButton.setVisibility(View.VISIBLE);
         }
     }
 
