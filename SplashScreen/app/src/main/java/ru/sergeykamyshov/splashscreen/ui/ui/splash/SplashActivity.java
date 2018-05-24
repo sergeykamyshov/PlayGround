@@ -1,13 +1,16 @@
-package ru.sergeykamyshov.splashscreen.ui;
+package ru.sergeykamyshov.splashscreen.ui.ui.splash;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import ru.sergeykamyshov.splashscreen.R;
+import ru.sergeykamyshov.splashscreen.ui.MainActivity;
+import ru.sergeykamyshov.splashscreen.ui.adapters.SplashAdapter;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,11 +22,14 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        if (prefs.getBoolean(FIRST_LAUNCH_KEY, true)) {
-            setContentView(R.layout.activity_splash);
-        } else {
+        if (!prefs.getBoolean(FIRST_LAUNCH_KEY, true)) {
             startMainActivity();
+            finish();
         }
+
+        setContentView(R.layout.activity_splash);
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(new SplashAdapter(getSupportFragmentManager()));
     }
 
     @Override
@@ -31,7 +37,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onDestroy();
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(FIRST_LAUNCH_KEY, false);
+        // TODO: удалить true после тестирования
+        editor.putBoolean(FIRST_LAUNCH_KEY, true);
         editor.apply();
     }
 
