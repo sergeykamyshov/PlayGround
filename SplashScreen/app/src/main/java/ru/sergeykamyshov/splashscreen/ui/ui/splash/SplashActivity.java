@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import ru.sergeykamyshov.splashscreen.R;
-import ru.sergeykamyshov.splashscreen.ui.MainActivity;
+import ru.sergeykamyshov.splashscreen.ui.ui.main.MainActivity;
 import ru.sergeykamyshov.splashscreen.ui.adapters.SplashAdapter;
 
 public class SplashActivity extends AppCompatActivity {
