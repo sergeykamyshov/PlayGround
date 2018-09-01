@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">Дневник эмоций</string>
 
-    <string name="menu_action_save">Сохранить</string>
+    <string name="menu_action_delete">Удалить</string>
 
     <string name="title_situation">Ситуация</string>
     <string name="title_thoughts">Мысли</string>
     <string name="title_emotions">Эмоции</string>
     <string name="title_reaction">Реакция</string>
     <string name="title_date">Дата</string>
-    <string name="action_button_delete">Удалить</string>
+
+    <string name="action_button_save">Сохранить</string>
 </resources>

@@ -29,6 +29,7 @@ public class CreateEntryActivity extends AppCompatActivity {
      */
     public static final boolean SHOW_HOME_AS_UP = true;
     public static final String EXTRA_ENTRY_ID = "entryId";
+    public static final long DEFAULT_ENTRY_ID = 0L;
 
     private Repository mRepository = Repository.getRepository();
     private long mEntryId;
@@ -39,7 +40,7 @@ public class CreateEntryActivity extends AppCompatActivity {
     private EditText mEmotions;
     private EditText mReaction;
     private EditText mDate;
-    private Button mDeleteButton;
+    private Button mSaveButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,8 +54,8 @@ public class CreateEntryActivity extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        if (intent != null && intent.getLongExtra(EXTRA_ENTRY_ID, 0L) != 0L) {
-            mEntryId = intent.getLongExtra(EXTRA_ENTRY_ID, 0L);
+        if (intent != null && intent.getLongExtra(EXTRA_ENTRY_ID, DEFAULT_ENTRY_ID) != DEFAULT_ENTRY_ID) {
+            mEntryId = intent.getLongExtra(EXTRA_ENTRY_ID, DEFAULT_ENTRY_ID);
             CreateEntryViewModel viewModel = ViewModelProviders.of(this).get(CreateEntryViewModel.class);
             mLiveData = viewModel.getData(mEntryId);
             mLiveData.observe(this, new Observer<Entry>() {
@@ -78,7 +79,6 @@ public class CreateEntryActivity extends AppCompatActivity {
             TextView dateTextView = findViewById(R.id.txt_date);
             dateTextView.setVisibility(View.VISIBLE);
             mDate.setVisibility(View.VISIBLE);
-            mDeleteButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -88,14 +88,11 @@ public class CreateEntryActivity extends AppCompatActivity {
         mEmotions = findViewById(R.id.edit_emotions);
         mReaction = findViewById(R.id.edit_reaction);
         mDate = findViewById(R.id.edit_date);
-        mDeleteButton = findViewById(R.id.btn_delete);
-        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+        mSaveButton = findViewById(R.id.btn_save);
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (mEntryId != 0L) {
-                    mRepository.delete(mEntryId);
-                }
-                finish();
+            public void onClick(View v) {
+                saveEntry();
             }
         });
     }
@@ -112,30 +109,36 @@ public class CreateEntryActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.menu_action_save:
-
-                if (mEntryId != 0L) {
-                    Entry entry = mLiveData.getValue();
-                    if (entry != null) {
-                        entry.setSituation(mSituation.getText().toString());
-                        entry.setThoughts(mThoughts.getText().toString());
-                        entry.setEmotion(mEmotions.getText().toString());
-                        entry.setReaction(mReaction.getText().toString());
-                        mRepository.update(entry);
-                    }
-                } else {
-                    Entry entry = new Entry();
-                    entry.setSituation(mSituation.getText().toString());
-                    entry.setThoughts(mThoughts.getText().toString());
-                    entry.setEmotion(mEmotions.getText().toString());
-                    entry.setReaction(mReaction.getText().toString());
-                    entry.setDate(new Date().getTime());
-                    mRepository.insert(entry);
+            case R.id.menu_action_delete:
+                if (mEntryId != DEFAULT_ENTRY_ID) {
+                    mRepository.delete(mEntryId);
                 }
-
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean saveEntry() {
+        if (mEntryId != DEFAULT_ENTRY_ID) {
+            Entry entry = mLiveData.getValue();
+            if (entry != null) {
+                entry.setSituation(mSituation.getText().toString());
+                entry.setThoughts(mThoughts.getText().toString());
+                entry.setEmotion(mEmotions.getText().toString());
+                entry.setReaction(mReaction.getText().toString());
+                mRepository.update(entry);
+            }
+        } else {
+            Entry entry = new Entry();
+            entry.setSituation(mSituation.getText().toString());
+            entry.setThoughts(mThoughts.getText().toString());
+            entry.setEmotion(mEmotions.getText().toString());
+            entry.setReaction(mReaction.getText().toString());
+            entry.setDate(new Date().getTime());
+            mRepository.insert(entry);
+        }
+        finish();
+        return true;
     }
 }
